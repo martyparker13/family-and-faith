@@ -1,0 +1,7761 @@
+[
+ {
+  "day": 1,
+  "passages": [
+   {
+    "reference": "Genesis 1–2",
+    "apiQueries": [
+     "genesis 1",
+     "genesis 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 1",
+    "apiQueries": [
+     "matthew 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God creates the whole world — light, seas, animals, and the very first people!"
+ },
+ {
+  "day": 2,
+  "passages": [
+   {
+    "reference": "Genesis 3–4",
+    "apiQueries": [
+     "genesis 3",
+     "genesis 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 1–2",
+    "apiQueries": [
+     "psalms 1",
+     "psalms 2"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about Adam and Eve's sad choice in the garden, and the family that came after them."
+ },
+ {
+  "day": 3,
+  "passages": [
+   {
+    "reference": "Genesis 5–6",
+    "apiQueries": [
+     "genesis 5",
+     "genesis 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 2",
+    "apiQueries": [
+     "matthew 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Adam and Eve's sad choice in the garden, and the family that came after them."
+ },
+ {
+  "day": 4,
+  "passages": [
+   {
+    "reference": "Genesis 7–8",
+    "apiQueries": [
+     "genesis 7",
+     "genesis 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 3",
+    "apiQueries": [
+     "matthew 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Noah building a giant boat to save his family and the animals from the flood!"
+ },
+ {
+  "day": 5,
+  "passages": [
+   {
+    "reference": "Genesis 9–10",
+    "apiQueries": [
+     "genesis 9",
+     "genesis 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 4",
+    "apiQueries": [
+     "matthew 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Noah building a giant boat to save his family and the animals from the flood!"
+ },
+ {
+  "day": 6,
+  "passages": [
+   {
+    "reference": "Genesis 11–12",
+    "apiQueries": [
+     "genesis 11",
+     "genesis 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 3–4",
+    "apiQueries": [
+     "psalms 3",
+     "psalms 4"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about the tower of Babel, where God gave people all their different languages."
+ },
+ {
+  "day": 7,
+  "passages": [
+   {
+    "reference": "Genesis 13–14",
+    "apiQueries": [
+     "genesis 13",
+     "genesis 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 5",
+    "apiQueries": [
+     "matthew 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's special promise to Abraham: his family will bless the whole world."
+ },
+ {
+  "day": 8,
+  "passages": [
+   {
+    "reference": "Genesis 15–16",
+    "apiQueries": [
+     "genesis 15",
+     "genesis 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 6",
+    "apiQueries": [
+     "matthew 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's special promise to Abraham: his family will bless the whole world."
+ },
+ {
+  "day": 9,
+  "passages": [
+   {
+    "reference": "Genesis 17–18",
+    "apiQueries": [
+     "genesis 17",
+     "genesis 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 5–6",
+    "apiQueries": [
+     "psalms 5",
+     "psalms 6"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God kept His promise to Abraham and Sarah with a baby named Isaac."
+ },
+ {
+  "day": 10,
+  "passages": [
+   {
+    "reference": "Genesis 19–20",
+    "apiQueries": [
+     "genesis 19",
+     "genesis 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 7",
+    "apiQueries": [
+     "matthew 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God kept His promise to Abraham and Sarah with a baby named Isaac."
+ },
+ {
+  "day": 11,
+  "passages": [
+   {
+    "reference": "Genesis 21–22",
+    "apiQueries": [
+     "genesis 21",
+     "genesis 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 8",
+    "apiQueries": [
+     "matthew 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God kept His promise to Abraham and Sarah with a baby named Isaac."
+ },
+ {
+  "day": 12,
+  "passages": [
+   {
+    "reference": "Genesis 23–24",
+    "apiQueries": [
+     "genesis 23",
+     "genesis 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 9",
+    "apiQueries": [
+     "matthew 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God kept His promise to Abraham and Sarah with a baby named Isaac."
+ },
+ {
+  "day": 13,
+  "passages": [
+   {
+    "reference": "Genesis 25–26",
+    "apiQueries": [
+     "genesis 25",
+     "genesis 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 7–8",
+    "apiQueries": [
+     "psalms 7",
+     "psalms 8"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about Isaac's twin sons, Jacob and Esau, and some hard family lessons."
+ },
+ {
+  "day": 14,
+  "passages": [
+   {
+    "reference": "Genesis 27–28",
+    "apiQueries": [
+     "genesis 27",
+     "genesis 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 10",
+    "apiQueries": [
+     "matthew 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Isaac's twin sons, Jacob and Esau, and some hard family lessons."
+ },
+ {
+  "day": 15,
+  "passages": [
+   {
+    "reference": "Genesis 29–30",
+    "apiQueries": [
+     "genesis 29",
+     "genesis 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 11",
+    "apiQueries": [
+     "matthew 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Jacob raised a big family and finally made peace with his brother Esau."
+ },
+ {
+  "day": 16,
+  "passages": [
+   {
+    "reference": "Genesis 31–32",
+    "apiQueries": [
+     "genesis 31",
+     "genesis 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 9–10",
+    "apiQueries": [
+     "psalms 9",
+     "psalms 10"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Jacob raised a big family and finally made peace with his brother Esau."
+ },
+ {
+  "day": 17,
+  "passages": [
+   {
+    "reference": "Genesis 33–34",
+    "apiQueries": [
+     "genesis 33",
+     "genesis 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 12",
+    "apiQueries": [
+     "matthew 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Jacob raised a big family and finally made peace with his brother Esau."
+ },
+ {
+  "day": 18,
+  "passages": [
+   {
+    "reference": "Genesis 35–36",
+    "apiQueries": [
+     "genesis 35",
+     "genesis 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 13",
+    "apiQueries": [
+     "matthew 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Jacob raised a big family and finally made peace with his brother Esau."
+ },
+ {
+  "day": 19,
+  "passages": [
+   {
+    "reference": "Genesis 37–38",
+    "apiQueries": [
+     "genesis 37",
+     "genesis 38"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 14",
+    "apiQueries": [
+     "matthew 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Joseph, sold by his jealous brothers — but God stayed with him in Egypt."
+ },
+ {
+  "day": 20,
+  "passages": [
+   {
+    "reference": "Genesis 39–40",
+    "apiQueries": [
+     "genesis 39",
+     "genesis 40"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 11–12",
+    "apiQueries": [
+     "psalms 11",
+     "psalms 12"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about Joseph, sold by his jealous brothers — but God stayed with him in Egypt."
+ },
+ {
+  "day": 21,
+  "passages": [
+   {
+    "reference": "Genesis 41–42",
+    "apiQueries": [
+     "genesis 41",
+     "genesis 42"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 15",
+    "apiQueries": [
+     "matthew 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Joseph, sold by his jealous brothers — but God stayed with him in Egypt."
+ },
+ {
+  "day": 22,
+  "passages": [
+   {
+    "reference": "Genesis 43–44",
+    "apiQueries": [
+     "genesis 43",
+     "genesis 44"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 16",
+    "apiQueries": [
+     "matthew 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Joseph forgave his brothers and saved his whole family from hunger."
+ },
+ {
+  "day": 23,
+  "passages": [
+   {
+    "reference": "Genesis 45–46",
+    "apiQueries": [
+     "genesis 45",
+     "genesis 46"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 13–14",
+    "apiQueries": [
+     "psalms 13",
+     "psalms 14"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Joseph forgave his brothers and saved his whole family from hunger."
+ },
+ {
+  "day": 24,
+  "passages": [
+   {
+    "reference": "Genesis 47–48",
+    "apiQueries": [
+     "genesis 47",
+     "genesis 48"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 17",
+    "apiQueries": [
+     "matthew 17"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Joseph forgave his brothers and saved his whole family from hunger."
+ },
+ {
+  "day": 25,
+  "passages": [
+   {
+    "reference": "Genesis 49–50",
+    "apiQueries": [
+     "genesis 49",
+     "genesis 50"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 18",
+    "apiQueries": [
+     "matthew 18"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Joseph reminded his family that God can turn bad things into good."
+ },
+ {
+  "day": 26,
+  "passages": [
+   {
+    "reference": "Exodus 1–2",
+    "apiQueries": [
+     "exodus 1",
+     "exodus 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 19",
+    "apiQueries": [
+     "matthew 19"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about baby Moses, hidden in a basket on the river and kept safe by God."
+ },
+ {
+  "day": 27,
+  "passages": [
+   {
+    "reference": "Exodus 3–4",
+    "apiQueries": [
+     "exodus 3",
+     "exodus 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 15–16",
+    "apiQueries": [
+     "psalms 15",
+     "psalms 16"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God spoke to Moses from a burning bush and sent him to free His people."
+ },
+ {
+  "day": 28,
+  "passages": [
+   {
+    "reference": "Exodus 5–6",
+    "apiQueries": [
+     "exodus 5",
+     "exodus 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 20",
+    "apiQueries": [
+     "matthew 20"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God spoke to Moses from a burning bush and sent him to free His people."
+ },
+ {
+  "day": 29,
+  "passages": [
+   {
+    "reference": "Exodus 7–8",
+    "apiQueries": [
+     "exodus 7",
+     "exodus 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 21",
+    "apiQueries": [
+     "matthew 21"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the mighty plagues God sent to show Pharaoh that He is the true God."
+ },
+ {
+  "day": 30,
+  "passages": [
+   {
+    "reference": "Exodus 9–10",
+    "apiQueries": [
+     "exodus 9",
+     "exodus 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 17–18",
+    "apiQueries": [
+     "psalms 17",
+     "psalms 18"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about the mighty plagues God sent to show Pharaoh that He is the true God."
+ },
+ {
+  "day": 31,
+  "passages": [
+   {
+    "reference": "Exodus 11–12",
+    "apiQueries": [
+     "exodus 11",
+     "exodus 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 22",
+    "apiQueries": [
+     "matthew 22"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the mighty plagues God sent to show Pharaoh that He is the true God."
+ },
+ {
+  "day": 32,
+  "passages": [
+   {
+    "reference": "Exodus 13–14",
+    "apiQueries": [
+     "exodus 13",
+     "exodus 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 23",
+    "apiQueries": [
+     "matthew 23"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God split the Red Sea so His people could escape — the biggest rescue ever!"
+ },
+ {
+  "day": 33,
+  "passages": [
+   {
+    "reference": "Exodus 15–16",
+    "apiQueries": [
+     "exodus 15",
+     "exodus 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 24",
+    "apiQueries": [
+     "matthew 24"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God split the Red Sea so His people could escape — the biggest rescue ever!"
+ },
+ {
+  "day": 34,
+  "passages": [
+   {
+    "reference": "Exodus 17–18",
+    "apiQueries": [
+     "exodus 17",
+     "exodus 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 19–20",
+    "apiQueries": [
+     "psalms 19",
+     "psalms 20"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God fed His people in the desert with special bread from heaven called manna."
+ },
+ {
+  "day": 35,
+  "passages": [
+   {
+    "reference": "Exodus 19–20",
+    "apiQueries": [
+     "exodus 19",
+     "exodus 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 25",
+    "apiQueries": [
+     "matthew 25"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the Ten Commandments — good rules for loving God and loving each other."
+ },
+ {
+  "day": 36,
+  "passages": [
+   {
+    "reference": "Exodus 21–22",
+    "apiQueries": [
+     "exodus 21",
+     "exodus 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 26",
+    "apiQueries": [
+     "matthew 26"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the Ten Commandments — good rules for loving God and loving each other."
+ },
+ {
+  "day": 37,
+  "passages": [
+   {
+    "reference": "Exodus 23–24",
+    "apiQueries": [
+     "exodus 23",
+     "exodus 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 21–22",
+    "apiQueries": [
+     "psalms 21",
+     "psalms 22"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about the Ten Commandments — good rules for loving God and loving each other."
+ },
+ {
+  "day": 38,
+  "passages": [
+   {
+    "reference": "Exodus 25–26",
+    "apiQueries": [
+     "exodus 25",
+     "exodus 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 27",
+    "apiQueries": [
+     "matthew 27"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's plans for the tabernacle, a special tent where He would meet His people."
+ },
+ {
+  "day": 39,
+  "passages": [
+   {
+    "reference": "Exodus 27–28",
+    "apiQueries": [
+     "exodus 27",
+     "exodus 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Matthew 28",
+    "apiQueries": [
+     "matthew 28"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's plans for the tabernacle, a special tent where He would meet His people."
+ },
+ {
+  "day": 40,
+  "passages": [
+   {
+    "reference": "Exodus 29–30",
+    "apiQueries": [
+     "exodus 29",
+     "exodus 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 23–24",
+    "apiQueries": [
+     "psalms 23",
+     "psalms 24"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read God's plans for the tabernacle, a special tent where He would meet His people."
+ },
+ {
+  "day": 41,
+  "passages": [
+   {
+    "reference": "Exodus 31–32",
+    "apiQueries": [
+     "exodus 31",
+     "exodus 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 1",
+    "apiQueries": [
+     "mark 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's plans for the tabernacle, a special tent where He would meet His people."
+ },
+ {
+  "day": 42,
+  "passages": [
+   {
+    "reference": "Exodus 33–34",
+    "apiQueries": [
+     "exodus 33",
+     "exodus 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 2",
+    "apiQueries": [
+     "mark 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the golden calf mistake, and how Moses prayed and God forgave."
+ },
+ {
+  "day": 43,
+  "passages": [
+   {
+    "reference": "Exodus 35–36",
+    "apiQueries": [
+     "exodus 35",
+     "exodus 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 3",
+    "apiQueries": [
+     "mark 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the people built God's tent just right — and God's glory filled it!"
+ },
+ {
+  "day": 44,
+  "passages": [
+   {
+    "reference": "Exodus 37–38",
+    "apiQueries": [
+     "exodus 37",
+     "exodus 38"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 25–26",
+    "apiQueries": [
+     "psalms 25",
+     "psalms 26"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how the people built God's tent just right — and God's glory filled it!"
+ },
+ {
+  "day": 45,
+  "passages": [
+   {
+    "reference": "Exodus 39–40",
+    "apiQueries": [
+     "exodus 39",
+     "exodus 40"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 4",
+    "apiQueries": [
+     "mark 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the people built God's tent just right — and God's glory filled it!"
+ },
+ {
+  "day": 46,
+  "passages": [
+   {
+    "reference": "Leviticus 1–3",
+    "apiQueries": [
+     "leviticus 1",
+     "leviticus 2",
+     "leviticus 3"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 5",
+    "apiQueries": [
+     "mark 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God taught His people to bring offerings to say sorry and thank You."
+ },
+ {
+  "day": 47,
+  "passages": [
+   {
+    "reference": "Leviticus 4–6",
+    "apiQueries": [
+     "leviticus 4",
+     "leviticus 5",
+     "leviticus 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 27–28",
+    "apiQueries": [
+     "psalms 27",
+     "psalms 28"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God taught His people to bring offerings to say sorry and thank You."
+ },
+ {
+  "day": 48,
+  "passages": [
+   {
+    "reference": "Leviticus 7–9",
+    "apiQueries": [
+     "leviticus 7",
+     "leviticus 8",
+     "leviticus 9"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 6",
+    "apiQueries": [
+     "mark 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God taught His people to bring offerings to say sorry and thank You."
+ },
+ {
+  "day": 49,
+  "passages": [
+   {
+    "reference": "Leviticus 10–12",
+    "apiQueries": [
+     "leviticus 10",
+     "leviticus 11",
+     "leviticus 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 7",
+    "apiQueries": [
+     "mark 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Aaron and his sons becoming priests who helped the people worship God."
+ },
+ {
+  "day": 50,
+  "passages": [
+   {
+    "reference": "Leviticus 13–15",
+    "apiQueries": [
+     "leviticus 13",
+     "leviticus 14",
+     "leviticus 15"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 8",
+    "apiQueries": [
+     "mark 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read some of the rules God gave to keep His people healthy and well."
+ },
+ {
+  "day": 51,
+  "passages": [
+   {
+    "reference": "Leviticus 16–18",
+    "apiQueries": [
+     "leviticus 16",
+     "leviticus 17",
+     "leviticus 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 29–30",
+    "apiQueries": [
+     "psalms 29",
+     "psalms 30"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about a special day each year when the people's sins were forgiven."
+ },
+ {
+  "day": 52,
+  "passages": [
+   {
+    "reference": "Leviticus 19–21",
+    "apiQueries": [
+     "leviticus 19",
+     "leviticus 20",
+     "leviticus 21"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 9",
+    "apiQueries": [
+     "mark 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God asked His people to live holy lives — set apart and loving."
+ },
+ {
+  "day": 53,
+  "passages": [
+   {
+    "reference": "Leviticus 22–24",
+    "apiQueries": [
+     "leviticus 22",
+     "leviticus 23",
+     "leviticus 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 10",
+    "apiQueries": [
+     "mark 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God asked His people to live holy lives — set apart and loving."
+ },
+ {
+  "day": 54,
+  "passages": [
+   {
+    "reference": "Leviticus 25–27",
+    "apiQueries": [
+     "leviticus 25",
+     "leviticus 26",
+     "leviticus 27"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 31–32",
+    "apiQueries": [
+     "psalms 31",
+     "psalms 32"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about the feasts and rest days God planned so His people could celebrate Him."
+ },
+ {
+  "day": 55,
+  "passages": [
+   {
+    "reference": "Numbers 1–3",
+    "apiQueries": [
+     "numbers 1",
+     "numbers 2",
+     "numbers 3"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 11",
+    "apiQueries": [
+     "mark 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God counted His people and organized their big camp in the desert."
+ },
+ {
+  "day": 56,
+  "passages": [
+   {
+    "reference": "Numbers 4–6",
+    "apiQueries": [
+     "numbers 4",
+     "numbers 5",
+     "numbers 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 12",
+    "apiQueries": [
+     "mark 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God counted His people and organized their big camp in the desert."
+ },
+ {
+  "day": 57,
+  "passages": [
+   {
+    "reference": "Numbers 7–9",
+    "apiQueries": [
+     "numbers 7",
+     "numbers 8",
+     "numbers 9"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 13",
+    "apiQueries": [
+     "mark 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every family got a special job helping care for God's tent."
+ },
+ {
+  "day": 58,
+  "passages": [
+   {
+    "reference": "Numbers 10–12",
+    "apiQueries": [
+     "numbers 10",
+     "numbers 11",
+     "numbers 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 33–34",
+    "apiQueries": [
+     "psalms 33",
+     "psalms 34"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how the people followed God's cloud — when it moved, they moved!"
+ },
+ {
+  "day": 59,
+  "passages": [
+   {
+    "reference": "Numbers 13–15",
+    "apiQueries": [
+     "numbers 13",
+     "numbers 14",
+     "numbers 15"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 14",
+    "apiQueries": [
+     "mark 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the twelve spies — and how only Joshua and Caleb trusted God."
+ },
+ {
+  "day": 60,
+  "passages": [
+   {
+    "reference": "Numbers 16–18",
+    "apiQueries": [
+     "numbers 16",
+     "numbers 17",
+     "numbers 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 15",
+    "apiQueries": [
+     "mark 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God showed everyone He had chosen Moses and Aaron to lead."
+ },
+ {
+  "day": 61,
+  "passages": [
+   {
+    "reference": "Numbers 19–21",
+    "apiQueries": [
+     "numbers 19",
+     "numbers 20",
+     "numbers 21"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 35–36",
+    "apiQueries": [
+     "psalms 35",
+     "psalms 36"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God kept caring for His grumbling people — even giving water from a rock."
+ },
+ {
+  "day": 62,
+  "passages": [
+   {
+    "reference": "Numbers 22–24",
+    "apiQueries": [
+     "numbers 22",
+     "numbers 23",
+     "numbers 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Mark 16",
+    "apiQueries": [
+     "mark 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Balaam and his talking donkey, and how God protected His people."
+ },
+ {
+  "day": 63,
+  "passages": [
+   {
+    "reference": "Numbers 25–27",
+    "apiQueries": [
+     "numbers 25",
+     "numbers 26",
+     "numbers 27"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 1",
+    "apiQueries": [
+     "luke 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Balaam and his talking donkey, and how God protected His people."
+ },
+ {
+  "day": 64,
+  "passages": [
+   {
+    "reference": "Numbers 28–30",
+    "apiQueries": [
+     "numbers 28",
+     "numbers 29",
+     "numbers 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 2",
+    "apiQueries": [
+     "luke 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how a new generation got counted and ready for the promised land."
+ },
+ {
+  "day": 65,
+  "passages": [
+   {
+    "reference": "Numbers 31–33",
+    "apiQueries": [
+     "numbers 31",
+     "numbers 32",
+     "numbers 33"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 37–38",
+    "apiQueries": [
+     "psalms 37",
+     "psalms 38"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Israel camped at the very edge of the land God promised them."
+ },
+ {
+  "day": 66,
+  "passages": [
+   {
+    "reference": "Numbers 34–36",
+    "apiQueries": [
+     "numbers 34",
+     "numbers 35",
+     "numbers 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 3",
+    "apiQueries": [
+     "luke 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Israel camped at the very edge of the land God promised them."
+ },
+ {
+  "day": 67,
+  "passages": [
+   {
+    "reference": "Deuteronomy 1–2",
+    "apiQueries": [
+     "deuteronomy 1",
+     "deuteronomy 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 4",
+    "apiQueries": [
+     "luke 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Moses reminding the people of everything God did for them in the desert."
+ },
+ {
+  "day": 68,
+  "passages": [
+   {
+    "reference": "Deuteronomy 3–4",
+    "apiQueries": [
+     "deuteronomy 3",
+     "deuteronomy 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 39–40",
+    "apiQueries": [
+     "psalms 39",
+     "psalms 40"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read Moses reminding the people of everything God did for them in the desert."
+ },
+ {
+  "day": 69,
+  "passages": [
+   {
+    "reference": "Deuteronomy 5–6",
+    "apiQueries": [
+     "deuteronomy 5",
+     "deuteronomy 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 5",
+    "apiQueries": [
+     "luke 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read the most important rule of all: love God with all your heart!"
+ },
+ {
+  "day": 70,
+  "passages": [
+   {
+    "reference": "Deuteronomy 7–8",
+    "apiQueries": [
+     "deuteronomy 7",
+     "deuteronomy 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 6",
+    "apiQueries": [
+     "luke 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Moses telling the people to remember God's love and never forget it."
+ },
+ {
+  "day": 71,
+  "passages": [
+   {
+    "reference": "Deuteronomy 9–10",
+    "apiQueries": [
+     "deuteronomy 9",
+     "deuteronomy 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 7",
+    "apiQueries": [
+     "luke 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Moses telling the people to remember God's love and never forget it."
+ },
+ {
+  "day": 72,
+  "passages": [
+   {
+    "reference": "Deuteronomy 11–12",
+    "apiQueries": [
+     "deuteronomy 11",
+     "deuteronomy 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 41–42",
+    "apiQueries": [
+     "psalms 41",
+     "psalms 42"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read Moses telling the people to remember God's love and never forget it."
+ },
+ {
+  "day": 73,
+  "passages": [
+   {
+    "reference": "Deuteronomy 13–14",
+    "apiQueries": [
+     "deuteronomy 13",
+     "deuteronomy 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 8",
+    "apiQueries": [
+     "luke 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God taught His people to be generous and to celebrate together."
+ },
+ {
+  "day": 74,
+  "passages": [
+   {
+    "reference": "Deuteronomy 15–16",
+    "apiQueries": [
+     "deuteronomy 15",
+     "deuteronomy 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 9",
+    "apiQueries": [
+     "luke 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God taught His people to be generous and to celebrate together."
+ },
+ {
+  "day": 75,
+  "passages": [
+   {
+    "reference": "Deuteronomy 17–18",
+    "apiQueries": [
+     "deuteronomy 17",
+     "deuteronomy 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 43–44",
+    "apiQueries": [
+     "psalms 43",
+     "psalms 44"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read rules God gave to help His people treat everyone fairly and kindly."
+ },
+ {
+  "day": 76,
+  "passages": [
+   {
+    "reference": "Deuteronomy 19–20",
+    "apiQueries": [
+     "deuteronomy 19",
+     "deuteronomy 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 10",
+    "apiQueries": [
+     "luke 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read rules God gave to help His people treat everyone fairly and kindly."
+ },
+ {
+  "day": 77,
+  "passages": [
+   {
+    "reference": "Deuteronomy 21–22",
+    "apiQueries": [
+     "deuteronomy 21",
+     "deuteronomy 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 11",
+    "apiQueries": [
+     "luke 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read rules God gave to help His people treat everyone fairly and kindly."
+ },
+ {
+  "day": 78,
+  "passages": [
+   {
+    "reference": "Deuteronomy 23–24",
+    "apiQueries": [
+     "deuteronomy 23",
+     "deuteronomy 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 12",
+    "apiQueries": [
+     "luke 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read rules God gave to help His people treat everyone fairly and kindly."
+ },
+ {
+  "day": 79,
+  "passages": [
+   {
+    "reference": "Deuteronomy 25–26",
+    "apiQueries": [
+     "deuteronomy 25",
+     "deuteronomy 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 45–46",
+    "apiQueries": [
+     "psalms 45",
+     "psalms 46"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read rules God gave to help His people treat everyone fairly and kindly."
+ },
+ {
+  "day": 80,
+  "passages": [
+   {
+    "reference": "Deuteronomy 27–28",
+    "apiQueries": [
+     "deuteronomy 27",
+     "deuteronomy 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 13",
+    "apiQueries": [
+     "luke 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Moses saying: choose life! Loving God is the best choice of all."
+ },
+ {
+  "day": 81,
+  "passages": [
+   {
+    "reference": "Deuteronomy 29–30",
+    "apiQueries": [
+     "deuteronomy 29",
+     "deuteronomy 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 14",
+    "apiQueries": [
+     "luke 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Moses saying: choose life! Loving God is the best choice of all."
+ },
+ {
+  "day": 82,
+  "passages": [
+   {
+    "reference": "Deuteronomy 31–32",
+    "apiQueries": [
+     "deuteronomy 31",
+     "deuteronomy 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 47–48",
+    "apiQueries": [
+     "psalms 47",
+     "psalms 48"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read Moses saying goodbye and blessing Joshua as the new leader."
+ },
+ {
+  "day": 83,
+  "passages": [
+   {
+    "reference": "Deuteronomy 33–34",
+    "apiQueries": [
+     "deuteronomy 33",
+     "deuteronomy 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 15",
+    "apiQueries": [
+     "luke 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Moses saying goodbye and blessing Joshua as the new leader."
+ },
+ {
+  "day": 84,
+  "passages": [
+   {
+    "reference": "Joshua 1–2",
+    "apiQueries": [
+     "joshua 1",
+     "joshua 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 16",
+    "apiQueries": [
+     "luke 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Joshua got ready to lead, and how brave Rahab helped God’s people."
+ },
+ {
+  "day": 85,
+  "passages": [
+   {
+    "reference": "Joshua 3–4",
+    "apiQueries": [
+     "joshua 3",
+     "joshua 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 17",
+    "apiQueries": [
+     "luke 17"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the walls of Jericho came tumbling down when the people trusted God!"
+ },
+ {
+  "day": 86,
+  "passages": [
+   {
+    "reference": "Joshua 5–6",
+    "apiQueries": [
+     "joshua 5",
+     "joshua 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 49–50",
+    "apiQueries": [
+     "psalms 49",
+     "psalms 50"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how the walls of Jericho came tumbling down when the people trusted God!"
+ },
+ {
+  "day": 87,
+  "passages": [
+   {
+    "reference": "Joshua 7–8",
+    "apiQueries": [
+     "joshua 7",
+     "joshua 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 18",
+    "apiQueries": [
+     "luke 18"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Israel learned that obeying God matters more than winning."
+ },
+ {
+  "day": 88,
+  "passages": [
+   {
+    "reference": "Joshua 9–10",
+    "apiQueries": [
+     "joshua 9",
+     "joshua 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 19",
+    "apiQueries": [
+     "luke 19"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God fought for His people — He even made the sun stand still!"
+ },
+ {
+  "day": 89,
+  "passages": [
+   {
+    "reference": "Joshua 11–12",
+    "apiQueries": [
+     "joshua 11",
+     "joshua 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 51–52",
+    "apiQueries": [
+     "psalms 51",
+     "psalms 52"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God fought for His people — He even made the sun stand still!"
+ },
+ {
+  "day": 90,
+  "passages": [
+   {
+    "reference": "Joshua 13–14",
+    "apiQueries": [
+     "joshua 13",
+     "joshua 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 20",
+    "apiQueries": [
+     "luke 20"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every family in Israel received their own piece of the promised land."
+ },
+ {
+  "day": 91,
+  "passages": [
+   {
+    "reference": "Joshua 15–16",
+    "apiQueries": [
+     "joshua 15",
+     "joshua 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 21",
+    "apiQueries": [
+     "luke 21"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every family in Israel received their own piece of the promised land."
+ },
+ {
+  "day": 92,
+  "passages": [
+   {
+    "reference": "Joshua 17–18",
+    "apiQueries": [
+     "joshua 17",
+     "joshua 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 22",
+    "apiQueries": [
+     "luke 22"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every family in Israel received their own piece of the promised land."
+ },
+ {
+  "day": 93,
+  "passages": [
+   {
+    "reference": "Joshua 19–20",
+    "apiQueries": [
+     "joshua 19",
+     "joshua 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 53–54",
+    "apiQueries": [
+     "psalms 53",
+     "psalms 54"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how every family in Israel received their own piece of the promised land."
+ },
+ {
+  "day": 94,
+  "passages": [
+   {
+    "reference": "Joshua 21–22",
+    "apiQueries": [
+     "joshua 21",
+     "joshua 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 23",
+    "apiQueries": [
+     "luke 23"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every family in Israel received their own piece of the promised land."
+ },
+ {
+  "day": 95,
+  "passages": [
+   {
+    "reference": "Joshua 23–24",
+    "apiQueries": [
+     "joshua 23",
+     "joshua 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Luke 24",
+    "apiQueries": [
+     "luke 24"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Joshua’s famous words: as for me and my house, we will serve the Lord!"
+ },
+ {
+  "day": 96,
+  "passages": [
+   {
+    "reference": "Judges 1–2",
+    "apiQueries": [
+     "judges 1",
+     "judges 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 55–56",
+    "apiQueries": [
+     "psalms 55",
+     "psalms 56"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God sent special helpers called judges to rescue His forgetful people."
+ },
+ {
+  "day": 97,
+  "passages": [
+   {
+    "reference": "Judges 3–4",
+    "apiQueries": [
+     "judges 3",
+     "judges 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 1",
+    "apiQueries": [
+     "john 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God sent special helpers called judges to rescue His forgetful people."
+ },
+ {
+  "day": 98,
+  "passages": [
+   {
+    "reference": "Judges 5–6",
+    "apiQueries": [
+     "judges 5",
+     "judges 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 2",
+    "apiQueries": [
+     "john 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about brave Deborah, who trusted God and led Israel to victory."
+ },
+ {
+  "day": 99,
+  "passages": [
+   {
+    "reference": "Judges 7–8",
+    "apiQueries": [
+     "judges 7",
+     "judges 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 3",
+    "apiQueries": [
+     "john 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God helped Gideon win with only 300 men, some torches, and trumpets!"
+ },
+ {
+  "day": 100,
+  "passages": [
+   {
+    "reference": "Judges 9–10",
+    "apiQueries": [
+     "judges 9",
+     "judges 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 57–58",
+    "apiQueries": [
+     "psalms 57",
+     "psalms 58"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Israel kept forgetting God — but He never stopped hearing their cries."
+ },
+ {
+  "day": 101,
+  "passages": [
+   {
+    "reference": "Judges 11–12",
+    "apiQueries": [
+     "judges 11",
+     "judges 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 4",
+    "apiQueries": [
+     "john 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Israel kept forgetting God — but He never stopped hearing their cries."
+ },
+ {
+  "day": 102,
+  "passages": [
+   {
+    "reference": "Judges 13–14",
+    "apiQueries": [
+     "judges 13",
+     "judges 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 5",
+    "apiQueries": [
+     "john 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about strong Samson, who learned that real strength comes from God."
+ },
+ {
+  "day": 103,
+  "passages": [
+   {
+    "reference": "Judges 15–16",
+    "apiQueries": [
+     "judges 15",
+     "judges 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 59–60",
+    "apiQueries": [
+     "psalms 59",
+     "psalms 60"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about strong Samson, who learned that real strength comes from God."
+ },
+ {
+  "day": 104,
+  "passages": [
+   {
+    "reference": "Judges 17–18",
+    "apiQueries": [
+     "judges 17",
+     "judges 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 6",
+    "apiQueries": [
+     "john 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read what happens when everyone does whatever they want — it goes badly!"
+ },
+ {
+  "day": 105,
+  "passages": [
+   {
+    "reference": "Judges 19–20",
+    "apiQueries": [
+     "judges 19",
+     "judges 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 7",
+    "apiQueries": [
+     "john 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read what happens when everyone does whatever they want — it goes badly!"
+ },
+ {
+  "day": 106,
+  "passages": [
+   {
+    "reference": "Judges 21",
+    "apiQueries": [
+     "judges 21"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 8",
+    "apiQueries": [
+     "john 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read what happens when everyone does whatever they want — it goes badly!"
+ },
+ {
+  "day": 107,
+  "passages": [
+   {
+    "reference": "Ruth 1–2",
+    "apiQueries": [
+     "ruth 1",
+     "ruth 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 61–62",
+    "apiQueries": [
+     "psalms 61",
+     "psalms 62"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Ruth stayed loyal to Naomi, and how God took care of them both."
+ },
+ {
+  "day": 108,
+  "passages": [
+   {
+    "reference": "Ruth 3–4",
+    "apiQueries": [
+     "ruth 3",
+     "ruth 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 9",
+    "apiQueries": [
+     "john 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Ruth's new family became part of King David's — and Jesus' — story!"
+ },
+ {
+  "day": 109,
+  "passages": [
+   {
+    "reference": "1 Samuel 1–2",
+    "apiQueries": [
+     "1 samuel 1",
+     "1 samuel 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 10",
+    "apiQueries": [
+     "john 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God answered Hannah's prayer with baby Samuel, who learned to listen to God."
+ },
+ {
+  "day": 110,
+  "passages": [
+   {
+    "reference": "1 Samuel 3–4",
+    "apiQueries": [
+     "1 samuel 3",
+     "1 samuel 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 63–64",
+    "apiQueries": [
+     "psalms 63",
+     "psalms 64"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God answered Hannah's prayer with baby Samuel, who learned to listen to God."
+ },
+ {
+  "day": 111,
+  "passages": [
+   {
+    "reference": "1 Samuel 5–6",
+    "apiQueries": [
+     "1 samuel 5",
+     "1 samuel 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 11",
+    "apiQueries": [
+     "john 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the ark of God reminded everyone that God is holy and mighty."
+ },
+ {
+  "day": 112,
+  "passages": [
+   {
+    "reference": "1 Samuel 7–8",
+    "apiQueries": [
+     "1 samuel 7",
+     "1 samuel 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 12",
+    "apiQueries": [
+     "john 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the ark of God reminded everyone that God is holy and mighty."
+ },
+ {
+  "day": 113,
+  "passages": [
+   {
+    "reference": "1 Samuel 9–10",
+    "apiQueries": [
+     "1 samuel 9",
+     "1 samuel 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 65–66",
+    "apiQueries": [
+     "psalms 65",
+     "psalms 66"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Israel asked for a king, and Samuel anointed Saul."
+ },
+ {
+  "day": 114,
+  "passages": [
+   {
+    "reference": "1 Samuel 11–12",
+    "apiQueries": [
+     "1 samuel 11",
+     "1 samuel 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 13",
+    "apiQueries": [
+     "john 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Israel asked for a king, and Samuel anointed Saul."
+ },
+ {
+  "day": 115,
+  "passages": [
+   {
+    "reference": "1 Samuel 13–14",
+    "apiQueries": [
+     "1 samuel 13",
+     "1 samuel 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 14",
+    "apiQueries": [
+     "john 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how King Saul learned that obeying God matters more than anything."
+ },
+ {
+  "day": 116,
+  "passages": [
+   {
+    "reference": "1 Samuel 15–16",
+    "apiQueries": [
+     "1 samuel 15",
+     "1 samuel 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 15",
+    "apiQueries": [
+     "john 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how King Saul learned that obeying God matters more than anything."
+ },
+ {
+  "day": 117,
+  "passages": [
+   {
+    "reference": "1 Samuel 17–18",
+    "apiQueries": [
+     "1 samuel 17",
+     "1 samuel 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 67–68",
+    "apiQueries": [
+     "psalms 67",
+     "psalms 68"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how young David defeated the giant Goliath with a sling and great faith!"
+ },
+ {
+  "day": 118,
+  "passages": [
+   {
+    "reference": "1 Samuel 19–20",
+    "apiQueries": [
+     "1 samuel 19",
+     "1 samuel 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 16",
+    "apiQueries": [
+     "john 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Jonathan and David, who show us what true friendship looks like."
+ },
+ {
+  "day": 119,
+  "passages": [
+   {
+    "reference": "1 Samuel 21–22",
+    "apiQueries": [
+     "1 samuel 21",
+     "1 samuel 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 17",
+    "apiQueries": [
+     "john 17"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Jonathan and David, who show us what true friendship looks like."
+ },
+ {
+  "day": 120,
+  "passages": [
+   {
+    "reference": "1 Samuel 23–24",
+    "apiQueries": [
+     "1 samuel 23",
+     "1 samuel 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 69–70",
+    "apiQueries": [
+     "psalms 69",
+     "psalms 70"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about Jonathan and David, who show us what true friendship looks like."
+ },
+ {
+  "day": 121,
+  "passages": [
+   {
+    "reference": "1 Samuel 25–26",
+    "apiQueries": [
+     "1 samuel 25",
+     "1 samuel 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 18",
+    "apiQueries": [
+     "john 18"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David waited for God's timing, even when life was unfair."
+ },
+ {
+  "day": 122,
+  "passages": [
+   {
+    "reference": "1 Samuel 27–28",
+    "apiQueries": [
+     "1 samuel 27",
+     "1 samuel 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 19",
+    "apiQueries": [
+     "john 19"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David waited for God's timing, even when life was unfair."
+ },
+ {
+  "day": 123,
+  "passages": [
+   {
+    "reference": "1 Samuel 29–30",
+    "apiQueries": [
+     "1 samuel 29",
+     "1 samuel 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 20",
+    "apiQueries": [
+     "john 20"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David waited for God's timing, even when life was unfair."
+ },
+ {
+  "day": 124,
+  "passages": [
+   {
+    "reference": "1 Samuel 31",
+    "apiQueries": [
+     "1 samuel 31"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 71–72",
+    "apiQueries": [
+     "psalms 71",
+     "psalms 72"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how David waited for God's timing, even when life was unfair."
+ },
+ {
+  "day": 125,
+  "passages": [
+   {
+    "reference": "2 Samuel 1–2",
+    "apiQueries": [
+     "2 samuel 1",
+     "2 samuel 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "John 21",
+    "apiQueries": [
+     "john 21"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David became king and remembered to ask God before he acted."
+ },
+ {
+  "day": 126,
+  "passages": [
+   {
+    "reference": "2 Samuel 3–4",
+    "apiQueries": [
+     "2 samuel 3",
+     "2 samuel 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 1",
+    "apiQueries": [
+     "acts 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David became king and remembered to ask God before he acted."
+ },
+ {
+  "day": 127,
+  "passages": [
+   {
+    "reference": "2 Samuel 5–6",
+    "apiQueries": [
+     "2 samuel 5",
+     "2 samuel 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 73–74",
+    "apiQueries": [
+     "psalms 73",
+     "psalms 74"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read God's promise that David's family would lead forever — pointing to Jesus!"
+ },
+ {
+  "day": 128,
+  "passages": [
+   {
+    "reference": "2 Samuel 7–8",
+    "apiQueries": [
+     "2 samuel 7",
+     "2 samuel 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 2",
+    "apiQueries": [
+     "acts 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise that David's family would lead forever — pointing to Jesus!"
+ },
+ {
+  "day": 129,
+  "passages": [
+   {
+    "reference": "2 Samuel 9–10",
+    "apiQueries": [
+     "2 samuel 9",
+     "2 samuel 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 3",
+    "apiQueries": [
+     "acts 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David showed kindness to Mephibosheth to keep a promise to his friend."
+ },
+ {
+  "day": 130,
+  "passages": [
+   {
+    "reference": "2 Samuel 11–12",
+    "apiQueries": [
+     "2 samuel 11",
+     "2 samuel 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 4",
+    "apiQueries": [
+     "acts 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David made a big mistake — and said sorry to God with his whole heart."
+ },
+ {
+  "day": 131,
+  "passages": [
+   {
+    "reference": "2 Samuel 13–14",
+    "apiQueries": [
+     "2 samuel 13",
+     "2 samuel 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 75–76",
+    "apiQueries": [
+     "psalms 75",
+     "psalms 76"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about hard times in David's family, and how God stayed faithful."
+ },
+ {
+  "day": 132,
+  "passages": [
+   {
+    "reference": "2 Samuel 15–16",
+    "apiQueries": [
+     "2 samuel 15",
+     "2 samuel 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 5",
+    "apiQueries": [
+     "acts 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about hard times in David's family, and how God stayed faithful."
+ },
+ {
+  "day": 133,
+  "passages": [
+   {
+    "reference": "2 Samuel 17–18",
+    "apiQueries": [
+     "2 samuel 17",
+     "2 samuel 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 6",
+    "apiQueries": [
+     "acts 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about hard times in David's family, and how God stayed faithful."
+ },
+ {
+  "day": 134,
+  "passages": [
+   {
+    "reference": "2 Samuel 19–20",
+    "apiQueries": [
+     "2 samuel 19",
+     "2 samuel 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 77",
+    "apiQueries": [
+     "psalms 77"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about hard times in David's family, and how God stayed faithful."
+ },
+ {
+  "day": 135,
+  "passages": [
+   {
+    "reference": "2 Samuel 21–22",
+    "apiQueries": [
+     "2 samuel 21",
+     "2 samuel 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 7",
+    "apiQueries": [
+     "acts 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read David singing praise to the God who rescued him again and again."
+ },
+ {
+  "day": 136,
+  "passages": [
+   {
+    "reference": "2 Samuel 23–24",
+    "apiQueries": [
+     "2 samuel 23",
+     "2 samuel 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 8",
+    "apiQueries": [
+     "acts 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read David singing praise to the God who rescued him again and again."
+ },
+ {
+  "day": 137,
+  "passages": [
+   {
+    "reference": "1 Kings 1–2",
+    "apiQueries": [
+     "1 kings 1",
+     "1 kings 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 9",
+    "apiQueries": [
+     "acts 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Solomon became king and asked God for wisdom instead of riches."
+ },
+ {
+  "day": 138,
+  "passages": [
+   {
+    "reference": "1 Kings 3–4",
+    "apiQueries": [
+     "1 kings 3",
+     "1 kings 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 78",
+    "apiQueries": [
+     "psalms 78"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Solomon became king and asked God for wisdom instead of riches."
+ },
+ {
+  "day": 139,
+  "passages": [
+   {
+    "reference": "1 Kings 5–6",
+    "apiQueries": [
+     "1 kings 5",
+     "1 kings 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 10",
+    "apiQueries": [
+     "acts 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Solomon built a beautiful temple and prayed a wonderful prayer."
+ },
+ {
+  "day": 140,
+  "passages": [
+   {
+    "reference": "1 Kings 7–8",
+    "apiQueries": [
+     "1 kings 7",
+     "1 kings 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 11",
+    "apiQueries": [
+     "acts 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Solomon built a beautiful temple and prayed a wonderful prayer."
+ },
+ {
+  "day": 141,
+  "passages": [
+   {
+    "reference": "1 Kings 9–10",
+    "apiQueries": [
+     "1 kings 9",
+     "1 kings 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 79–80",
+    "apiQueries": [
+     "psalms 79",
+     "psalms 80"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how even the wisest king had to learn to keep his heart close to God."
+ },
+ {
+  "day": 142,
+  "passages": [
+   {
+    "reference": "1 Kings 11–12",
+    "apiQueries": [
+     "1 kings 11",
+     "1 kings 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 12",
+    "apiQueries": [
+     "acts 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how even the wisest king had to learn to keep his heart close to God."
+ },
+ {
+  "day": 143,
+  "passages": [
+   {
+    "reference": "1 Kings 13–14",
+    "apiQueries": [
+     "1 kings 13",
+     "1 kings 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 13",
+    "apiQueries": [
+     "acts 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the kingdom split in two, and many kings forgot God."
+ },
+ {
+  "day": 144,
+  "passages": [
+   {
+    "reference": "1 Kings 15–16",
+    "apiQueries": [
+     "1 kings 15",
+     "1 kings 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 14",
+    "apiQueries": [
+     "acts 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the kingdom split in two, and many kings forgot God."
+ },
+ {
+  "day": 145,
+  "passages": [
+   {
+    "reference": "1 Kings 17–18",
+    "apiQueries": [
+     "1 kings 17",
+     "1 kings 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 81–82",
+    "apiQueries": [
+     "psalms 81",
+     "psalms 82"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Elijah prayed, fire fell from heaven, and God spoke in a gentle whisper."
+ },
+ {
+  "day": 146,
+  "passages": [
+   {
+    "reference": "1 Kings 19–20",
+    "apiQueries": [
+     "1 kings 19",
+     "1 kings 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 15",
+    "apiQueries": [
+     "acts 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Elijah prayed, fire fell from heaven, and God spoke in a gentle whisper."
+ },
+ {
+  "day": 147,
+  "passages": [
+   {
+    "reference": "1 Kings 21–22",
+    "apiQueries": [
+     "1 kings 21",
+     "1 kings 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 16",
+    "apiQueries": [
+     "acts 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God patiently kept speaking the truth through His prophets."
+ },
+ {
+  "day": 148,
+  "passages": [
+   {
+    "reference": "2 Kings 1–2",
+    "apiQueries": [
+     "2 kings 1",
+     "2 kings 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 83–84",
+    "apiQueries": [
+     "psalms 83",
+     "psalms 84"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about Elisha's amazing miracles that showed God's kind care."
+ },
+ {
+  "day": 149,
+  "passages": [
+   {
+    "reference": "2 Kings 3–4",
+    "apiQueries": [
+     "2 kings 3",
+     "2 kings 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 17",
+    "apiQueries": [
+     "acts 17"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Elisha's amazing miracles that showed God's kind care."
+ },
+ {
+  "day": 150,
+  "passages": [
+   {
+    "reference": "2 Kings 5–6",
+    "apiQueries": [
+     "2 kings 5",
+     "2 kings 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 18",
+    "apiQueries": [
+     "acts 18"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Naaman was healed when he humbly obeyed God’s simple instructions."
+ },
+ {
+  "day": 151,
+  "passages": [
+   {
+    "reference": "2 Kings 7–8",
+    "apiQueries": [
+     "2 kings 7",
+     "2 kings 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 19",
+    "apiQueries": [
+     "acts 19"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Naaman was healed when he humbly obeyed God’s simple instructions."
+ },
+ {
+  "day": 152,
+  "passages": [
+   {
+    "reference": "2 Kings 9–10",
+    "apiQueries": [
+     "2 kings 9",
+     "2 kings 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 85–86",
+    "apiQueries": [
+     "psalms 85",
+     "psalms 86"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God protected the royal family He had promised to David."
+ },
+ {
+  "day": 153,
+  "passages": [
+   {
+    "reference": "2 Kings 11–12",
+    "apiQueries": [
+     "2 kings 11",
+     "2 kings 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 20",
+    "apiQueries": [
+     "acts 20"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God protected the royal family He had promised to David."
+ },
+ {
+  "day": 154,
+  "passages": [
+   {
+    "reference": "2 Kings 13–14",
+    "apiQueries": [
+     "2 kings 13",
+     "2 kings 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 21",
+    "apiQueries": [
+     "acts 21"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Israel kept forgetting God, and sad consequences followed."
+ },
+ {
+  "day": 155,
+  "passages": [
+   {
+    "reference": "2 Kings 15–16",
+    "apiQueries": [
+     "2 kings 15",
+     "2 kings 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 87–88",
+    "apiQueries": [
+     "psalms 87",
+     "psalms 88"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Israel kept forgetting God, and sad consequences followed."
+ },
+ {
+  "day": 156,
+  "passages": [
+   {
+    "reference": "2 Kings 17–18",
+    "apiQueries": [
+     "2 kings 17",
+     "2 kings 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 22",
+    "apiQueries": [
+     "acts 22"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Israel kept forgetting God, and sad consequences followed."
+ },
+ {
+  "day": 157,
+  "passages": [
+   {
+    "reference": "2 Kings 19–20",
+    "apiQueries": [
+     "2 kings 19",
+     "2 kings 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 23",
+    "apiQueries": [
+     "acts 23"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how good King Hezekiah prayed, and God answered powerfully."
+ },
+ {
+  "day": 158,
+  "passages": [
+   {
+    "reference": "2 Kings 21–22",
+    "apiQueries": [
+     "2 kings 21",
+     "2 kings 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 24",
+    "apiQueries": [
+     "acts 24"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about kings who forgot God — and young Josiah, who found God's book and obeyed it."
+ },
+ {
+  "day": 159,
+  "passages": [
+   {
+    "reference": "2 Kings 23–24",
+    "apiQueries": [
+     "2 kings 23",
+     "2 kings 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 89–90",
+    "apiQueries": [
+     "psalms 89",
+     "psalms 90"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about kings who forgot God — and young Josiah, who found God's book and obeyed it."
+ },
+ {
+  "day": 160,
+  "passages": [
+   {
+    "reference": "2 Kings 25",
+    "apiQueries": [
+     "2 kings 25"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 25",
+    "apiQueries": [
+     "acts 25"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about kings who forgot God — and young Josiah, who found God's book and obeyed it."
+ },
+ {
+  "day": 161,
+  "passages": [
+   {
+    "reference": "1 Chronicles 1–3",
+    "apiQueries": [
+     "1 chronicles 1",
+     "1 chronicles 2",
+     "1 chronicles 3"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 26",
+    "apiQueries": [
+     "acts 26"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read a long family list that reminds us every single person matters in God's story."
+ },
+ {
+  "day": 162,
+  "passages": [
+   {
+    "reference": "1 Chronicles 4–6",
+    "apiQueries": [
+     "1 chronicles 4",
+     "1 chronicles 5",
+     "1 chronicles 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 91–92",
+    "apiQueries": [
+     "psalms 91",
+     "psalms 92"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read a long family list that reminds us every single person matters in God's story."
+ },
+ {
+  "day": 163,
+  "passages": [
+   {
+    "reference": "1 Chronicles 7–9",
+    "apiQueries": [
+     "1 chronicles 7",
+     "1 chronicles 8",
+     "1 chronicles 9"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 27",
+    "apiQueries": [
+     "acts 27"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read a long family list that reminds us every single person matters in God's story."
+ },
+ {
+  "day": 164,
+  "passages": [
+   {
+    "reference": "1 Chronicles 10–12",
+    "apiQueries": [
+     "1 chronicles 10",
+     "1 chronicles 11",
+     "1 chronicles 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Acts 28",
+    "apiQueries": [
+     "acts 28"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David's mighty men gathered to make him king, just as God planned."
+ },
+ {
+  "day": 165,
+  "passages": [
+   {
+    "reference": "1 Chronicles 13–15",
+    "apiQueries": [
+     "1 chronicles 13",
+     "1 chronicles 14",
+     "1 chronicles 15"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 1",
+    "apiQueries": [
+     "romans 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David brought the ark home with singing, dancing, and thankful praise!"
+ },
+ {
+  "day": 166,
+  "passages": [
+   {
+    "reference": "1 Chronicles 16–18",
+    "apiQueries": [
+     "1 chronicles 16",
+     "1 chronicles 17",
+     "1 chronicles 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 93–94",
+    "apiQueries": [
+     "psalms 93",
+     "psalms 94"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how David brought the ark home with singing, dancing, and thankful praise!"
+ },
+ {
+  "day": 167,
+  "passages": [
+   {
+    "reference": "1 Chronicles 19–21",
+    "apiQueries": [
+     "1 chronicles 19",
+     "1 chronicles 20",
+     "1 chronicles 21"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 2",
+    "apiQueries": [
+     "romans 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise to David of a kingdom that never ends."
+ },
+ {
+  "day": 168,
+  "passages": [
+   {
+    "reference": "1 Chronicles 22–24",
+    "apiQueries": [
+     "1 chronicles 22",
+     "1 chronicles 23",
+     "1 chronicles 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 3",
+    "apiQueries": [
+     "romans 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how David gathered everything needed to build God's temple."
+ },
+ {
+  "day": 169,
+  "passages": [
+   {
+    "reference": "1 Chronicles 25–27",
+    "apiQueries": [
+     "1 chronicles 25",
+     "1 chronicles 26",
+     "1 chronicles 27"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 95–96",
+    "apiQueries": [
+     "psalms 95",
+     "psalms 96"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how David gathered everything needed to build God's temple."
+ },
+ {
+  "day": 170,
+  "passages": [
+   {
+    "reference": "1 Chronicles 28–29",
+    "apiQueries": [
+     "1 chronicles 28",
+     "1 chronicles 29"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 4",
+    "apiQueries": [
+     "romans 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read David's prayer: everything we have comes from You, God!"
+ },
+ {
+  "day": 171,
+  "passages": [
+   {
+    "reference": "2 Chronicles 1–2",
+    "apiQueries": [
+     "2 chronicles 1",
+     "2 chronicles 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 5",
+    "apiQueries": [
+     "romans 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Solomon built the temple, a beautiful house for worshiping God."
+ },
+ {
+  "day": 172,
+  "passages": [
+   {
+    "reference": "2 Chronicles 3–4",
+    "apiQueries": [
+     "2 chronicles 3",
+     "2 chronicles 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 6",
+    "apiQueries": [
+     "romans 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Solomon built the temple, a beautiful house for worshiping God."
+ },
+ {
+  "day": 173,
+  "passages": [
+   {
+    "reference": "2 Chronicles 5–6",
+    "apiQueries": [
+     "2 chronicles 5",
+     "2 chronicles 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 97–98",
+    "apiQueries": [
+     "psalms 97",
+     "psalms 98"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Solomon built the temple, a beautiful house for worshiping God."
+ },
+ {
+  "day": 174,
+  "passages": [
+   {
+    "reference": "2 Chronicles 7–8",
+    "apiQueries": [
+     "2 chronicles 7",
+     "2 chronicles 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 7",
+    "apiQueries": [
+     "romans 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the queen of Sheba visited and saw how God had blessed Solomon."
+ },
+ {
+  "day": 175,
+  "passages": [
+   {
+    "reference": "2 Chronicles 9–10",
+    "apiQueries": [
+     "2 chronicles 9",
+     "2 chronicles 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 8",
+    "apiQueries": [
+     "romans 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the queen of Sheba visited and saw how God had blessed Solomon."
+ },
+ {
+  "day": 176,
+  "passages": [
+   {
+    "reference": "2 Chronicles 11–12",
+    "apiQueries": [
+     "2 chronicles 11",
+     "2 chronicles 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 99–100",
+    "apiQueries": [
+     "psalms 99",
+     "psalms 100"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how kings who trusted God found help — and kings who didn't found trouble."
+ },
+ {
+  "day": 177,
+  "passages": [
+   {
+    "reference": "2 Chronicles 13–14",
+    "apiQueries": [
+     "2 chronicles 13",
+     "2 chronicles 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 9",
+    "apiQueries": [
+     "romans 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how kings who trusted God found help — and kings who didn't found trouble."
+ },
+ {
+  "day": 178,
+  "passages": [
+   {
+    "reference": "2 Chronicles 15–16",
+    "apiQueries": [
+     "2 chronicles 15",
+     "2 chronicles 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 10",
+    "apiQueries": [
+     "romans 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how kings who trusted God found help — and kings who didn't found trouble."
+ },
+ {
+  "day": 179,
+  "passages": [
+   {
+    "reference": "2 Chronicles 17–18",
+    "apiQueries": [
+     "2 chronicles 17",
+     "2 chronicles 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 11",
+    "apiQueries": [
+     "romans 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how King Jehoshaphat won a battle by sending singers out front to praise God!"
+ },
+ {
+  "day": 180,
+  "passages": [
+   {
+    "reference": "2 Chronicles 19–20",
+    "apiQueries": [
+     "2 chronicles 19",
+     "2 chronicles 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 101–102",
+    "apiQueries": [
+     "psalms 101",
+     "psalms 102"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how King Jehoshaphat won a battle by sending singers out front to praise God!"
+ },
+ {
+  "day": 181,
+  "passages": [
+   {
+    "reference": "2 Chronicles 21–22",
+    "apiQueries": [
+     "2 chronicles 21",
+     "2 chronicles 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 12",
+    "apiQueries": [
+     "romans 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every king had a choice: follow God, or go their own way."
+ },
+ {
+  "day": 182,
+  "passages": [
+   {
+    "reference": "2 Chronicles 23–24",
+    "apiQueries": [
+     "2 chronicles 23",
+     "2 chronicles 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 13",
+    "apiQueries": [
+     "romans 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every king had a choice: follow God, or go their own way."
+ },
+ {
+  "day": 183,
+  "passages": [
+   {
+    "reference": "2 Chronicles 25–26",
+    "apiQueries": [
+     "2 chronicles 25",
+     "2 chronicles 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 103–104",
+    "apiQueries": [
+     "psalms 103",
+     "psalms 104"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how every king had a choice: follow God, or go their own way."
+ },
+ {
+  "day": 184,
+  "passages": [
+   {
+    "reference": "2 Chronicles 27–28",
+    "apiQueries": [
+     "2 chronicles 27",
+     "2 chronicles 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 14",
+    "apiQueries": [
+     "romans 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how every king had a choice: follow God, or go their own way."
+ },
+ {
+  "day": 185,
+  "passages": [
+   {
+    "reference": "2 Chronicles 29–30",
+    "apiQueries": [
+     "2 chronicles 29",
+     "2 chronicles 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 15",
+    "apiQueries": [
+     "romans 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how King Hezekiah trusted God when a huge army surrounded the city."
+ },
+ {
+  "day": 186,
+  "passages": [
+   {
+    "reference": "2 Chronicles 31–32",
+    "apiQueries": [
+     "2 chronicles 31",
+     "2 chronicles 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 105–106",
+    "apiQueries": [
+     "psalms 105",
+     "psalms 106"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how King Hezekiah trusted God when a huge army surrounded the city."
+ },
+ {
+  "day": 187,
+  "passages": [
+   {
+    "reference": "2 Chronicles 33–34",
+    "apiQueries": [
+     "2 chronicles 33",
+     "2 chronicles 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Romans 16",
+    "apiQueries": [
+     "romans 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the people heard God's book again and promised to follow Him."
+ },
+ {
+  "day": 188,
+  "passages": [
+   {
+    "reference": "2 Chronicles 35–36",
+    "apiQueries": [
+     "2 chronicles 35",
+     "2 chronicles 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 1",
+    "apiQueries": [
+     "1 corinthians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the people heard God's book again and promised to follow Him."
+ },
+ {
+  "day": 189,
+  "passages": [
+   {
+    "reference": "Ezra 1–2",
+    "apiQueries": [
+     "ezra 1",
+     "ezra 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 2",
+    "apiQueries": [
+     "1 corinthians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God brought His people home from a faraway land to rebuild the temple."
+ },
+ {
+  "day": 190,
+  "passages": [
+   {
+    "reference": "Ezra 3–4",
+    "apiQueries": [
+     "ezra 3",
+     "ezra 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 107–108",
+    "apiQueries": [
+     "psalms 107",
+     "psalms 108"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God brought His people home from a faraway land to rebuild the temple."
+ },
+ {
+  "day": 191,
+  "passages": [
+   {
+    "reference": "Ezra 5–6",
+    "apiQueries": [
+     "ezra 5",
+     "ezra 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 3",
+    "apiQueries": [
+     "1 corinthians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God brought His people home from a faraway land to rebuild the temple."
+ },
+ {
+  "day": 192,
+  "passages": [
+   {
+    "reference": "Ezra 7–8",
+    "apiQueries": [
+     "ezra 7",
+     "ezra 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 4",
+    "apiQueries": [
+     "1 corinthians 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Ezra taught the people God's word, and they listened with all their hearts."
+ },
+ {
+  "day": 193,
+  "passages": [
+   {
+    "reference": "Ezra 9–10",
+    "apiQueries": [
+     "ezra 9",
+     "ezra 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 109–110",
+    "apiQueries": [
+     "psalms 109",
+     "psalms 110"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Ezra taught the people God's word, and they listened with all their hearts."
+ },
+ {
+  "day": 194,
+  "passages": [
+   {
+    "reference": "Nehemiah 1–2",
+    "apiQueries": [
+     "nehemiah 1",
+     "nehemiah 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 5",
+    "apiQueries": [
+     "1 corinthians 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Nehemiah prayed, planned, and rebuilt a whole city wall in 52 days!"
+ },
+ {
+  "day": 195,
+  "passages": [
+   {
+    "reference": "Nehemiah 3–4",
+    "apiQueries": [
+     "nehemiah 3",
+     "nehemiah 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 6",
+    "apiQueries": [
+     "1 corinthians 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Nehemiah prayed, planned, and rebuilt a whole city wall in 52 days!"
+ },
+ {
+  "day": 196,
+  "passages": [
+   {
+    "reference": "Nehemiah 5–6",
+    "apiQueries": [
+     "nehemiah 5",
+     "nehemiah 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 7",
+    "apiQueries": [
+     "1 corinthians 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Nehemiah prayed, planned, and rebuilt a whole city wall in 52 days!"
+ },
+ {
+  "day": 197,
+  "passages": [
+   {
+    "reference": "Nehemiah 7–8",
+    "apiQueries": [
+     "nehemiah 7",
+     "nehemiah 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 111–112",
+    "apiQueries": [
+     "psalms 111",
+     "psalms 112"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how the people heard God's word read aloud and celebrated with great joy."
+ },
+ {
+  "day": 198,
+  "passages": [
+   {
+    "reference": "Nehemiah 9–10",
+    "apiQueries": [
+     "nehemiah 9",
+     "nehemiah 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 8",
+    "apiQueries": [
+     "1 corinthians 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the people heard God's word read aloud and celebrated with great joy."
+ },
+ {
+  "day": 199,
+  "passages": [
+   {
+    "reference": "Nehemiah 11–12",
+    "apiQueries": [
+     "nehemiah 11",
+     "nehemiah 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 9",
+    "apiQueries": [
+     "1 corinthians 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how the people heard God's word read aloud and celebrated with great joy."
+ },
+ {
+  "day": 200,
+  "passages": [
+   {
+    "reference": "Nehemiah 13",
+    "apiQueries": [
+     "nehemiah 13"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 113–114",
+    "apiQueries": [
+     "psalms 113",
+     "psalms 114"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how the people heard God's word read aloud and celebrated with great joy."
+ },
+ {
+  "day": 201,
+  "passages": [
+   {
+    "reference": "Esther 1–2",
+    "apiQueries": [
+     "esther 1",
+     "esther 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 10",
+    "apiQueries": [
+     "1 corinthians 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about brave Queen Esther, getting ready to risk everything for her people."
+ },
+ {
+  "day": 202,
+  "passages": [
+   {
+    "reference": "Esther 3–4",
+    "apiQueries": [
+     "esther 3",
+     "esther 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 11",
+    "apiQueries": [
+     "1 corinthians 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about brave Queen Esther, getting ready to risk everything for her people."
+ },
+ {
+  "day": 203,
+  "passages": [
+   {
+    "reference": "Esther 5–6",
+    "apiQueries": [
+     "esther 5",
+     "esther 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 12",
+    "apiQueries": [
+     "1 corinthians 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Esther spoke up 'for such a time as this' — and God saved His people!"
+ },
+ {
+  "day": 204,
+  "passages": [
+   {
+    "reference": "Esther 7–8",
+    "apiQueries": [
+     "esther 7",
+     "esther 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 115–116",
+    "apiQueries": [
+     "psalms 115",
+     "psalms 116"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Esther spoke up 'for such a time as this' — and God saved His people!"
+ },
+ {
+  "day": 205,
+  "passages": [
+   {
+    "reference": "Esther 9–10",
+    "apiQueries": [
+     "esther 9",
+     "esther 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 13",
+    "apiQueries": [
+     "1 corinthians 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Esther spoke up 'for such a time as this' — and God saved His people!"
+ },
+ {
+  "day": 206,
+  "passages": [
+   {
+    "reference": "Job 1–2",
+    "apiQueries": [
+     "job 1",
+     "job 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 14",
+    "apiQueries": [
+     "1 corinthians 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about Job, who lost almost everything but kept talking to God."
+ },
+ {
+  "day": 207,
+  "passages": [
+   {
+    "reference": "Job 3–4",
+    "apiQueries": [
+     "job 3",
+     "job 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 117–118",
+    "apiQueries": [
+     "psalms 117",
+     "psalms 118"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about Job, who lost almost everything but kept talking to God."
+ },
+ {
+  "day": 208,
+  "passages": [
+   {
+    "reference": "Job 5–6",
+    "apiQueries": [
+     "job 5",
+     "job 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 15",
+    "apiQueries": [
+     "1 corinthians 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Job's friends trying to explain his hurt — without knowing the whole story."
+ },
+ {
+  "day": 209,
+  "passages": [
+   {
+    "reference": "Job 7–8",
+    "apiQueries": [
+     "job 7",
+     "job 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Corinthians 16",
+    "apiQueries": [
+     "1 corinthians 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Job's friends trying to explain his hurt — without knowing the whole story."
+ },
+ {
+  "day": 210,
+  "passages": [
+   {
+    "reference": "Job 9–10",
+    "apiQueries": [
+     "job 9",
+     "job 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 1",
+    "apiQueries": [
+     "2 corinthians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Job's friends trying to explain his hurt — without knowing the whole story."
+ },
+ {
+  "day": 211,
+  "passages": [
+   {
+    "reference": "Job 11–12",
+    "apiQueries": [
+     "job 11",
+     "job 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 119",
+    "apiQueries": [
+     "psalms 119"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read Job's friends trying to explain his hurt — without knowing the whole story."
+ },
+ {
+  "day": 212,
+  "passages": [
+   {
+    "reference": "Job 13–14",
+    "apiQueries": [
+     "job 13",
+     "job 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 2",
+    "apiQueries": [
+     "2 corinthians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Job's friends trying to explain his hurt — without knowing the whole story."
+ },
+ {
+  "day": 213,
+  "passages": [
+   {
+    "reference": "Job 15–16",
+    "apiQueries": [
+     "job 15",
+     "job 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 3",
+    "apiQueries": [
+     "2 corinthians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Job asking God hard questions. That's okay — God can handle our questions."
+ },
+ {
+  "day": 214,
+  "passages": [
+   {
+    "reference": "Job 17–18",
+    "apiQueries": [
+     "job 17",
+     "job 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 120–121",
+    "apiQueries": [
+     "psalms 120",
+     "psalms 121"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read Job asking God hard questions. That's okay — God can handle our questions."
+ },
+ {
+  "day": 215,
+  "passages": [
+   {
+    "reference": "Job 19–20",
+    "apiQueries": [
+     "job 19",
+     "job 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 4",
+    "apiQueries": [
+     "2 corinthians 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Job asking God hard questions. That's okay — God can handle our questions."
+ },
+ {
+  "day": 216,
+  "passages": [
+   {
+    "reference": "Job 21–22",
+    "apiQueries": [
+     "job 21",
+     "job 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 5",
+    "apiQueries": [
+     "2 corinthians 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Job asking God hard questions. That's okay — God can handle our questions."
+ },
+ {
+  "day": 217,
+  "passages": [
+   {
+    "reference": "Job 23–24",
+    "apiQueries": [
+     "job 23",
+     "job 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 6",
+    "apiQueries": [
+     "2 corinthians 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Job kept holding on to God even when nothing made sense."
+ },
+ {
+  "day": 218,
+  "passages": [
+   {
+    "reference": "Job 25–26",
+    "apiQueries": [
+     "job 25",
+     "job 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 122–123",
+    "apiQueries": [
+     "psalms 122",
+     "psalms 123"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Job kept holding on to God even when nothing made sense."
+ },
+ {
+  "day": 219,
+  "passages": [
+   {
+    "reference": "Job 27–28",
+    "apiQueries": [
+     "job 27",
+     "job 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 7",
+    "apiQueries": [
+     "2 corinthians 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Job kept holding on to God even when nothing made sense."
+ },
+ {
+  "day": 220,
+  "passages": [
+   {
+    "reference": "Job 29–30",
+    "apiQueries": [
+     "job 29",
+     "job 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 8",
+    "apiQueries": [
+     "2 corinthians 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Job kept holding on to God even when nothing made sense."
+ },
+ {
+  "day": 221,
+  "passages": [
+   {
+    "reference": "Job 31–32",
+    "apiQueries": [
+     "job 31",
+     "job 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 124–125",
+    "apiQueries": [
+     "psalms 124",
+     "psalms 125"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Job kept holding on to God even when nothing made sense."
+ },
+ {
+  "day": 222,
+  "passages": [
+   {
+    "reference": "Job 33–34",
+    "apiQueries": [
+     "job 33",
+     "job 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 9",
+    "apiQueries": [
+     "2 corinthians 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Elihu reminding everyone that God is greater than we can understand."
+ },
+ {
+  "day": 223,
+  "passages": [
+   {
+    "reference": "Job 35–36",
+    "apiQueries": [
+     "job 35",
+     "job 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 10",
+    "apiQueries": [
+     "2 corinthians 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Elihu reminding everyone that God is greater than we can understand."
+ },
+ {
+  "day": 224,
+  "passages": [
+   {
+    "reference": "Job 37–38",
+    "apiQueries": [
+     "job 37",
+     "job 38"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 11",
+    "apiQueries": [
+     "2 corinthians 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Elihu reminding everyone that God is greater than we can understand."
+ },
+ {
+  "day": 225,
+  "passages": [
+   {
+    "reference": "Job 39–40",
+    "apiQueries": [
+     "job 39",
+     "job 40"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 126–127",
+    "apiQueries": [
+     "psalms 126",
+     "psalms 127"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read God speaking from the storm, and Job discovering how big and good God is."
+ },
+ {
+  "day": 226,
+  "passages": [
+   {
+    "reference": "Job 41–42",
+    "apiQueries": [
+     "job 41",
+     "job 42"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 12",
+    "apiQueries": [
+     "2 corinthians 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God speaking from the storm, and Job discovering how big and good God is."
+ },
+ {
+  "day": 227,
+  "passages": [
+   {
+    "reference": "Ecclesiastes 1–2",
+    "apiQueries": [
+     "ecclesiastes 1",
+     "ecclesiastes 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Corinthians 13",
+    "apiQueries": [
+     "2 corinthians 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the Teacher who searched everywhere for happiness — and what he found."
+ },
+ {
+  "day": 228,
+  "passages": [
+   {
+    "reference": "Ecclesiastes 3–4",
+    "apiQueries": [
+     "ecclesiastes 3",
+     "ecclesiastes 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 128–129",
+    "apiQueries": [
+     "psalms 128",
+     "psalms 129"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read that there is a time for everything, and God makes everything beautiful in its time."
+ },
+ {
+  "day": 229,
+  "passages": [
+   {
+    "reference": "Ecclesiastes 5–6",
+    "apiQueries": [
+     "ecclesiastes 5",
+     "ecclesiastes 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Galatians 1",
+    "apiQueries": [
+     "galatians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that there is a time for everything, and God makes everything beautiful in its time."
+ },
+ {
+  "day": 230,
+  "passages": [
+   {
+    "reference": "Ecclesiastes 7–8",
+    "apiQueries": [
+     "ecclesiastes 7",
+     "ecclesiastes 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Galatians 2",
+    "apiQueries": [
+     "galatians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read the Teacher’s best advice: love God and keep His commands."
+ },
+ {
+  "day": 231,
+  "passages": [
+   {
+    "reference": "Ecclesiastes 9–10",
+    "apiQueries": [
+     "ecclesiastes 9",
+     "ecclesiastes 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Galatians 3",
+    "apiQueries": [
+     "galatians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read the Teacher’s best advice: love God and keep His commands."
+ },
+ {
+  "day": 232,
+  "passages": [
+   {
+    "reference": "Ecclesiastes 11–12",
+    "apiQueries": [
+     "ecclesiastes 11",
+     "ecclesiastes 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 130–131",
+    "apiQueries": [
+     "psalms 130",
+     "psalms 131"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read the Teacher’s best advice: love God and keep His commands."
+ },
+ {
+  "day": 233,
+  "passages": [
+   {
+    "reference": "Song of Solomon 1–2",
+    "apiQueries": [
+     "song of solomon 1",
+     "song of solomon 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Galatians 4",
+    "apiQueries": [
+     "galatians 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read a beautiful song that reminds us love is a wonderful gift from God."
+ },
+ {
+  "day": 234,
+  "passages": [
+   {
+    "reference": "Song of Solomon 3–4",
+    "apiQueries": [
+     "song of solomon 3",
+     "song of solomon 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Galatians 5",
+    "apiQueries": [
+     "galatians 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read a beautiful song that reminds us love is a wonderful gift from God."
+ },
+ {
+  "day": 235,
+  "passages": [
+   {
+    "reference": "Song of Solomon 5–6",
+    "apiQueries": [
+     "song of solomon 5",
+     "song of solomon 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 132–133",
+    "apiQueries": [
+     "psalms 132",
+     "psalms 133"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read a beautiful song that reminds us love is a wonderful gift from God."
+ },
+ {
+  "day": 236,
+  "passages": [
+   {
+    "reference": "Song of Solomon 7–8",
+    "apiQueries": [
+     "song of solomon 7",
+     "song of solomon 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Galatians 6",
+    "apiQueries": [
+     "galatians 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read a beautiful song that reminds us love is a wonderful gift from God."
+ },
+ {
+  "day": 237,
+  "passages": [
+   {
+    "reference": "Isaiah 1–2",
+    "apiQueries": [
+     "isaiah 1",
+     "isaiah 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Ephesians 1",
+    "apiQueries": [
+     "ephesians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Isaiah saw God on His throne and said, 'Here am I — send me!'"
+ },
+ {
+  "day": 238,
+  "passages": [
+   {
+    "reference": "Isaiah 3–4",
+    "apiQueries": [
+     "isaiah 3",
+     "isaiah 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Ephesians 2",
+    "apiQueries": [
+     "ephesians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Isaiah saw God on His throne and said, 'Here am I — send me!'"
+ },
+ {
+  "day": 239,
+  "passages": [
+   {
+    "reference": "Isaiah 5–6",
+    "apiQueries": [
+     "isaiah 5",
+     "isaiah 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 134–135",
+    "apiQueries": [
+     "psalms 134",
+     "psalms 135"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how Isaiah saw God on His throne and said, 'Here am I — send me!'"
+ },
+ {
+  "day": 240,
+  "passages": [
+   {
+    "reference": "Isaiah 7–8",
+    "apiQueries": [
+     "isaiah 7",
+     "isaiah 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Ephesians 3",
+    "apiQueries": [
+     "ephesians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s promise of a special child called Immanuel — God with us."
+ },
+ {
+  "day": 241,
+  "passages": [
+   {
+    "reference": "Isaiah 9–10",
+    "apiQueries": [
+     "isaiah 9",
+     "isaiah 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Ephesians 4",
+    "apiQueries": [
+     "ephesians 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s promise of a special child called Immanuel — God with us."
+ },
+ {
+  "day": 242,
+  "passages": [
+   {
+    "reference": "Isaiah 11–12",
+    "apiQueries": [
+     "isaiah 11",
+     "isaiah 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 136–137",
+    "apiQueries": [
+     "psalms 136",
+     "psalms 137"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read God’s promise of a special child called Immanuel — God with us."
+ },
+ {
+  "day": 243,
+  "passages": [
+   {
+    "reference": "Isaiah 13–14",
+    "apiQueries": [
+     "isaiah 13",
+     "isaiah 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Ephesians 5",
+    "apiQueries": [
+     "ephesians 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God speaks to all the nations — He is King over the whole world."
+ },
+ {
+  "day": 244,
+  "passages": [
+   {
+    "reference": "Isaiah 15–16",
+    "apiQueries": [
+     "isaiah 15",
+     "isaiah 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Ephesians 6",
+    "apiQueries": [
+     "ephesians 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God speaks to all the nations — He is King over the whole world."
+ },
+ {
+  "day": 245,
+  "passages": [
+   {
+    "reference": "Isaiah 17–18",
+    "apiQueries": [
+     "isaiah 17",
+     "isaiah 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Philippians 1",
+    "apiQueries": [
+     "philippians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God speaks to all the nations — He is King over the whole world."
+ },
+ {
+  "day": 246,
+  "passages": [
+   {
+    "reference": "Isaiah 19–20",
+    "apiQueries": [
+     "isaiah 19",
+     "isaiah 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 138–139",
+    "apiQueries": [
+     "psalms 138",
+     "psalms 139"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God speaks to all the nations — He is King over the whole world."
+ },
+ {
+  "day": 247,
+  "passages": [
+   {
+    "reference": "Isaiah 21–22",
+    "apiQueries": [
+     "isaiah 21",
+     "isaiah 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Philippians 2",
+    "apiQueries": [
+     "philippians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God speaks to all the nations — He is King over the whole world."
+ },
+ {
+  "day": 248,
+  "passages": [
+   {
+    "reference": "Isaiah 23–24",
+    "apiQueries": [
+     "isaiah 23",
+     "isaiah 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Philippians 3",
+    "apiQueries": [
+     "philippians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God speaks to all the nations — He is King over the whole world."
+ },
+ {
+  "day": 249,
+  "passages": [
+   {
+    "reference": "Isaiah 25–26",
+    "apiQueries": [
+     "isaiah 25",
+     "isaiah 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 140–141",
+    "apiQueries": [
+     "psalms 140",
+     "psalms 141"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how God keeps His people safe, like a careful gardener with his vineyard."
+ },
+ {
+  "day": 250,
+  "passages": [
+   {
+    "reference": "Isaiah 27–28",
+    "apiQueries": [
+     "isaiah 27",
+     "isaiah 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Philippians 4",
+    "apiQueries": [
+     "philippians 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God keeps His people safe, like a careful gardener with his vineyard."
+ },
+ {
+  "day": 251,
+  "passages": [
+   {
+    "reference": "Isaiah 29–30",
+    "apiQueries": [
+     "isaiah 29",
+     "isaiah 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Colossians 1",
+    "apiQueries": [
+     "colossians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about a joyful highway home for everyone God rescues."
+ },
+ {
+  "day": 252,
+  "passages": [
+   {
+    "reference": "Isaiah 31–32",
+    "apiQueries": [
+     "isaiah 31",
+     "isaiah 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Colossians 2",
+    "apiQueries": [
+     "colossians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about a joyful highway home for everyone God rescues."
+ },
+ {
+  "day": 253,
+  "passages": [
+   {
+    "reference": "Isaiah 33–34",
+    "apiQueries": [
+     "isaiah 33",
+     "isaiah 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 142–143",
+    "apiQueries": [
+     "psalms 142",
+     "psalms 143"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about a joyful highway home for everyone God rescues."
+ },
+ {
+  "day": 254,
+  "passages": [
+   {
+    "reference": "Isaiah 35–36",
+    "apiQueries": [
+     "isaiah 35",
+     "isaiah 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Colossians 3",
+    "apiQueries": [
+     "colossians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about a joyful highway home for everyone God rescues."
+ },
+ {
+  "day": 255,
+  "passages": [
+   {
+    "reference": "Isaiah 37–38",
+    "apiQueries": [
+     "isaiah 37",
+     "isaiah 38"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Colossians 4",
+    "apiQueries": [
+     "colossians 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how King Hezekiah trusted God when trouble surrounded the city."
+ },
+ {
+  "day": 256,
+  "passages": [
+   {
+    "reference": "Isaiah 39–40",
+    "apiQueries": [
+     "isaiah 39",
+     "isaiah 40"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 144–145",
+    "apiQueries": [
+     "psalms 144",
+     "psalms 145"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read how King Hezekiah trusted God when trouble surrounded the city."
+ },
+ {
+  "day": 257,
+  "passages": [
+   {
+    "reference": "Isaiah 41–42",
+    "apiQueries": [
+     "isaiah 41",
+     "isaiah 42"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Thessalonians 1",
+    "apiQueries": [
+     "1 thessalonians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's comfort for His people: He gives strength to the weary."
+ },
+ {
+  "day": 258,
+  "passages": [
+   {
+    "reference": "Isaiah 43–44",
+    "apiQueries": [
+     "isaiah 43",
+     "isaiah 44"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Thessalonians 2",
+    "apiQueries": [
+     "1 thessalonians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's comfort for His people: He gives strength to the weary."
+ },
+ {
+  "day": 259,
+  "passages": [
+   {
+    "reference": "Isaiah 45–46",
+    "apiQueries": [
+     "isaiah 45",
+     "isaiah 46"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 146–147",
+    "apiQueries": [
+     "psalms 146",
+     "psalms 147"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read that there is no one like our God, who knows the end from the beginning."
+ },
+ {
+  "day": 260,
+  "passages": [
+   {
+    "reference": "Isaiah 47–48",
+    "apiQueries": [
+     "isaiah 47",
+     "isaiah 48"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Thessalonians 3",
+    "apiQueries": [
+     "1 thessalonians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that there is no one like our God, who knows the end from the beginning."
+ },
+ {
+  "day": 261,
+  "passages": [
+   {
+    "reference": "Isaiah 49–50",
+    "apiQueries": [
+     "isaiah 49",
+     "isaiah 50"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Thessalonians 4",
+    "apiQueries": [
+     "1 thessalonians 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the suffering servant who carries our sorrows — pointing to Jesus."
+ },
+ {
+  "day": 262,
+  "passages": [
+   {
+    "reference": "Isaiah 51–52",
+    "apiQueries": [
+     "isaiah 51",
+     "isaiah 52"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Thessalonians 5",
+    "apiQueries": [
+     "1 thessalonians 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the suffering servant who carries our sorrows — pointing to Jesus."
+ },
+ {
+  "day": 263,
+  "passages": [
+   {
+    "reference": "Isaiah 53–54",
+    "apiQueries": [
+     "isaiah 53",
+     "isaiah 54"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 148–149",
+    "apiQueries": [
+     "psalms 148",
+     "psalms 149"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read about the suffering servant who carries our sorrows — pointing to Jesus."
+ },
+ {
+  "day": 264,
+  "passages": [
+   {
+    "reference": "Isaiah 55–56",
+    "apiQueries": [
+     "isaiah 55",
+     "isaiah 56"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Thessalonians 1",
+    "apiQueries": [
+     "2 thessalonians 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God inviting everyone who is thirsty to come and be filled."
+ },
+ {
+  "day": 265,
+  "passages": [
+   {
+    "reference": "Isaiah 57–58",
+    "apiQueries": [
+     "isaiah 57",
+     "isaiah 58"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Thessalonians 2",
+    "apiQueries": [
+     "2 thessalonians 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God inviting everyone who is thirsty to come and be filled."
+ },
+ {
+  "day": 266,
+  "passages": [
+   {
+    "reference": "Isaiah 59–60",
+    "apiQueries": [
+     "isaiah 59",
+     "isaiah 60"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Psalm 150",
+    "apiQueries": [
+     "psalms 150"
+    ],
+    "track": "psalms"
+   }
+  ],
+  "kidSummary": "Today we read God's promise of new heavens and a new earth, full of joy."
+ },
+ {
+  "day": 267,
+  "passages": [
+   {
+    "reference": "Isaiah 61–62",
+    "apiQueries": [
+     "isaiah 61",
+     "isaiah 62"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Thessalonians 3",
+    "apiQueries": [
+     "2 thessalonians 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise of new heavens and a new earth, full of joy."
+ },
+ {
+  "day": 268,
+  "passages": [
+   {
+    "reference": "Isaiah 63–64",
+    "apiQueries": [
+     "isaiah 63",
+     "isaiah 64"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Timothy 1",
+    "apiQueries": [
+     "1 timothy 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise of new heavens and a new earth, full of joy."
+ },
+ {
+  "day": 269,
+  "passages": [
+   {
+    "reference": "Isaiah 65–66",
+    "apiQueries": [
+     "isaiah 65",
+     "isaiah 66"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Timothy 2",
+    "apiQueries": [
+     "1 timothy 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise of new heavens and a new earth, full of joy."
+ },
+ {
+  "day": 270,
+  "passages": [
+   {
+    "reference": "Jeremiah 1–2",
+    "apiQueries": [
+     "jeremiah 1",
+     "jeremiah 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 1",
+    "apiQueries": [
+     "proverbs 1"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God called young Jeremiah and promised to give him the words to say."
+ },
+ {
+  "day": 271,
+  "passages": [
+   {
+    "reference": "Jeremiah 3–4",
+    "apiQueries": [
+     "jeremiah 3",
+     "jeremiah 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Timothy 3",
+    "apiQueries": [
+     "1 timothy 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Jeremiah telling the people: come back to God with your whole heart."
+ },
+ {
+  "day": 272,
+  "passages": [
+   {
+    "reference": "Jeremiah 5–6",
+    "apiQueries": [
+     "jeremiah 5",
+     "jeremiah 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Timothy 4",
+    "apiQueries": [
+     "1 timothy 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Jeremiah telling the people: come back to God with your whole heart."
+ },
+ {
+  "day": 273,
+  "passages": [
+   {
+    "reference": "Jeremiah 7–8",
+    "apiQueries": [
+     "jeremiah 7",
+     "jeremiah 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 2",
+    "apiQueries": [
+     "proverbs 2"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read Jeremiah telling the people: come back to God with your whole heart."
+ },
+ {
+  "day": 274,
+  "passages": [
+   {
+    "reference": "Jeremiah 9–10",
+    "apiQueries": [
+     "jeremiah 9",
+     "jeremiah 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Timothy 5",
+    "apiQueries": [
+     "1 timothy 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Jeremiah telling the people: come back to God with your whole heart."
+ },
+ {
+  "day": 275,
+  "passages": [
+   {
+    "reference": "Jeremiah 11–12",
+    "apiQueries": [
+     "jeremiah 11",
+     "jeremiah 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Timothy 6",
+    "apiQueries": [
+     "1 timothy 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that trusting God makes you like a tree planted by the water."
+ },
+ {
+  "day": 276,
+  "passages": [
+   {
+    "reference": "Jeremiah 13–14",
+    "apiQueries": [
+     "jeremiah 13",
+     "jeremiah 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Timothy 1",
+    "apiQueries": [
+     "2 timothy 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that trusting God makes you like a tree planted by the water."
+ },
+ {
+  "day": 277,
+  "passages": [
+   {
+    "reference": "Jeremiah 15–16",
+    "apiQueries": [
+     "jeremiah 15",
+     "jeremiah 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 3",
+    "apiQueries": [
+     "proverbs 3"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read that trusting God makes you like a tree planted by the water."
+ },
+ {
+  "day": 278,
+  "passages": [
+   {
+    "reference": "Jeremiah 17–18",
+    "apiQueries": [
+     "jeremiah 17",
+     "jeremiah 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Timothy 2",
+    "apiQueries": [
+     "2 timothy 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that trusting God makes you like a tree planted by the water."
+ },
+ {
+  "day": 279,
+  "passages": [
+   {
+    "reference": "Jeremiah 19–20",
+    "apiQueries": [
+     "jeremiah 19",
+     "jeremiah 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Timothy 3",
+    "apiQueries": [
+     "2 timothy 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God can reshape His people like clay in a potter’s hands."
+ },
+ {
+  "day": 280,
+  "passages": [
+   {
+    "reference": "Jeremiah 21–22",
+    "apiQueries": [
+     "jeremiah 21",
+     "jeremiah 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 4",
+    "apiQueries": [
+     "proverbs 4"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God can reshape His people like clay in a potter’s hands."
+ },
+ {
+  "day": 281,
+  "passages": [
+   {
+    "reference": "Jeremiah 23–24",
+    "apiQueries": [
+     "jeremiah 23",
+     "jeremiah 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Timothy 4",
+    "apiQueries": [
+     "2 timothy 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God can reshape His people like clay in a potter’s hands."
+ },
+ {
+  "day": 282,
+  "passages": [
+   {
+    "reference": "Jeremiah 25–26",
+    "apiQueries": [
+     "jeremiah 25",
+     "jeremiah 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Titus 1",
+    "apiQueries": [
+     "titus 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God can reshape His people like clay in a potter’s hands."
+ },
+ {
+  "day": 283,
+  "passages": [
+   {
+    "reference": "Jeremiah 27–28",
+    "apiQueries": [
+     "jeremiah 27",
+     "jeremiah 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Titus 2",
+    "apiQueries": [
+     "titus 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise: His plans for His people are good — plans of hope and a future."
+ },
+ {
+  "day": 284,
+  "passages": [
+   {
+    "reference": "Jeremiah 29–30",
+    "apiQueries": [
+     "jeremiah 29",
+     "jeremiah 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 5",
+    "apiQueries": [
+     "proverbs 5"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read God's promise: His plans for His people are good — plans of hope and a future."
+ },
+ {
+  "day": 285,
+  "passages": [
+   {
+    "reference": "Jeremiah 31–32",
+    "apiQueries": [
+     "jeremiah 31",
+     "jeremiah 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Titus 3",
+    "apiQueries": [
+     "titus 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise of a new covenant, with His law written on our hearts."
+ },
+ {
+  "day": 286,
+  "passages": [
+   {
+    "reference": "Jeremiah 33–34",
+    "apiQueries": [
+     "jeremiah 33",
+     "jeremiah 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Philemon 1",
+    "apiQueries": [
+     "philemon 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise of a new covenant, with His law written on our hearts."
+ },
+ {
+  "day": 287,
+  "passages": [
+   {
+    "reference": "Jeremiah 35–36",
+    "apiQueries": [
+     "jeremiah 35",
+     "jeremiah 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 6–7",
+    "apiQueries": [
+     "proverbs 6",
+     "proverbs 7"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how Jeremiah kept telling the truth, even when it landed him in a muddy well."
+ },
+ {
+  "day": 288,
+  "passages": [
+   {
+    "reference": "Jeremiah 37–38",
+    "apiQueries": [
+     "jeremiah 37",
+     "jeremiah 38"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 1",
+    "apiQueries": [
+     "hebrews 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Jeremiah kept telling the truth, even when it landed him in a muddy well."
+ },
+ {
+  "day": 289,
+  "passages": [
+   {
+    "reference": "Jeremiah 39–40",
+    "apiQueries": [
+     "jeremiah 39",
+     "jeremiah 40"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 2",
+    "apiQueries": [
+     "hebrews 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Jeremiah kept telling the truth, even when it landed him in a muddy well."
+ },
+ {
+  "day": 290,
+  "passages": [
+   {
+    "reference": "Jeremiah 41–42",
+    "apiQueries": [
+     "jeremiah 41",
+     "jeremiah 42"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 3",
+    "apiQueries": [
+     "hebrews 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God watched over His faithful messenger in sad times."
+ },
+ {
+  "day": 291,
+  "passages": [
+   {
+    "reference": "Jeremiah 43–44",
+    "apiQueries": [
+     "jeremiah 43",
+     "jeremiah 44"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 8",
+    "apiQueries": [
+     "proverbs 8"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God watched over His faithful messenger in sad times."
+ },
+ {
+  "day": 292,
+  "passages": [
+   {
+    "reference": "Jeremiah 45–46",
+    "apiQueries": [
+     "jeremiah 45",
+     "jeremiah 46"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 4",
+    "apiQueries": [
+     "hebrews 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God watched over His faithful messenger in sad times."
+ },
+ {
+  "day": 293,
+  "passages": [
+   {
+    "reference": "Jeremiah 47–48",
+    "apiQueries": [
+     "jeremiah 47",
+     "jeremiah 48"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 5",
+    "apiQueries": [
+     "hebrews 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God is fair and just with every nation on earth."
+ },
+ {
+  "day": 294,
+  "passages": [
+   {
+    "reference": "Jeremiah 49–50",
+    "apiQueries": [
+     "jeremiah 49",
+     "jeremiah 50"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 9",
+    "apiQueries": [
+     "proverbs 9"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God is fair and just with every nation on earth."
+ },
+ {
+  "day": 295,
+  "passages": [
+   {
+    "reference": "Jeremiah 51–52",
+    "apiQueries": [
+     "jeremiah 51",
+     "jeremiah 52"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 6",
+    "apiQueries": [
+     "hebrews 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God is fair and just with every nation on earth."
+ },
+ {
+  "day": 296,
+  "passages": [
+   {
+    "reference": "Lamentations 1–2",
+    "apiQueries": [
+     "lamentations 1",
+     "lamentations 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 7",
+    "apiQueries": [
+     "hebrews 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Jeremiah telling God exactly how sad he feels about the broken city."
+ },
+ {
+  "day": 297,
+  "passages": [
+   {
+    "reference": "Lamentations 3–4",
+    "apiQueries": [
+     "lamentations 3",
+     "lamentations 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 8",
+    "apiQueries": [
+     "hebrews 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read the best news in a sad book: God's mercies are new every morning!"
+ },
+ {
+  "day": 298,
+  "passages": [
+   {
+    "reference": "Lamentations 5",
+    "apiQueries": [
+     "lamentations 5"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 10–11",
+    "apiQueries": [
+     "proverbs 10",
+     "proverbs 11"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God's people, even in tears, remember He is still King."
+ },
+ {
+  "day": 299,
+  "passages": [
+   {
+    "reference": "Ezekiel 1–2",
+    "apiQueries": [
+     "ezekiel 1",
+     "ezekiel 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 9",
+    "apiQueries": [
+     "hebrews 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Ezekiel's amazing vision of God's glory, shining like a rainbow."
+ },
+ {
+  "day": 300,
+  "passages": [
+   {
+    "reference": "Ezekiel 3–4",
+    "apiQueries": [
+     "ezekiel 3",
+     "ezekiel 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 10",
+    "apiQueries": [
+     "hebrews 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Ezekiel's amazing vision of God's glory, shining like a rainbow."
+ },
+ {
+  "day": 301,
+  "passages": [
+   {
+    "reference": "Ezekiel 5–6",
+    "apiQueries": [
+     "ezekiel 5",
+     "ezekiel 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 12",
+    "apiQueries": [
+     "proverbs 12"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God showed Ezekiel why the people's hearts had wandered away."
+ },
+ {
+  "day": 302,
+  "passages": [
+   {
+    "reference": "Ezekiel 7–8",
+    "apiQueries": [
+     "ezekiel 7",
+     "ezekiel 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 11",
+    "apiQueries": [
+     "hebrews 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God showed Ezekiel why the people's hearts had wandered away."
+ },
+ {
+  "day": 303,
+  "passages": [
+   {
+    "reference": "Ezekiel 9–10",
+    "apiQueries": [
+     "ezekiel 9",
+     "ezekiel 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 12",
+    "apiQueries": [
+     "hebrews 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God showed Ezekiel why the people's hearts had wandered away."
+ },
+ {
+  "day": 304,
+  "passages": [
+   {
+    "reference": "Ezekiel 11–12",
+    "apiQueries": [
+     "ezekiel 11",
+     "ezekiel 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Hebrews 13",
+    "apiQueries": [
+     "hebrews 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God showed Ezekiel why the people's hearts had wandered away."
+ },
+ {
+  "day": 305,
+  "passages": [
+   {
+    "reference": "Ezekiel 13–14",
+    "apiQueries": [
+     "ezekiel 13",
+     "ezekiel 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 13",
+    "apiQueries": [
+     "proverbs 13"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read the picture-stories God used to call His people back home."
+ },
+ {
+  "day": 306,
+  "passages": [
+   {
+    "reference": "Ezekiel 15–16",
+    "apiQueries": [
+     "ezekiel 15",
+     "ezekiel 16"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "James 1",
+    "apiQueries": [
+     "james 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read the picture-stories God used to call His people back home."
+ },
+ {
+  "day": 307,
+  "passages": [
+   {
+    "reference": "Ezekiel 17–18",
+    "apiQueries": [
+     "ezekiel 17",
+     "ezekiel 18"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "James 2",
+    "apiQueries": [
+     "james 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read the picture-stories God used to call His people back home."
+ },
+ {
+  "day": 308,
+  "passages": [
+   {
+    "reference": "Ezekiel 19–20",
+    "apiQueries": [
+     "ezekiel 19",
+     "ezekiel 20"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 14",
+    "apiQueries": [
+     "proverbs 14"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read God's promise: I will give you a new heart and a new spirit."
+ },
+ {
+  "day": 309,
+  "passages": [
+   {
+    "reference": "Ezekiel 21–22",
+    "apiQueries": [
+     "ezekiel 21",
+     "ezekiel 22"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "James 3",
+    "apiQueries": [
+     "james 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise: I will give you a new heart and a new spirit."
+ },
+ {
+  "day": 310,
+  "passages": [
+   {
+    "reference": "Ezekiel 23–24",
+    "apiQueries": [
+     "ezekiel 23",
+     "ezekiel 24"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "James 4",
+    "apiQueries": [
+     "james 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God's promise: I will give you a new heart and a new spirit."
+ },
+ {
+  "day": 311,
+  "passages": [
+   {
+    "reference": "Ezekiel 25–26",
+    "apiQueries": [
+     "ezekiel 25",
+     "ezekiel 26"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "James 5",
+    "apiQueries": [
+     "james 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God is in charge of every nation, big and small."
+ },
+ {
+  "day": 312,
+  "passages": [
+   {
+    "reference": "Ezekiel 27–28",
+    "apiQueries": [
+     "ezekiel 27",
+     "ezekiel 28"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 15",
+    "apiQueries": [
+     "proverbs 15"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God is in charge of every nation, big and small."
+ },
+ {
+  "day": 313,
+  "passages": [
+   {
+    "reference": "Ezekiel 29–30",
+    "apiQueries": [
+     "ezekiel 29",
+     "ezekiel 30"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Peter 1",
+    "apiQueries": [
+     "1 peter 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God is in charge of every nation, big and small."
+ },
+ {
+  "day": 314,
+  "passages": [
+   {
+    "reference": "Ezekiel 31–32",
+    "apiQueries": [
+     "ezekiel 31",
+     "ezekiel 32"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Peter 2",
+    "apiQueries": [
+     "1 peter 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God is in charge of every nation, big and small."
+ },
+ {
+  "day": 315,
+  "passages": [
+   {
+    "reference": "Ezekiel 33–34",
+    "apiQueries": [
+     "ezekiel 33",
+     "ezekiel 34"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 16",
+    "apiQueries": [
+     "proverbs 16"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read about the valley of dry bones coming alive — God can bring life to anything!"
+ },
+ {
+  "day": 316,
+  "passages": [
+   {
+    "reference": "Ezekiel 35–36",
+    "apiQueries": [
+     "ezekiel 35",
+     "ezekiel 36"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Peter 3",
+    "apiQueries": [
+     "1 peter 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the valley of dry bones coming alive — God can bring life to anything!"
+ },
+ {
+  "day": 317,
+  "passages": [
+   {
+    "reference": "Ezekiel 37–38",
+    "apiQueries": [
+     "ezekiel 37",
+     "ezekiel 38"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Peter 4",
+    "apiQueries": [
+     "1 peter 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about the valley of dry bones coming alive — God can bring life to anything!"
+ },
+ {
+  "day": 318,
+  "passages": [
+   {
+    "reference": "Ezekiel 39–40",
+    "apiQueries": [
+     "ezekiel 39",
+     "ezekiel 40"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 Peter 5",
+    "apiQueries": [
+     "1 peter 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God protects His people from every enemy."
+ },
+ {
+  "day": 319,
+  "passages": [
+   {
+    "reference": "Ezekiel 41–42",
+    "apiQueries": [
+     "ezekiel 41",
+     "ezekiel 42"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 17",
+    "apiQueries": [
+     "proverbs 17"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read Ezekiel's vision of a new temple with a river of life flowing out of it."
+ },
+ {
+  "day": 320,
+  "passages": [
+   {
+    "reference": "Ezekiel 43–44",
+    "apiQueries": [
+     "ezekiel 43",
+     "ezekiel 44"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Peter 1",
+    "apiQueries": [
+     "2 peter 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Ezekiel's vision of a new temple with a river of life flowing out of it."
+ },
+ {
+  "day": 321,
+  "passages": [
+   {
+    "reference": "Ezekiel 45–46",
+    "apiQueries": [
+     "ezekiel 45",
+     "ezekiel 46"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Peter 2",
+    "apiQueries": [
+     "2 peter 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Ezekiel's vision of a new temple with a river of life flowing out of it."
+ },
+ {
+  "day": 322,
+  "passages": [
+   {
+    "reference": "Ezekiel 47–48",
+    "apiQueries": [
+     "ezekiel 47",
+     "ezekiel 48"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 18",
+    "apiQueries": [
+     "proverbs 18"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read Ezekiel's vision of a new temple with a river of life flowing out of it."
+ },
+ {
+  "day": 323,
+  "passages": [
+   {
+    "reference": "Daniel 1–2",
+    "apiQueries": [
+     "daniel 1",
+     "daniel 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 Peter 3",
+    "apiQueries": [
+     "2 peter 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Daniel and his friends stayed faithful to God in a faraway land."
+ },
+ {
+  "day": 324,
+  "passages": [
+   {
+    "reference": "Daniel 3–4",
+    "apiQueries": [
+     "daniel 3",
+     "daniel 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 John 1",
+    "apiQueries": [
+     "1 john 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how God saved Shadrach, Meshach, and Abednego from the fiery furnace!"
+ },
+ {
+  "day": 325,
+  "passages": [
+   {
+    "reference": "Daniel 5–6",
+    "apiQueries": [
+     "daniel 5",
+     "daniel 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 John 2",
+    "apiQueries": [
+     "1 john 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Daniel kept praying — and God shut the lions' mouths."
+ },
+ {
+  "day": 326,
+  "passages": [
+   {
+    "reference": "Daniel 7–8",
+    "apiQueries": [
+     "daniel 7",
+     "daniel 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 19",
+    "apiQueries": [
+     "proverbs 19"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read Daniel's visions showing that God's kingdom lasts forever."
+ },
+ {
+  "day": 327,
+  "passages": [
+   {
+    "reference": "Daniel 9–10",
+    "apiQueries": [
+     "daniel 9",
+     "daniel 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 John 3",
+    "apiQueries": [
+     "1 john 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Daniel's visions showing that God's kingdom lasts forever."
+ },
+ {
+  "day": 328,
+  "passages": [
+   {
+    "reference": "Daniel 11–12",
+    "apiQueries": [
+     "daniel 11",
+     "daniel 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 John 4",
+    "apiQueries": [
+     "1 john 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Daniel's visions showing that God's kingdom lasts forever."
+ },
+ {
+  "day": 329,
+  "passages": [
+   {
+    "reference": "Hosea 1–2",
+    "apiQueries": [
+     "hosea 1",
+     "hosea 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 20",
+    "apiQueries": [
+     "proverbs 20"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read Hosea's story of how much God keeps loving His people, no matter what."
+ },
+ {
+  "day": 330,
+  "passages": [
+   {
+    "reference": "Hosea 3–4",
+    "apiQueries": [
+     "hosea 3",
+     "hosea 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "1 John 5",
+    "apiQueries": [
+     "1 john 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Hosea's story of how much God keeps loving His people, no matter what."
+ },
+ {
+  "day": 331,
+  "passages": [
+   {
+    "reference": "Hosea 5–6",
+    "apiQueries": [
+     "hosea 5",
+     "hosea 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "2 John 1",
+    "apiQueries": [
+     "2 john 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that God wants our love and loyalty more than anything else."
+ },
+ {
+  "day": 332,
+  "passages": [
+   {
+    "reference": "Hosea 7–8",
+    "apiQueries": [
+     "hosea 7",
+     "hosea 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 21",
+    "apiQueries": [
+     "proverbs 21"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read that God wants our love and loyalty more than anything else."
+ },
+ {
+  "day": 333,
+  "passages": [
+   {
+    "reference": "Hosea 9–10",
+    "apiQueries": [
+     "hosea 9",
+     "hosea 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "3 John 1",
+    "apiQueries": [
+     "3 john 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s invitation: come back to Me, and I will heal and love you freely."
+ },
+ {
+  "day": 334,
+  "passages": [
+   {
+    "reference": "Hosea 11–12",
+    "apiQueries": [
+     "hosea 11",
+     "hosea 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Jude 1",
+    "apiQueries": [
+     "jude 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s invitation: come back to Me, and I will heal and love you freely."
+ },
+ {
+  "day": 335,
+  "passages": [
+   {
+    "reference": "Hosea 13–14",
+    "apiQueries": [
+     "hosea 13",
+     "hosea 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 1",
+    "apiQueries": [
+     "revelation 1"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s invitation: come back to Me, and I will heal and love you freely."
+ },
+ {
+  "day": 336,
+  "passages": [
+   {
+    "reference": "Joel 1–2",
+    "apiQueries": [
+     "joel 1",
+     "joel 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 22",
+    "apiQueries": [
+     "proverbs 22"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how a swarm of locusts taught the people to return to God, who restores everything."
+ },
+ {
+  "day": 337,
+  "passages": [
+   {
+    "reference": "Joel 3",
+    "apiQueries": [
+     "joel 3"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 2",
+    "apiQueries": [
+     "revelation 2"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how a swarm of locusts taught the people to return to God, who restores everything."
+ },
+ {
+  "day": 338,
+  "passages": [
+   {
+    "reference": "Amos 1–2",
+    "apiQueries": [
+     "amos 1",
+     "amos 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 3",
+    "apiQueries": [
+     "revelation 3"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Amos the shepherd told everyone that God wants fairness for all people."
+ },
+ {
+  "day": 339,
+  "passages": [
+   {
+    "reference": "Amos 3–4",
+    "apiQueries": [
+     "amos 3",
+     "amos 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 23",
+    "apiQueries": [
+     "proverbs 23"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how Amos the shepherd told everyone that God wants fairness for all people."
+ },
+ {
+  "day": 340,
+  "passages": [
+   {
+    "reference": "Amos 5–6",
+    "apiQueries": [
+     "amos 5",
+     "amos 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 4",
+    "apiQueries": [
+     "revelation 4"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s call to let justice roll down like a mighty river."
+ },
+ {
+  "day": 341,
+  "passages": [
+   {
+    "reference": "Amos 7–8",
+    "apiQueries": [
+     "amos 7",
+     "amos 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 5",
+    "apiQueries": [
+     "revelation 5"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s call to let justice roll down like a mighty river."
+ },
+ {
+  "day": 342,
+  "passages": [
+   {
+    "reference": "Amos 9",
+    "apiQueries": [
+     "amos 9"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 6",
+    "apiQueries": [
+     "revelation 6"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s call to let justice roll down like a mighty river."
+ },
+ {
+  "day": 343,
+  "passages": [
+   {
+    "reference": "Obadiah 1",
+    "apiQueries": [
+     "obadiah 1"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 24",
+    "apiQueries": [
+     "proverbs 24"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how God sees when people are treated unfairly — and He makes things right."
+ },
+ {
+  "day": 344,
+  "passages": [
+   {
+    "reference": "Jonah 1–2",
+    "apiQueries": [
+     "jonah 1",
+     "jonah 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 7",
+    "apiQueries": [
+     "revelation 7"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Jonah ran from God and got swallowed by a great fish!"
+ },
+ {
+  "day": 345,
+  "passages": [
+   {
+    "reference": "Jonah 3–4",
+    "apiQueries": [
+     "jonah 3",
+     "jonah 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 8",
+    "apiQueries": [
+     "revelation 8"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Jonah learned that God loves to forgive — even people we don't like."
+ },
+ {
+  "day": 346,
+  "passages": [
+   {
+    "reference": "Micah 1–2",
+    "apiQueries": [
+     "micah 1",
+     "micah 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 25",
+    "apiQueries": [
+     "proverbs 25"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how Micah spoke up for people who were being treated unfairly."
+ },
+ {
+  "day": 347,
+  "passages": [
+   {
+    "reference": "Micah 3–4",
+    "apiQueries": [
+     "micah 3",
+     "micah 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 9",
+    "apiQueries": [
+     "revelation 9"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Micah spoke up for people who were being treated unfairly."
+ },
+ {
+  "day": 348,
+  "passages": [
+   {
+    "reference": "Micah 5–6",
+    "apiQueries": [
+     "micah 5",
+     "micah 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 10",
+    "apiQueries": [
+     "revelation 10"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that a special ruler would come from little Bethlehem — the Christmas town!"
+ },
+ {
+  "day": 349,
+  "passages": [
+   {
+    "reference": "Micah 7",
+    "apiQueries": [
+     "micah 7"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 11",
+    "apiQueries": [
+     "revelation 11"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Micah’s famous words: do justly, love mercy, and walk humbly with your God."
+ },
+ {
+  "day": 350,
+  "passages": [
+   {
+    "reference": "Nahum 1–2",
+    "apiQueries": [
+     "nahum 1",
+     "nahum 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 26–27",
+    "apiQueries": [
+     "proverbs 26",
+     "proverbs 27"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read that God is slow to anger but strong to protect His people."
+ },
+ {
+  "day": 351,
+  "passages": [
+   {
+    "reference": "Nahum 3",
+    "apiQueries": [
+     "nahum 3"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 12",
+    "apiQueries": [
+     "revelation 12"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that God is slow to anger but strong to protect His people."
+ },
+ {
+  "day": 352,
+  "passages": [
+   {
+    "reference": "Habakkuk 1–2",
+    "apiQueries": [
+     "habakkuk 1",
+     "habakkuk 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 13",
+    "apiQueries": [
+     "revelation 13"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read how Habakkuk asked God hard questions and learned to rejoice no matter what."
+ },
+ {
+  "day": 353,
+  "passages": [
+   {
+    "reference": "Habakkuk 3",
+    "apiQueries": [
+     "habakkuk 3"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 28",
+    "apiQueries": [
+     "proverbs 28"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read how Habakkuk asked God hard questions and learned to rejoice no matter what."
+ },
+ {
+  "day": 354,
+  "passages": [
+   {
+    "reference": "Zephaniah 1–2",
+    "apiQueries": [
+     "zephaniah 1",
+     "zephaniah 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 14",
+    "apiQueries": [
+     "revelation 14"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that God delights in His people and sings over them with joy!"
+ },
+ {
+  "day": 355,
+  "passages": [
+   {
+    "reference": "Zephaniah 3",
+    "apiQueries": [
+     "zephaniah 3"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 15",
+    "apiQueries": [
+     "revelation 15"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that God delights in His people and sings over them with joy!"
+ },
+ {
+  "day": 356,
+  "passages": [
+   {
+    "reference": "Haggai 1–2",
+    "apiQueries": [
+     "haggai 1",
+     "haggai 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 16",
+    "apiQueries": [
+     "revelation 16"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God telling His people: it's time to rebuild My house — and I am with you."
+ },
+ {
+  "day": 357,
+  "passages": [
+   {
+    "reference": "Zechariah 1–2",
+    "apiQueries": [
+     "zechariah 1",
+     "zechariah 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 29",
+    "apiQueries": [
+     "proverbs 29"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read Zechariah's visions promising that God will live with His people again."
+ },
+ {
+  "day": 358,
+  "passages": [
+   {
+    "reference": "Zechariah 3–4",
+    "apiQueries": [
+     "zechariah 3",
+     "zechariah 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 17",
+    "apiQueries": [
+     "revelation 17"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Zechariah's visions promising that God will live with His people again."
+ },
+ {
+  "day": 359,
+  "passages": [
+   {
+    "reference": "Zechariah 5–6",
+    "apiQueries": [
+     "zechariah 5",
+     "zechariah 6"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 18",
+    "apiQueries": [
+     "revelation 18"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read Zechariah's visions promising that God will live with His people again."
+ },
+ {
+  "day": 360,
+  "passages": [
+   {
+    "reference": "Zechariah 7–8",
+    "apiQueries": [
+     "zechariah 7",
+     "zechariah 8"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 30",
+    "apiQueries": [
+     "proverbs 30"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read God’s promise of a city full of boys and girls playing safely in the streets."
+ },
+ {
+  "day": 361,
+  "passages": [
+   {
+    "reference": "Zechariah 9–10",
+    "apiQueries": [
+     "zechariah 9",
+     "zechariah 10"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 19",
+    "apiQueries": [
+     "revelation 19"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about a King who comes humbly, riding on a donkey."
+ },
+ {
+  "day": 362,
+  "passages": [
+   {
+    "reference": "Zechariah 11–12",
+    "apiQueries": [
+     "zechariah 11",
+     "zechariah 12"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 20",
+    "apiQueries": [
+     "revelation 20"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read about a King who comes humbly, riding on a donkey."
+ },
+ {
+  "day": 363,
+  "passages": [
+   {
+    "reference": "Zechariah 13–14",
+    "apiQueries": [
+     "zechariah 13",
+     "zechariah 14"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 21",
+    "apiQueries": [
+     "revelation 21"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read that one day the Lord will be King over all the earth."
+ },
+ {
+  "day": 364,
+  "passages": [
+   {
+    "reference": "Malachi 1–2",
+    "apiQueries": [
+     "malachi 1",
+     "malachi 2"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Proverbs 31",
+    "apiQueries": [
+     "proverbs 31"
+    ],
+    "track": "proverbs"
+   }
+  ],
+  "kidSummary": "Today we read God reminding His people: I have loved you — bring Me your very best."
+ },
+ {
+  "day": 365,
+  "passages": [
+   {
+    "reference": "Malachi 3–4",
+    "apiQueries": [
+     "malachi 3",
+     "malachi 4"
+    ],
+    "track": "ot"
+   },
+   {
+    "reference": "Revelation 22",
+    "apiQueries": [
+     "revelation 22"
+    ],
+    "track": "nt"
+   }
+  ],
+  "kidSummary": "Today we read God’s promise to send a messenger to get hearts ready for Him."
+ }
+]

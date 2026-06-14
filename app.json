@@ -1,18 +1,24 @@
 {
   "expo": {
-    "name": "family-faith-scaffold",
-    "slug": "family-faith-scaffold",
+    "name": "Family & Faith",
+    "slug": "family-and-faith",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "familyfaithscaffold",
+    "scheme": "familyandfaith",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "supportsTablet": true,
+      "bundleIdentifier": "com.C323.familyandfaith",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "com.C323.familyandfaith",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FDF6E9",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -28,17 +34,36 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#FDF6E9",
           "android": {
             "image": "./assets/images/splash-icon.png",
-            "imageWidth": 76
+            "imageWidth": 96
           }
         }
-      ]
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#C99A3C"
+        }
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "fc964871-2945-46cf-a625-7e23b26e52db"
+      }
+    },
+    "owner": "martyparker13",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/fc964871-2945-46cf-a625-7e23b26e52db"
     }
   }
 }
