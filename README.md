@@ -1,4 +1,4 @@
-# Family & Faith 🏡✝️
+# Faith & Family 🏡✝️
 
 A warm, family-friendly Bible app for reading, talking, and praying through
 the whole Bible in a year — together. Built with Expo (managed workflow),

@@ -1,4 +1,4 @@
-# Store Listing Copy — Family & Faith
+# Store Listing Copy — Faith & Family
 
 Everything below is ready to paste into App Store Connect and Google Play
 Console. Character limits are noted where the stores enforce them.
@@ -7,7 +7,7 @@ Console. Character limits are noted where the stores enforce them.
 
 ## Shared
 
-**App name:** Family & Faith
+**App name:** Faith & Family
 **Category:** Lifestyle (primary) · Reference (secondary, iOS only)
 **Privacy policy URL:** host `docs/privacy.html` and paste its URL
 (GitHub Pages: repo Settings → Pages → deploy from `/docs` folder, then the
@@ -33,7 +33,7 @@ URL is `https://<username>.github.io/<repo>/privacy.html`)
 
 **Description:**
 
-Family & Faith helps your whole family grow closer to God together — around
+Faith & Family helps your whole family grow closer to God together — around
 the dinner table, at bedtime, or on the couch on a Saturday morning.
 
 ONE YEAR THROUGH THE WHOLE BIBLE

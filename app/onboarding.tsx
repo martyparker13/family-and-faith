@@ -147,7 +147,7 @@ export default function OnboardingScreen() {
           <Ionicons name="home" size={44} color={theme.colors.goldDeep} />
         </View>
         <AppText variant="display" center accessibilityRole="header">
-          Family & Faith
+          Faith & Family
         </AppText>
         <AppText variant="body" center color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm, maxWidth: 300 }}>
           A year of reading, talking, and praying through the Bible — together.

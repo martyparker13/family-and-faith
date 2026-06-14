@@ -59,7 +59,7 @@ export default function SettingsScreen() {
       if (!allowed) {
         Alert.alert(
           'Notifications are off',
-          'Enable notifications for Family & Faith in your device settings to get the daily reminder.'
+          'Enable notifications for Faith & Family in your device settings to get the daily reminder.'
         );
         return;
       }
@@ -209,7 +209,7 @@ export default function SettingsScreen() {
       <SectionLabel>About</SectionLabel>
       <Card>
         <AppText variant="small" color={theme.colors.textMuted}>
-          Family & Faith v1.0 · Scripture quotations are from the World English Bible (WEB),
+          Faith & Family v1.0 · Scripture quotations are from the World English Bible (WEB),
           which is in the public domain. All your family’s progress, favorites, and prayers are
           stored only on this device.
         </AppText>

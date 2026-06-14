@@ -1,5 +1,5 @@
 /**
- * Color palettes for Family & Faith.
+ * Color palettes for Faith & Family.
  *
  * The palette is intentionally warm and book-like: soft creams, warm golds,
  * and gentle blues/greens. Dark mode keeps the same warmth (candle-lit browns)
