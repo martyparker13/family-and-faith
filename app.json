@@ -5,18 +5,18 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "familyandfaith",
+    "scheme": "faithandfamily",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.C323.familyandfaith",
+      "bundleIdentifier": "com.C323.faithandfamily",
       "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
-      "package": "com.C323.familyandfaith",
+      "package": "com.C323.faithandfamily",
       "adaptiveIcon": {
         "backgroundColor": "#FDF6E9",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
