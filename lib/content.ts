@@ -23,6 +23,17 @@ export interface PlanPassage {
   track: 'ot' | 'nt' | 'psalms' | 'proverbs';
 }
 
+export interface ParentNotes {
+  /** Short label, e.g. "Violence", "Death", "Mature themes". */
+  trigger: string;
+  /** 1–2 sentences for ages 3–7. */
+  little: string;
+  /** 1–2 sentences for ages 8–12. */
+  older: string;
+  /** Optional guidance for ages 13+. */
+  teen?: string;
+}
+
 export interface PlanDay {
   day: number;
   passages: PlanPassage[];
@@ -32,6 +43,8 @@ export interface PlanDay {
   teachingPoint?: string;
   /** Shorter bedtime-friendly highlights (2–3 verse references). */
   bedtimeHighlight?: string[];
+  /** Age-tiered guidance for sensitive passages. */
+  parentNotes?: ParentNotes;
 }
 
 export const readingPlan = readingPlanJson as PlanDay[];

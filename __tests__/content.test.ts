@@ -39,6 +39,21 @@ describe('reading plan', () => {
       expect(day.bedtimeHighlight?.length).toBeGreaterThanOrEqual(1);
     }
   });
+
+  it('validates parentNotes when present', () => {
+    const withNotes = (readingPlan as {
+      parentNotes?: { trigger: string; little: string; older: string; teen?: string };
+    }[]).filter((d) => d.parentNotes);
+    expect(withNotes.length).toBeGreaterThanOrEqual(40);
+    expect(withNotes.length).toBeLessThanOrEqual(60);
+    for (const day of withNotes) {
+      const n = day.parentNotes!;
+      expect(n.trigger.length).toBeGreaterThan(2);
+      expect(n.little.length).toBeGreaterThan(10);
+      expect(n.older.length).toBeGreaterThan(10);
+      if (n.teen !== undefined) expect(n.teen.length).toBeGreaterThan(10);
+    }
+  });
 });
 
 describe('devotionals', () => {

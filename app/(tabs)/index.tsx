@@ -178,7 +178,43 @@ export default function TodayScreen() {
         <AppText variant="small" semiBold color={theme.colors.green} style={{ marginTop: theme.spacing.sm }}>
           {parentPrep.questionHint}
         </AppText>
+        {parentPrep.parentNoteTrigger ? (
+          <View
+            style={{
+              marginTop: theme.spacing.md,
+              paddingTop: theme.spacing.md,
+              borderTopWidth: 1,
+              borderTopColor: theme.colors.border,
+            }}
+          >
+            <AppText variant="caption" bold scaled={false} color={theme.colors.clay}>
+              SENSITIVE READING · {parentPrep.parentNoteTrigger.toUpperCase()}
+            </AppText>
+            <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 4 }}>
+              {parentPrep.parentNotePreview}
+            </AppText>
+          </View>
+        ) : null}
       </ExpandableCard>
+
+      <Pressable
+        onPress={() => router.push(`/quick-evening?day=${day}`)}
+        accessibilityRole="button"
+        accessibilityLabel="Short on time? Try a five-minute family moment"
+        style={({ pressed }) => ({
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: theme.spacing.sm,
+          marginTop: theme.spacing.md,
+          opacity: pressed ? 0.75 : 1,
+        })}
+      >
+        <Ionicons name="timer-outline" size={18} color={theme.colors.goldDeep} />
+        <AppText variant="small" semiBold color={theme.colors.goldDeep}>
+          Short on time? 5-minute family moment →
+        </AppText>
+      </Pressable>
 
       <Card style={{ marginTop: theme.spacing.md }}>
         <View
@@ -373,14 +409,34 @@ function RhythmDashboardCard({
         <AppText variant="caption" bold scaled={false} style={{ letterSpacing: 0.6, flex: 1 }}>
           {eyebrow.toUpperCase()}
         </AppText>
-        {done ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-            <Ionicons name="checkmark-circle" size={20} color={theme.colors.success} />
-            <AppText variant="caption" semiBold scaled={false} color={theme.colors.success}>
-              Done
-            </AppText>
-          </View>
-        ) : null}
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm }}>
+          {slot === 'morning' && plan.parentNotes ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 4,
+                backgroundColor: theme.colors.surfaceAlt,
+                borderRadius: theme.radius.pill,
+                paddingHorizontal: 8,
+                paddingVertical: 2,
+              }}
+            >
+              <Ionicons name="shield-checkmark-outline" size={14} color={theme.colors.clay} />
+              <AppText variant="caption" semiBold scaled={false} color={theme.colors.clay}>
+                Parent note
+              </AppText>
+            </View>
+          ) : null}
+          {done ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              <Ionicons name="checkmark-circle" size={20} color={theme.colors.success} />
+              <AppText variant="caption" semiBold scaled={false} color={theme.colors.success}>
+                Done
+              </AppText>
+            </View>
+          ) : null}
+        </View>
       </View>
       <AppText variant="title" semiBold style={{ marginTop: theme.spacing.sm }}>
         {title}

@@ -59,6 +59,14 @@ export default function DevotionalScreen() {
 
       <ParentTipBanner screen="devotional" day={day} />
 
+      <AppButton
+        label="Short on time? 5-minute moment"
+        icon="timer-outline"
+        variant="ghost"
+        onPress={() => router.push(`/quick-evening?day=${day}`)}
+        style={{ marginTop: theme.spacing.sm }}
+      />
+
       <AppText
         variant="display"
         center

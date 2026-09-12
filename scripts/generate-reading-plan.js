@@ -21,6 +21,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { HARD_PASSAGE_NOTES } = require('./data/hard-passage-notes');
+
 // [name, chapters, chunkSize] — chunkSize 3 for list-heavy books keeps the
 // total at exactly 365 OT chunks while sparing families long slogs elsewhere.
 const OT_BOOKS = [
@@ -491,6 +493,7 @@ function main() {
       ot.reference,
       ...(second.chapters === 1 ? [second.reference] : [second.reference.split('–')[0].trim()]),
     ].slice(0, 3);
+    const parentNotes = HARD_PASSAGE_NOTES[day];
     plan.push({
       day,
       passages: [
@@ -500,6 +503,7 @@ function main() {
       kidSummary,
       teachingPoint: kidSummary.replace(/^Today we read about /i, 'Remember: ').replace(/\.$/, '.'),
       bedtimeHighlight,
+      ...(parentNotes ? { parentNotes } : {}),
     });
   }
 
