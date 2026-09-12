@@ -69,6 +69,15 @@ export default function PlanScreen() {
         keyExtractor={(item) => String(item.day)}
         initialScrollIndex={initialIndex}
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={(info) => {
+          listRef.current?.scrollToOffset({
+            offset: info.averageItemLength * info.index,
+            animated: false,
+          });
+          setTimeout(() => {
+            listRef.current?.scrollToIndex({ index: info.index, animated: false });
+          }, 100);
+        }}
         contentContainerStyle={{
           paddingBottom: insets.bottom + theme.spacing.xl,
           // Book-width column on tablets, matching the Screen wrapper.

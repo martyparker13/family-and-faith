@@ -11,8 +11,9 @@ import { SectionLabel } from '@/components/SectionLabel';
 import { TextSizeControl } from '@/components/TextSizeControl';
 import { clearBibleCache } from '@/lib/bible';
 import { currentPlanDay, todayISO } from '@/lib/dates';
+import { shareFamilyDataExport } from '@/lib/export-data';
 import { requestNotificationPermission, scheduleDailyReminder } from '@/lib/notifications';
-import { prefetchDays, type PrefetchProgress } from '@/lib/prefetch';
+import { prefetchDays, type PrefetchResult } from '@/lib/prefetch';
 import { useTheme } from '@/lib/theme-context';
 import { useProgress } from '@/store/progress';
 import { useSettings, type SpeechRate, type ThemePreference } from '@/store/settings';
@@ -39,19 +40,32 @@ const SPEECH_RATE_OPTIONS: { label: string; value: SpeechRate }[] = [
   { label: 'Fast', value: 'fast' },
 ];
 
+function formatReminderTime(time: { hour: number; minute: number }): string {
+  const d = new Date();
+  d.setHours(time.hour, time.minute, 0, 0);
+  return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+}
+
+function reminderSelectedIndex(reminder: { hour: number; minute: number } | null): number {
+  return REMINDER_OPTIONS.findIndex((o) => {
+    if (reminder === null) return o.value === null;
+    if (o.value === null) return false;
+    return o.value.hour === reminder.hour && o.value.minute === reminder.minute;
+  });
+}
+
 /** Settings: family name, appearance, text size, reminder, and plan restart. */
 export default function SettingsScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const settings = useSettings();
-  const [name, setName] = useState(settings.familyName);
-
-  const reminderLabel = settings.reminder
+  const presetMatch = settings.reminder
     ? REMINDER_OPTIONS.find(
         (o) =>
           o.value?.hour === settings.reminder?.hour && o.value?.minute === settings.reminder?.minute
-      )?.label ?? 'Custom'
-    : 'Off';
+      )
+    : REMINDER_OPTIONS.find((o) => o.value === null);
+  const reminderLabel = presetMatch?.label ?? (settings.reminder ? formatReminderTime(settings.reminder) : 'Off');
 
   const pickReminder = async (option: (typeof REMINDER_OPTIONS)[number]) => {
     if (option.value) {
@@ -71,10 +85,17 @@ export default function SettingsScreen() {
   const restartPlan = () => {
     Alert.alert(
       'Restart the plan?',
-      'Day 1 will become today. Your completed-day history stays saved.',
+      'Day 1 will become today and all completed-day checkmarks will be cleared so progress matches the new calendar. Your journal, favorites, and prayer list stay saved.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Restart', style: 'destructive', onPress: () => settings.setPlanStartDate(todayISO()) },
+        {
+          text: 'Restart',
+          style: 'destructive',
+          onPress: () => {
+            settings.setPlanStartDate(todayISO());
+            useProgress.getState().resetProgress();
+          },
+        },
       ]
     );
   };
@@ -108,6 +129,14 @@ export default function SettingsScreen() {
     ]);
   };
 
+  const exportData = async () => {
+    try {
+      await shareFamilyDataExport();
+    } catch {
+      Alert.alert('Export failed', 'Could not open the share sheet. Please try again.');
+    }
+  };
+
   return (
     <Screen contentStyle={{ paddingTop: insets.top + theme.spacing.lg }}>
       <AppText variant="heading" semiBold accessibilityRole="header">
@@ -115,24 +144,10 @@ export default function SettingsScreen() {
       </AppText>
 
       <SectionLabel>Family name</SectionLabel>
-      <TextInput
-        value={name}
-        onChangeText={setName}
-        onEndEditing={() => settings.setFamilyName(name.trim())}
-        placeholder="e.g. The Parker Family"
-        placeholderTextColor={theme.colors.textMuted}
-        accessibilityLabel="Family name"
-        style={{
-          minHeight: theme.minTouch + 4,
-          borderWidth: 1,
-          borderColor: theme.colors.border,
-          borderRadius: theme.radius.md,
-          paddingHorizontal: theme.spacing.lg,
-          color: theme.colors.text,
-          fontFamily: theme.fonts.sans,
-          fontSize: theme.fontSizes.body,
-          backgroundColor: theme.colors.surface,
-        }}
+      <FamilyNameInput
+        key={settings.familyName}
+        familyName={settings.familyName}
+        onSave={(name) => settings.setFamilyName(name)}
       />
 
       <SectionLabel>Appearance</SectionLabel>
@@ -157,7 +172,7 @@ export default function SettingsScreen() {
       <SectionLabel>{`Daily reminder · currently ${reminderLabel}`}</SectionLabel>
       <OptionRow
         options={REMINDER_OPTIONS.map((o) => o.label)}
-        selectedIndex={REMINDER_OPTIONS.findIndex((o) => o.label === reminderLabel)}
+        selectedIndex={reminderSelectedIndex(settings.reminder)}
         onSelect={(i) => pickReminder(REMINDER_OPTIONS[i])}
       />
 
@@ -168,7 +183,8 @@ export default function SettingsScreen() {
             Restart the plan from today
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Day 1 started {settings.planStartDate ?? '—'}. Restarting makes today Day 1 again.
+            Day 1 started {settings.planStartDate ?? '—'}. Restarting makes today Day 1 again and
+            clears checkmarks so they match the new calendar.
           </AppText>
         </Card>
         <Card
@@ -206,6 +222,16 @@ export default function SettingsScreen() {
       <SectionLabel>Offline reading</SectionLabel>
       <DownloadAheadCard planStartDate={settings.planStartDate} />
 
+      <SectionLabel>Your data</SectionLabel>
+      <Card onPress={exportData} accessibilityLabel="Export family data as JSON backup">
+        <AppText variant="body" semiBold>
+          Export family data
+        </AppText>
+        <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
+          Save journal, prayers, favorites, and progress as a JSON file you can keep or share.
+        </AppText>
+      </Card>
+
       <SectionLabel>About</SectionLabel>
       <Card>
         <AppText variant="small" color={theme.colors.textMuted}>
@@ -221,24 +247,36 @@ export default function SettingsScreen() {
 /** Caches the next 30 days of chapters for fully-offline reading. */
 function DownloadAheadCard({ planStartDate }: { planStartDate: string | null }) {
   const theme = useTheme();
-  const [progress, setProgress] = useState<PrefetchProgress | null>(null);
+  const [result, setResult] = useState<PrefetchResult | null>(null);
   const [running, setRunning] = useState(false);
 
   const start = async () => {
     if (running) return;
     setRunning(true);
+    setResult(null);
     const day = planStartDate ? currentPlanDay(planStartDate, todayISO()) : 1;
-    const result = await prefetchDays(day, 30, setProgress);
-    setProgress(result);
+    const prefetchResult = await prefetchDays(day, 30, (p) =>
+      setResult({ ...p, complete: p.failed === 0 })
+    );
+    setResult(prefetchResult);
     setRunning(false);
   };
 
-  const finished = !running && progress !== null;
+  const finished = !running && result !== null;
+  const savedCount = result ? result.done - result.failed : 0;
   const label = running
-    ? `Downloading… ${progress ? `${progress.done} of ${progress.total} chapters` : ''}`
+    ? `Downloading… ${result ? `${result.done} of ${result.total} chapters` : ''}`
     : finished
-      ? `Done — ${progress.done} of ${progress.total} chapters saved`
+      ? result.complete
+        ? `Done — all ${result.total} chapters saved`
+        : `${savedCount} of ${result.total} chapters saved · ${result.failed} failed`
       : 'Download the next 30 days';
+
+  const subtitle = finished
+    ? result.complete
+      ? 'Upcoming chapters are on this device for offline reading.'
+      : 'Some chapters could not download. Tap to retry.'
+    : 'Saves upcoming chapters on this device so readings work without internet.';
 
   return (
     <Card
@@ -250,9 +288,15 @@ function DownloadAheadCard({ planStartDate }: { planStartDate: string | null }) 
           <ActivityIndicator color={theme.colors.gold} />
         ) : (
           <Ionicons
-            name={finished ? 'checkmark-circle' : 'cloud-download'}
+            name={finished ? (result?.complete ? 'checkmark-circle' : 'alert-circle') : 'cloud-download'}
             size={24}
-            color={finished ? theme.colors.success : theme.colors.goldDeep}
+            color={
+              finished
+                ? result?.complete
+                  ? theme.colors.success
+                  : theme.colors.goldDeep
+                : theme.colors.goldDeep
+            }
           />
         )}
         <View style={{ flex: 1 }}>
@@ -260,11 +304,44 @@ function DownloadAheadCard({ planStartDate }: { planStartDate: string | null }) 
             {label}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Saves upcoming chapters on this device so readings work without internet.
+            {subtitle}
           </AppText>
         </View>
       </View>
     </Card>
+  );
+}
+
+function FamilyNameInput({
+  familyName,
+  onSave,
+}: {
+  familyName: string;
+  onSave: (name: string) => void;
+}) {
+  const theme = useTheme();
+  const [name, setName] = useState(familyName);
+
+  return (
+    <TextInput
+      value={name}
+      onChangeText={setName}
+      onEndEditing={() => onSave(name.trim())}
+      placeholder="e.g. The Parker Family"
+      placeholderTextColor={theme.colors.textMuted}
+      accessibilityLabel="Family name"
+      style={{
+        minHeight: theme.minTouch + 4,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        borderRadius: theme.radius.md,
+        paddingHorizontal: theme.spacing.lg,
+        color: theme.colors.text,
+        fontFamily: theme.fonts.sans,
+        fontSize: theme.fontSizes.body,
+        backgroundColor: theme.colors.surface,
+      }}
+    />
   );
 }
 

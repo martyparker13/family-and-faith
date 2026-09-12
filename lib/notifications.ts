@@ -5,6 +5,9 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
+/** Stable identifier so we only cancel/reschedule the daily reminder. */
+export const DAILY_REMINDER_ID = 'ff-daily-reminder';
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
@@ -35,10 +38,11 @@ export async function requestNotificationPermission(): Promise<boolean> {
 export async function scheduleDailyReminder(
   time: { hour: number; minute: number } | null
 ): Promise<void> {
-  await Notifications.cancelAllScheduledNotificationsAsync();
+  await Notifications.cancelScheduledNotificationAsync(DAILY_REMINDER_ID);
   if (!time) return;
 
   await Notifications.scheduleNotificationAsync({
+    identifier: DAILY_REMINDER_ID,
     content: {
       title: 'Family time with God 🌿',
       body: "Today's reading, devotional, and prayer are ready for your family.",

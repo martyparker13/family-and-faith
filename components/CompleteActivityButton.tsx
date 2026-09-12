@@ -1,7 +1,12 @@
 import React from 'react';
 
 import { AppButton } from './AppButton';
-import { celebrationFor, celebrationHaptics, undoHaptics } from '@/lib/celebrate';
+import {
+  celebrationFor,
+  celebrationHaptics,
+  isStreakMilestoneCelebration,
+  undoHaptics,
+} from '@/lib/celebrate';
 import { todayISO } from '@/lib/dates';
 import { useCelebration } from '@/store/celebration';
 import { useProgress, type Activity } from '@/store/progress';
@@ -35,11 +40,14 @@ export function CompleteActivityButton({ activity, day }: { activity: Activity; 
       undoHaptics();
       return;
     }
-    // Read the post-toggle state for milestone/all-three detection.
     const after = useProgress.getState();
-    const celebration = celebrationFor(after, day, today);
+    const celebration = celebrationFor(after, day, today, after.celebratedMilestones);
     fire(celebration);
     celebrationHaptics(celebration.size);
+    const milestone = isStreakMilestoneCelebration(after, today, celebration);
+    if (milestone !== null) {
+      after.recordMilestoneCelebration(milestone, today);
+    }
   };
 
   return (
