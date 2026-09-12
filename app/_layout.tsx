@@ -17,6 +17,8 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Confetti } from '@/components/Confetti';
+import { scheduleDailyReminder } from '@/lib/notifications';
+import { allStoresHydrated, waitForAllStoresHydrated } from '@/lib/store-hydration';
 import { ThemeProvider, useTheme } from '@/lib/theme-context';
 import { useCelebration } from '@/store/celebration';
 import { useSettings } from '@/store/settings';
@@ -25,8 +27,8 @@ SplashScreen.preventAutoHideAsync();
 
 /**
  * Root layout: loads the font pairing (Lora for scripture, Nunito for UI),
- * waits for the persisted settings store to hydrate from AsyncStorage, and
- * mounts the navigation stack inside the theme provider.
+ * waits for all persisted stores to hydrate from AsyncStorage, re-registers
+ * the daily reminder from saved settings, and mounts the navigation stack.
  */
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -38,12 +40,26 @@ export default function RootLayout() {
     Nunito_700Bold,
     Nunito_800ExtraBold,
   });
-  const [hydrated, setHydrated] = useState(useSettings.persist.hasHydrated());
+  const [hydrated, setHydrated] = useState(allStoresHydrated());
+  const reminder = useSettings((s) => s.reminder);
 
   useEffect(() => {
-    const unsub = useSettings.persist.onFinishHydration(() => setHydrated(true));
-    return unsub;
-  }, []);
+    if (hydrated) return;
+    let cancelled = false;
+    waitForAllStoresHydrated().then(() => {
+      if (!cancelled) setHydrated(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    scheduleDailyReminder(reminder).catch(() => {
+      // Permission or platform issues — user can re-enable in Settings.
+    });
+  }, [hydrated, reminder]);
 
   useEffect(() => {
     if (fontsLoaded && hydrated) {

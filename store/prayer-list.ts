@@ -27,12 +27,14 @@ export const usePrayerList = create<PrayerListState>()(
   persist(
     (set) => ({
       requests: [],
-      addRequest: (title, note) =>
+      addRequest: (title, note) => {
+        const trimmedTitle = title.trim();
+        if (!trimmedTitle) return;
         set((state) => ({
           requests: [
             {
               id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-              title: title.trim(),
+              title: trimmedTitle,
               note: note.trim(),
               createdAt: new Date().toISOString(),
               answeredAt: null,
@@ -40,7 +42,8 @@ export const usePrayerList = create<PrayerListState>()(
             },
             ...state.requests,
           ],
-        })),
+        }));
+      },
       markAnswered: (id, answeredNote) =>
         set((state) => ({
           requests: state.requests.map((r) =>

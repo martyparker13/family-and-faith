@@ -19,7 +19,7 @@ interface ReminderTime {
   minute: number;
 }
 
-/** Preset reminder times; the final chip opens a native time picker. */
+/** Preset reminder times; the final chips are Custom and Off. */
 const REMINDER_PRESETS: { label: string; value: ReminderTime }[] = [
   { label: '7:00 AM', value: { hour: 7, minute: 0 } },
   { label: '8:00 AM', value: { hour: 8, minute: 0 } },
@@ -31,6 +31,8 @@ const REMINDER_PRESETS: { label: string; value: ReminderTime }[] = [
 
 /** Index of the "Custom" chip (one past the presets). */
 const CUSTOM_INDEX = REMINDER_PRESETS.length;
+/** Index of the "Off" chip (no daily reminder). */
+const OFF_INDEX = REMINDER_PRESETS.length + 1;
 
 /** "9:15 PM" style label for a reminder time. */
 function formatTime({ hour, minute }: ReminderTime): string {
@@ -97,9 +99,11 @@ export default function OnboardingScreen() {
   const [showAndroidPicker, setShowAndroidPicker] = useState(false);
 
   const customSelected = reminderIndex === CUSTOM_INDEX;
+  const offSelected = reminderIndex === OFF_INDEX;
   const reminderLabels = [
     ...REMINDER_PRESETS.map((o) => o.label),
     customSelected ? `Custom · ${formatTime(customTime)}` : 'Custom…',
+    'Off',
   ];
 
   const pickReminder = (index: number) => {
@@ -117,16 +121,33 @@ export default function OnboardingScreen() {
   };
 
   const begin = async () => {
-    const reminder = customSelected ? customTime : REMINDER_PRESETS[reminderIndex].value;
-    const allowed = await requestNotificationPermission();
-    if (allowed) {
-      await scheduleDailyReminder(reminder);
+    let reminder: ReminderTime | null;
+    if (offSelected) {
+      reminder = null;
+    } else if (customSelected) {
+      reminder = customTime;
+    } else {
+      reminder = REMINDER_PRESETS[reminderIndex].value;
     }
-    completeOnboarding({
-      familyName: familyName.trim(),
-      planStartDate: START_OPTIONS[startIndex].date(),
-      reminder: allowed ? reminder : null,
-    });
+
+    if (reminder) {
+      const allowed = await requestNotificationPermission();
+      if (allowed) {
+        await scheduleDailyReminder(reminder);
+      }
+      completeOnboarding({
+        familyName: familyName.trim(),
+        planStartDate: START_OPTIONS[startIndex].date(),
+        reminder: allowed ? reminder : null,
+      });
+    } else {
+      await scheduleDailyReminder(null);
+      completeOnboarding({
+        familyName: familyName.trim(),
+        planStartDate: START_OPTIONS[startIndex].date(),
+        reminder: null,
+      });
+    }
     router.replace('/(tabs)');
   };
 

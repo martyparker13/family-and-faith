@@ -22,11 +22,14 @@ interface ProgressState {
   prayerDays: Record<number, string>;
   /** Weeks (0-based index) whose memory verse the family practiced. */
   practicedWeeks: Record<number, string>;
+  /** Streak milestone values (7, 30, …) → last calendar date celebrated. */
+  celebratedMilestones: Record<number, string>;
 
   toggleActivity: (activity: Activity, day: number, todayISO: string) => void;
   /** Back-compat alias for toggling the reading. */
   toggleDay: (day: number, todayISO: string) => void;
   togglePracticedWeek: (week: number, todayISO: string) => void;
+  recordMilestoneCelebration: (streak: number, dateISO: string) => void;
   resetProgress: () => void;
 }
 
@@ -43,6 +46,7 @@ export const useProgress = create<ProgressState>()(
       devotionalDays: {},
       prayerDays: {},
       practicedWeeks: {},
+      celebratedMilestones: {},
 
       toggleActivity: (activity, day, todayISO) =>
         set((state) => {
@@ -75,8 +79,18 @@ export const useProgress = create<ProgressState>()(
           }
           return { practicedWeeks: next };
         }),
+      recordMilestoneCelebration: (streak, dateISO) =>
+        set((state) => ({
+          celebratedMilestones: { ...state.celebratedMilestones, [streak]: dateISO },
+        })),
       resetProgress: () =>
-        set({ completedDays: {}, devotionalDays: {}, prayerDays: {}, practicedWeeks: {} }),
+        set({
+          completedDays: {},
+          devotionalDays: {},
+          prayerDays: {},
+          practicedWeeks: {},
+          celebratedMilestones: {},
+        }),
     }),
     {
       name: 'ff-progress',
