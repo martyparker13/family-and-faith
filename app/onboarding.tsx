@@ -10,45 +10,18 @@ import { AppText } from '@/components/AppText';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
 import { dateToISO, todayISO } from '@/lib/dates';
-import { requestNotificationPermission, scheduleDailyReminder } from '@/lib/notifications';
+import { requestNotificationPermission, scheduleRhythmReminders } from '@/lib/notifications';
 import { useTheme } from '@/lib/theme-context';
-import { useSettings } from '@/store/settings';
-
-interface ReminderTime {
-  hour: number;
-  minute: number;
-}
-
-/** Preset reminder times; the final chip opens a native time picker. */
-const REMINDER_PRESETS: { label: string; value: ReminderTime }[] = [
-  { label: '7:00 AM', value: { hour: 7, minute: 0 } },
-  { label: '8:00 AM', value: { hour: 8, minute: 0 } },
-  { label: '12:00 PM', value: { hour: 12, minute: 0 } },
-  { label: '6:00 PM', value: { hour: 18, minute: 0 } },
-  { label: '7:30 PM', value: { hour: 19, minute: 30 } },
-  { label: '8:30 PM', value: { hour: 20, minute: 30 } },
-];
-
-/** Index of the "Custom" chip (one past the presets). */
-const CUSTOM_INDEX = REMINDER_PRESETS.length;
-
-/** "9:15 PM" style label for a reminder time. */
-function formatTime({ hour, minute }: ReminderTime): string {
-  const d = new Date();
-  d.setHours(hour, minute, 0, 0);
-  return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
-}
-
-/** Converts a reminder time to a Date for the native picker. */
-function timeToDate({ hour, minute }: ReminderTime): Date {
-  const d = new Date();
-  d.setHours(hour, minute, 0, 0);
-  return d;
-}
+import {
+  DEFAULT_REMINDERS,
+  useSettings,
+  type AgeBand,
+  type ChildProfile,
+  type ReminderTime,
+} from '@/store/settings';
 
 interface StartOption {
   label: string;
-  /** Returns the plan start date as local YYYY-MM-DD. */
   date: () => string;
 }
 
@@ -80,9 +53,37 @@ const START_OPTIONS: StartOption[] = [
   },
 ];
 
+const RHYTHM_PRESETS: { label: string; times: Record<'morning' | 'dinner' | 'bedtime', ReminderTime | null> }[] = [
+  {
+    label: '7 AM · 6 PM · 8 PM',
+    times: { morning: { hour: 7, minute: 0 }, dinner: { hour: 18, minute: 0 }, bedtime: { hour: 20, minute: 0 } },
+  },
+  {
+    label: '8 AM · 6:30 PM · 8:30 PM',
+    times: {
+      morning: { hour: 8, minute: 0 },
+      dinner: { hour: 18, minute: 30 },
+      bedtime: { hour: 20, minute: 30 },
+    },
+  },
+  { label: 'Reminders off', times: { morning: null, dinner: null, bedtime: null } },
+];
+
+const AGE_BANDS: { label: string; value: AgeBand }[] = [
+  { label: 'Little (3–7)', value: 'little' },
+  { label: 'Older (8–12)', value: 'older' },
+  { label: 'Teen (13+)', value: 'teen' },
+];
+
+function formatTime({ hour, minute }: ReminderTime): string {
+  const d = new Date();
+  d.setHours(hour, minute, 0, 0);
+  return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+}
+
 /**
- * First-launch onboarding: optional family name, daily reminder time, and
- * the start date for the 365-day plan (Day 1 is whenever the family begins).
+ * First-launch onboarding: family name, children, three-rhythm reminders,
+ * and plan start date.
  */
 export default function OnboardingScreen() {
   const theme = useTheme();
@@ -90,42 +91,40 @@ export default function OnboardingScreen() {
   const completeOnboarding = useSettings((s) => s.completeOnboarding);
 
   const [familyName, setFamilyName] = useState('');
-  const [reminderIndex, setReminderIndex] = useState(4); // 7:30 PM default
-  const [startIndex, setStartIndex] = useState(0); // Today
-  const [customTime, setCustomTime] = useState<ReminderTime>({ hour: 21, minute: 0 });
-  // Android shows the time picker as a dialog; iOS renders it inline.
-  const [showAndroidPicker, setShowAndroidPicker] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+  const [presetIndex, setPresetIndex] = useState(0);
+  const [customTimes, setCustomTimes] = useState(DEFAULT_REMINDERS);
+  const [useCustom, setUseCustom] = useState(false);
+  const [children, setChildren] = useState<ChildProfile[]>([]);
+  const [childBand, setChildBand] = useState<AgeBand>('little');
 
-  const customSelected = reminderIndex === CUSTOM_INDEX;
-  const reminderLabels = [
-    ...REMINDER_PRESETS.map((o) => o.label),
-    customSelected ? `Custom · ${formatTime(customTime)}` : 'Custom…',
-  ];
-
-  const pickReminder = (index: number) => {
-    setReminderIndex(index);
-    if (index === CUSTOM_INDEX && Platform.OS === 'android') {
-      setShowAndroidPicker(true);
-    }
-  };
-
-  const onPickTime = (event: DateTimePickerEvent, date?: Date) => {
-    if (Platform.OS === 'android') setShowAndroidPicker(false);
-    if (event.type === 'set' && date) {
-      setCustomTime({ hour: date.getHours(), minute: date.getMinutes() });
-    }
+  const addChild = () => {
+    setChildren((c) => [...c, { ageBand: childBand }]);
   };
 
   const begin = async () => {
-    const reminder = customSelected ? customTime : REMINDER_PRESETS[reminderIndex].value;
-    const allowed = await requestNotificationPermission();
+    const times = useCustom
+      ? customTimes
+      : RHYTHM_PRESETS[presetIndex].times;
+    const hasAnyReminder = times.morning || times.dinner || times.bedtime;
+    let allowed = false;
+    if (hasAnyReminder) {
+      allowed = await requestNotificationPermission();
+    }
     if (allowed) {
-      await scheduleDailyReminder(reminder);
+      await scheduleRhythmReminders({
+        morning: times.morning,
+        dinner: times.dinner,
+        bedtime: times.bedtime,
+      });
     }
     completeOnboarding({
       familyName: familyName.trim(),
       planStartDate: START_OPTIONS[startIndex].date(),
-      reminder: allowed ? reminder : null,
+      morningReminder: allowed ? times.morning : null,
+      dinnerReminder: allowed ? times.dinner : null,
+      bedtimeReminder: allowed ? times.bedtime : null,
+      children,
     });
     router.replace('/(tabs)');
   };
@@ -150,7 +149,7 @@ export default function OnboardingScreen() {
           Faith & Family
         </AppText>
         <AppText variant="body" center color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm, maxWidth: 300 }}>
-          A year of reading, talking, and praying through the Bible — together.
+          Morning reading, dinner talk, bedtime prayer — a daily rhythm together.
         </AppText>
       </View>
 
@@ -174,6 +173,19 @@ export default function OnboardingScreen() {
         }}
       />
 
+      <SectionLabel>Who is in your family? (optional)</SectionLabel>
+      <ChipRow
+        options={AGE_BANDS.map((b) => b.label)}
+        selected={AGE_BANDS.findIndex((b) => b.value === childBand)}
+        onSelect={(i) => setChildBand(AGE_BANDS[i].value)}
+      />
+      <AppButton label="Add a child" variant="secondary" onPress={addChild} style={{ marginTop: theme.spacing.sm }} />
+      {children.length > 0 ? (
+        <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm }}>
+          {children.length} child profile{children.length === 1 ? '' : 's'} added — devotionals will match their ages.
+        </AppText>
+      ) : null}
+
       <SectionLabel>When does Day 1 begin?</SectionLabel>
       <ChipRow
         options={START_OPTIONS.map((o) => o.label)}
@@ -181,30 +193,31 @@ export default function OnboardingScreen() {
         onSelect={setStartIndex}
       />
 
-      <SectionLabel>A gentle daily reminder?</SectionLabel>
-      <ChipRow options={reminderLabels} selected={reminderIndex} onSelect={pickReminder} />
+      <SectionLabel>Your daily rhythm reminders</SectionLabel>
+      <ChipRow
+        options={[...RHYTHM_PRESETS.map((p) => p.label), 'Custom per slot']}
+        selected={useCustom ? RHYTHM_PRESETS.length : presetIndex}
+        onSelect={(i) => {
+          if (i === RHYTHM_PRESETS.length) setUseCustom(true);
+          else {
+            setUseCustom(false);
+            setPresetIndex(i);
+          }
+        }}
+      />
 
-      {/* Custom time picker: inline spinner on iOS, dialog on Android. */}
-      {customSelected && Platform.OS === 'ios' && (
-        <View style={{ alignItems: 'center', marginTop: theme.spacing.sm }}>
-          <DateTimePicker
-            mode="time"
-            display="spinner"
-            value={timeToDate(customTime)}
-            onChange={onPickTime}
-            themeVariant={theme.scheme}
-            accessibilityLabel="Pick a custom reminder time"
-          />
+      {useCustom ? (
+        <View style={{ marginTop: theme.spacing.md, gap: theme.spacing.sm }}>
+          {(['morning', 'dinner', 'bedtime'] as const).map((slot) => (
+            <CustomTimeRow
+              key={slot}
+              label={slot.charAt(0).toUpperCase() + slot.slice(1)}
+              value={customTimes[slot]}
+              onChange={(t) => setCustomTimes((prev) => ({ ...prev, [slot]: t }))}
+            />
+          ))}
         </View>
-      )}
-      {showAndroidPicker && (
-        <DateTimePicker
-          mode="time"
-          display="clock"
-          value={timeToDate(customTime)}
-          onChange={onPickTime}
-        />
-      )}
+      ) : null}
 
       <AppButton
         label="Begin our journey"
@@ -217,7 +230,57 @@ export default function OnboardingScreen() {
   );
 }
 
-/** A wrapping row of selectable pill chips. */
+function CustomTimeRow({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: ReminderTime | null;
+  onChange: (t: ReminderTime | null) => void;
+}) {
+  const theme = useTheme();
+  const [showPicker, setShowPicker] = useState(false);
+
+  const onPick = (event: DateTimePickerEvent, date?: Date) => {
+    if (Platform.OS === 'android') setShowPicker(false);
+    if (event.type === 'set' && date) {
+      onChange({ hour: date.getHours(), minute: date.getMinutes() });
+    }
+  };
+
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+      <AppText variant="body" semiBold>
+        {label}
+      </AppText>
+      <Pressable
+        onPress={() => onChange(value ? null : DEFAULT_REMINDERS[label.toLowerCase() as keyof typeof DEFAULT_REMINDERS] ?? { hour: 7, minute: 0 })}
+        accessibilityRole="button"
+      >
+        <AppText variant="small" color={theme.colors.textMuted}>
+          {value ? 'On' : 'Off'}
+        </AppText>
+      </Pressable>
+      {value ? (
+        <Pressable onPress={() => setShowPicker(true)}>
+          <AppText variant="small" semiBold color={theme.colors.goldDeep}>
+            {formatTime(value)}
+          </AppText>
+        </Pressable>
+      ) : null}
+      {showPicker && value ? (
+        <DateTimePicker
+          mode="time"
+          display={Platform.OS === 'ios' ? 'spinner' : 'clock'}
+          value={new Date(new Date().setHours(value.hour, value.minute, 0, 0))}
+          onChange={onPick}
+        />
+      ) : null}
+    </View>
+  );
+}
+
 function ChipRow({
   options,
   selected,

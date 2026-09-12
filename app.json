@@ -17,6 +17,20 @@
     },
     "android": {
       "package": "com.C323.faithandfamily",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "faithandfamily",
+              "host": "rhythm",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "adaptiveIcon": {
         "backgroundColor": "#FDF6E9",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

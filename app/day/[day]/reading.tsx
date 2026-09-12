@@ -6,9 +6,11 @@ import { ActivityIndicator, Pressable, View } from 'react-native';
 
 import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
+import { BibleTimeline } from '@/components/BibleTimeline';
 import { Card } from '@/components/Card';
 import { CompleteActivityButton } from '@/components/CompleteActivityButton';
 import { DayNavigator } from '@/components/DayNavigator';
+import { ParentTipBanner } from '@/components/ParentTipBanner';
 import { Screen } from '@/components/Screen';
 import { TextSizeControl } from '@/components/TextSizeControl';
 import { fetchPassageGroup, groupByChapter, type PassageText } from '@/lib/bible';
@@ -40,6 +42,7 @@ export default function ReadingScreen() {
   >({});
   // Index into the utterance queue currently being read aloud (null = idle).
   const [speakIndex, setSpeakIndex] = useState<number | null>(null);
+  const [bedtimeMode, setBedtimeMode] = useState(false);
   const speaking = speakIndex !== null;
 
   const result = results[day];
@@ -132,6 +135,22 @@ export default function ReadingScreen() {
         onChange={(next) => router.setParams({ day: String(next) })}
       />
 
+      <ParentTipBanner screen="reading" day={day} />
+
+      <View style={{ marginTop: theme.spacing.md }}>
+        <BibleTimeline day={day} />
+      </View>
+
+      {/* Teaching point */}
+      <Card accent={theme.colors.blue} style={{ marginTop: theme.spacing.md }}>
+        <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
+          TODAY&apos;S TAKEAWAY
+        </AppText>
+        <AppText variant="bodyLarge" style={{ marginTop: theme.spacing.sm }}>
+          {plan.teachingPoint ?? plan.kidSummary}
+        </AppText>
+      </Card>
+
       {/* For Kids recap */}
       <Card accent={theme.colors.gold} style={{ marginTop: theme.spacing.md }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm }}>
@@ -144,6 +163,39 @@ export default function ReadingScreen() {
           {plan.kidSummary}
         </AppText>
       </Card>
+
+      {plan.bedtimeHighlight && plan.bedtimeHighlight.length > 0 ? (
+        <Pressable
+          onPress={() => setBedtimeMode((b) => !b)}
+          accessibilityRole="button"
+          accessibilityLabel={bedtimeMode ? 'Show full reading' : 'Show bedtime version'}
+          style={({ pressed }) => ({
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: theme.spacing.sm,
+            marginTop: theme.spacing.md,
+            opacity: pressed ? 0.8 : 1,
+          })}
+        >
+          <Ionicons name="moon" size={18} color={theme.colors.goldDeep} />
+          <AppText variant="small" semiBold color={theme.colors.goldDeep}>
+            {bedtimeMode ? 'Show full reading' : 'Bedtime version (shorter)'}
+          </AppText>
+        </Pressable>
+      ) : null}
+
+      {bedtimeMode && plan.bedtimeHighlight ? (
+        <Card accent={theme.colors.green} style={{ marginTop: theme.spacing.sm }}>
+          <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
+            BEDTIME HIGHLIGHTS
+          </AppText>
+          {plan.bedtimeHighlight.map((ref) => (
+            <AppText key={ref} variant="body" style={{ marginTop: theme.spacing.sm }}>
+              {ref}
+            </AppText>
+          ))}
+        </Card>
+      ) : null}
 
       {/* Controls */}
       <View
@@ -208,7 +260,7 @@ export default function ReadingScreen() {
             Loading today’s reading…
           </AppText>
         </View>
-      ) : (
+      ) : bedtimeMode ? null : (
         passages.map((passage) => (
           <View key={passage.reference} style={{ marginBottom: theme.spacing.xl }}>
             {groupByChapter(passage).map((group) => (

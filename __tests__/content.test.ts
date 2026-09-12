@@ -29,6 +29,16 @@ describe('reading plan', () => {
       expect(day.kidSummary.length).toBeGreaterThan(20);
     }
   });
+
+  it('includes teachingPoint and bedtimeHighlight on every day', () => {
+    for (const day of readingPlan as {
+      teachingPoint?: string;
+      bedtimeHighlight?: string[];
+    }[]) {
+      expect(day.teachingPoint?.length).toBeGreaterThan(10);
+      expect(day.bedtimeHighlight?.length).toBeGreaterThanOrEqual(1);
+    }
+  });
 });
 
 describe('devotionals', () => {

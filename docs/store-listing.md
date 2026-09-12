@@ -17,62 +17,59 @@ URL is `https://<username>.github.io/<repo>/privacy.html`)
 
 ## Apple App Store
 
-**Subtitle** (max 30 chars — this one is 28):
+**Subtitle** (max 30 chars — this one is 29):
 
-> Bible, devotions and prayer
+> Morning, dinner & bedtime rhythm
 
-**Promotional text** (max 170 chars — editable anytime without review; 161):
+**Promotional text** (max 170 chars — editable anytime without review; 168):
 
-> Start any day of the year — Day 1 begins when your family does. Read,
-> talk, and pray together with readings, devotionals, and prayers for kids
-> and parents.
+> Three daily moments — morning reading, dinner talk, bedtime prayer. A
+> gentle rhythm that helps parents lead, not just read aloud. Start any day.
 
-**Keywords** (max 100 chars, comma-separated, no spaces — 97):
+**Keywords** (max 100 chars, comma-separated, no spaces — 98):
 
-> bible,family,devotional,kids,prayer,christian,faith,scripture,daily,children,verse,study,worship
+> bible,family,devotional,kids,prayer,christian,faith,scripture,daily,rhythm,bedtime,parent
 
 **Description:**
 
-Faith & Family helps your whole family grow closer to God together — around
-the dinner table, at bedtime, or on the couch on a Saturday morning.
+Faith & Family helps your whole family grow closer to God through a simple
+daily rhythm — morning reading, dinner talk, and bedtime prayer.
+
+YOUR DAILY RHYTHM
+Three reminders, three moments, one year through the whole Bible. The Today
+screen shows what's up next based on time of day. Guided flows walk parents
+through each slot — reading + memory verse in the morning, conversation at
+dinner, prayer at bedtime. Per-slot streaks celebrate showing up, not
+checkbox anxiety.
 
 ONE YEAR THROUGH THE WHOLE BIBLE
 A family-paced reading plan covers every chapter of the Bible in 365 days.
 Each day pairs a manageable Old Testament portion with the New Testament or
-Psalms — no long slogs. Every day opens with a "For Kids" recap in simple
-language ("Today we read about Noah building a giant boat!") so even the
-youngest reader knows what's happening. Start any day of the year: Day 1 is
-whenever your family begins.
+Psalms. Teaching points, a story timeline, and a shorter "bedtime version"
+help kids grasp one takeaway per day.
+
+PARENT-AS-LEADER TOOLS
+Child age profiles auto-match discussion questions. A collapsible parent prep
+card gives tonight's big idea, a lead-in script, and which questions to use.
+Weekly recap on Sundays summarizes readings, themes, journal entries, and
+answered prayers.
 
 DAILY DEVOTIONALS BUILT FOR CONVERSATION
-365 warm, kid-friendly devotionals, each anchored to scripture, with
-discussion questions tiered for little ones and for older kids & parents —
-revealed one card at a time, the way real family conversations work. Each
-day ends with a simple Family Challenge.
+365 warm devotionals with tiered questions revealed one card at a time.
+Family challenges you can mark complete together. 35 rotating themes so content
+stays fresh all year.
 
-PRAYERS YOUR WHOLE FAMILY CAN PRAY
-365 daily prayers written to be read aloud together, with fill-in-the-blank
-moments so every family member gets a voice, and a closing line you repeat
-together. Keep a family prayer list, and move requests to a growing
-"Answered Prayers" history kids can look back on — faith they can see.
-
-SCRIPTURE FOR REAL LIFE
-Type what your family is facing — "my kids keep fighting," "anxiety about
-finances," "grief after losing a grandparent" — and find curated Bible
-passages with a short pastoral note. More than 60 topics across parenting,
-marriage, fear, grief, money, friendship, and more. Save verses and prayers
-to Favorites.
+PRAYERS, GUIDANCE, JOURNAL & MORE
+• Fill-in-the-blank family prayers · Prayer list with answered history
+• Scripture Guidance — 60+ topics for real-life struggles
+• Memory verse practice with tap-to-reveal words
+• Family journal becomes a year-end keepsake export
+• Advent seasonal overlay · Catch-up mode when life gets messy
+• Import/export backup JSON for a second device
 
 MADE FOR FAMILIES
-• Streak flame and joyful celebrations for days completed together
-• Read-aloud narration that highlights each verse as it reads
-• A family journal — one line a day becomes a yearly keepsake
-• Memory verse of the week
-• Adjustable text size, light & dark mode, gentle daily reminder
-• Works offline — download weeks of reading ahead of time
-
-PRIVATE BY DESIGN
-No accounts. No ads. No tracking. Everything stays on your device.
+• Read-aloud narration · Offline reading · Light & dark mode
+• No accounts · No ads · No tracking · Private by design
 
 Scripture quotations are from the World English Bible (public domain).
 
@@ -80,9 +77,9 @@ Scripture quotations are from the World English Bible (public domain).
 
 ## Google Play
 
-**Short description** (max 80 chars — this one is 78):
+**Short description** (max 80 chars — this one is 79):
 
-> Read the Bible in a year as a family — daily devotionals, prayers & guidance.
+> Morning reading, dinner talk, bedtime prayer — disciple kids through daily rhythm.
 
 **Full description:** use the Apple description above (Play allows 4,000
 characters; it fits).
@@ -115,13 +112,12 @@ no data in transit on our servers (we have none).
 | Asset | Spec | Status |
 | --- | --- | --- |
 | App icon | generated (`assets/images/icon.png`) | ✅ done |
-| iPhone screenshots | 6.9" (1320×2868) and 6.5" (1284×2778), 3–10 each | 📸 take in Simulator |
-| iPad screenshots | 13" (2064×2752), needed because `supportsTablet` is true | 📸 take in Simulator |
-| Play phone screenshots | min 2, 16:9 or 9:16, ≥1080px | 📸 take on device/emulator |
-| Play feature graphic | 1024×500 PNG/JPG | 🎨 to make |
-| Play app icon | 512×512 (export from icon.png) | run: `npx sharp-cli resize 512 512 -i assets/images/icon.png -o playstore-icon.png` or ask Claude |
+| iPhone screenshots | 6.9" and 6.5", 3–10 each | 📸 capture Today rhythm hero |
+| iPad screenshots | 13", needed because `supportsTablet` is true | 📸 |
+| Play phone screenshots | min 2, ≥1080px | 📸 |
+| Play feature graphic | 1024×500 PNG/JPG | 🎨 |
+| Play app icon | 512×512 | export from icon.png |
 
-Screenshot tip: the best five screens to capture are Today (with a streak),
-the Reading screen (Genesis 1 with the For Kids card), a Devotional with one
-question revealed, the Prayer screen in prayer mode, and Guidance search
-results for "my kids keep fighting".
+Screenshot tip: capture the Today screen with the "Up next" hero, three
+rhythm streak indicators, parent prep card, guided flow, memory verse
+practice, and Advent overlay (in December).
