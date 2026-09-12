@@ -148,6 +148,13 @@ export default function RhythmFlowScreen() {
             </AppText>
           </Card>
           <AppButton
+            label="Short on time? 5-minute moment"
+            icon="timer-outline"
+            variant="ghost"
+            onPress={() => router.push(`/quick-evening?day=${day}`)}
+            style={{ marginTop: theme.spacing.md }}
+          />
+          <AppButton
             label="Open full devotional"
             variant="secondary"
             onPress={openFullScreen}

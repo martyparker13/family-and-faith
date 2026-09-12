@@ -38,6 +38,8 @@ interface ProgressState {
   markSlotComplete: (slot: RhythmSlot, day: number, todayISO: string) => void;
   toggleFamilyChallenge: (day: number) => void;
   recordMilestoneCelebration: (streak: number, dateISO: string) => void;
+  /** Marks devotional + prayer (not reading) for the quick evening fallback. */
+  completeQuickEvening: (day: number, todayISO: string) => void;
   resetProgress: () => void;
   applyImportedProgress: (partial: {
     completedDays?: Record<number, string>;
@@ -153,6 +155,16 @@ export const useProgress = create<ProgressState>()(
       recordMilestoneCelebration: (streak, dateISO) =>
         set((state) => ({
           celebratedMilestones: { ...state.celebratedMilestones, [streak]: dateISO },
+        })),
+      completeQuickEvening: (day, todayISO) =>
+        set((state) => ({
+          devotionalDays: { ...state.devotionalDays, [day]: todayISO },
+          prayerDays: { ...state.prayerDays, [day]: todayISO },
+          slotCompletions: {
+            ...state.slotCompletions,
+            dinner: { ...state.slotCompletions.dinner, [day]: todayISO },
+            bedtime: { ...state.slotCompletions.bedtime, [day]: todayISO },
+          },
         })),
       resetProgress: () =>
         set({

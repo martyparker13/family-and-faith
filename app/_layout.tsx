@@ -124,6 +124,7 @@ function RootStack() {
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Home' }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="quick-evening" options={{ title: 'Five-minute moment' }} />
         <Stack.Screen name="rhythm/[slot]" options={{ title: 'Family rhythm' }} />
         <Stack.Screen name="recap" options={{ title: 'Weekly recap' }} />
         <Stack.Screen name="day/[day]/reading" options={{ title: 'Daily Reading' }} />

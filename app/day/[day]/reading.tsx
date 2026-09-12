@@ -10,6 +10,7 @@ import { BibleTimeline } from '@/components/BibleTimeline';
 import { Card } from '@/components/Card';
 import { CompleteActivityButton } from '@/components/CompleteActivityButton';
 import { DayNavigator } from '@/components/DayNavigator';
+import { ParentNoteBanner } from '@/components/ParentNoteBanner';
 import { ParentTipBanner } from '@/components/ParentTipBanner';
 import { Screen } from '@/components/Screen';
 import { TextSizeControl } from '@/components/TextSizeControl';
@@ -138,6 +139,8 @@ export default function ReadingScreen() {
       />
 
       <ParentTipBanner screen="reading" day={day} />
+
+      {plan.parentNotes ? <ParentNoteBanner parentNotes={plan.parentNotes} /> : null}
 
       <View style={{ marginTop: theme.spacing.md }}>
         <BibleTimeline day={day} />
