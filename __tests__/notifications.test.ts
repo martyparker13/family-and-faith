@@ -5,6 +5,7 @@ import {
   DAILY_REMINDER_ID,
   requestNotificationPermission,
   scheduleDailyReminder,
+  slotNotificationId,
 } from '@/lib/notifications';
 
 jest.mock('expo-notifications', () => ({
@@ -17,6 +18,14 @@ jest.mock('expo-notifications', () => ({
   AndroidImportance: { DEFAULT: 3 },
   SchedulableTriggerInputTypes: { DAILY: 'daily' },
 }));
+
+describe('slot notifications', () => {
+  it('uses stable identifiers per slot', () => {
+    expect(slotNotificationId('morning')).toBe('rhythm-morning');
+    expect(slotNotificationId('dinner')).toBe('rhythm-dinner');
+    expect(slotNotificationId('bedtime')).toBe('rhythm-bedtime');
+  });
+});
 
 describe('requestNotificationPermission', () => {
   beforeEach(() => {

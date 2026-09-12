@@ -10,14 +10,16 @@ import {
   Nunito_700Bold,
   Nunito_800ExtraBold,
 } from '@expo-google-fonts/nunito';
-import { Stack } from 'expo-router';
+import * as Linking from 'expo-linking';
+import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Confetti } from '@/components/Confetti';
-import { scheduleDailyReminder } from '@/lib/notifications';
+import { deepLinkToRoute } from '@/lib/import-data';
+import { scheduleRhythmReminders } from '@/lib/notifications';
 import { allStoresHydrated, waitForAllStoresHydrated } from '@/lib/store-hydration';
 import { ThemeProvider, useTheme } from '@/lib/theme-context';
 import { useCelebration } from '@/store/celebration';
@@ -26,9 +28,9 @@ import { useSettings } from '@/store/settings';
 SplashScreen.preventAutoHideAsync();
 
 /**
- * Root layout: loads the font pairing (Lora for scripture, Nunito for UI),
- * waits for all persisted stores to hydrate from AsyncStorage, re-registers
- * the daily reminder from saved settings, and mounts the navigation stack.
+ * Root layout: loads fonts, waits for all persisted stores to hydrate,
+ * re-registers rhythm reminders from saved settings, handles deep links,
+ * and mounts the navigation stack.
  */
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -41,7 +43,9 @@ export default function RootLayout() {
     Nunito_800ExtraBold,
   });
   const [hydrated, setHydrated] = useState(allStoresHydrated());
-  const reminder = useSettings((s) => s.reminder);
+  const morningReminder = useSettings((s) => s.morningReminder);
+  const dinnerReminder = useSettings((s) => s.dinnerReminder);
+  const bedtimeReminder = useSettings((s) => s.bedtimeReminder);
 
   useEffect(() => {
     if (hydrated) return;
@@ -56,16 +60,32 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (!hydrated) return;
-    scheduleDailyReminder(reminder).catch(() => {
+    scheduleRhythmReminders({
+      morning: morningReminder,
+      dinner: dinnerReminder,
+      bedtime: bedtimeReminder,
+    }).catch(() => {
       // Permission or platform issues — user can re-enable in Settings.
     });
-  }, [hydrated, reminder]);
+  }, [hydrated, morningReminder, dinnerReminder, bedtimeReminder]);
 
   useEffect(() => {
     if (fontsLoaded && hydrated) {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, hydrated]);
+
+  useEffect(() => {
+    const handleUrl = (event: { url: string }) => {
+      const route = deepLinkToRoute(event.url);
+      if (route) router.push(route as '/rhythm/morning');
+    };
+    Linking.getInitialURL().then((url) => {
+      if (url) handleUrl({ url });
+    });
+    const sub = Linking.addEventListener('url', handleUrl);
+    return () => sub.remove();
+  }, []);
 
   if (!fontsLoaded || !hydrated) {
     return null;
@@ -81,7 +101,6 @@ export default function RootLayout() {
   );
 }
 
-/** Global confetti layer — sits above the navigator so bursts cover the screen. */
 function CelebrationOverlay() {
   const { burst, message, size } = useCelebration();
   return <Confetti burst={burst} message={message} size={size} />;
@@ -99,14 +118,14 @@ function RootStack() {
           headerTintColor: theme.colors.text,
           headerTitleStyle: { fontFamily: theme.fonts.sansBold },
           headerShadowVisible: false,
-          // Chevron-only back button (otherwise iOS labels it with the
-          // previous route's name, e.g. "(tabs)").
           headerBackButtonDisplayMode: 'minimal',
           contentStyle: { backgroundColor: theme.colors.background },
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Home' }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="rhythm/[slot]" options={{ title: 'Family rhythm' }} />
+        <Stack.Screen name="recap" options={{ title: 'Weekly recap' }} />
         <Stack.Screen name="day/[day]/reading" options={{ title: 'Daily Reading' }} />
         <Stack.Screen name="day/[day]/devotional" options={{ title: 'Devotional' }} />
         <Stack.Screen name="day/[day]/prayer" options={{ title: 'Family Prayer' }} />

@@ -6,6 +6,7 @@ import { Pressable, View } from 'react-native';
 import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
+import { ParentTipBanner } from '@/components/ParentTipBanner';
 import { CompleteActivityButton } from '@/components/CompleteActivityButton';
 import { DayNavigator } from '@/components/DayNavigator';
 import { Screen } from '@/components/Screen';
@@ -47,11 +48,14 @@ export default function PrayerScreen() {
       style={prayerMode ? { backgroundColor: theme.scheme === 'dark' ? '#171209' : '#F6EDD9' } : undefined}
     >
       {!prayerMode && (
-        <DayNavigator
-          day={day}
-          subtitle={prayer.theme}
-          onChange={(next) => router.setParams({ day: String(next) })}
-        />
+        <>
+          <DayNavigator
+            day={day}
+            subtitle={prayer.theme}
+            onChange={(next) => router.setParams({ day: String(next) })}
+          />
+          <ParentTipBanner screen="prayer" day={day} />
+        </>
       )}
 
       <AppText

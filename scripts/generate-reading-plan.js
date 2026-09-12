@@ -486,13 +486,20 @@ function main() {
   for (let day = 1; day <= 365; day++) {
     const ot = otChunks[day - 1];
     const second = track2[day - 1];
+    const kidSummary = kidSummaryFor(ot);
+    const bedtimeHighlight = [
+      ot.reference,
+      ...(second.chapters === 1 ? [second.reference] : [second.reference.split('–')[0].trim()]),
+    ].slice(0, 3);
     plan.push({
       day,
       passages: [
         { reference: ot.reference, apiQueries: ot.apiQueries, track: ot.track },
         { reference: second.reference, apiQueries: second.apiQueries, track: second.track },
       ],
-      kidSummary: kidSummaryFor(ot),
+      kidSummary,
+      teachingPoint: kidSummary.replace(/^Today we read about /i, 'Remember: ').replace(/\.$/, '.'),
+      bedtimeHighlight,
     });
   }
 

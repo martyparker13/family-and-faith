@@ -1,9 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Pressable, TextInput, View } from 'react-native';
+import { ActivityIndicator, Alert, Modal, Pressable, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
@@ -11,21 +13,34 @@ import { SectionLabel } from '@/components/SectionLabel';
 import { TextSizeControl } from '@/components/TextSizeControl';
 import { clearBibleCache } from '@/lib/bible';
 import { currentPlanDay, todayISO } from '@/lib/dates';
-import { shareFamilyDataExport } from '@/lib/export-data';
-import { requestNotificationPermission, scheduleDailyReminder } from '@/lib/notifications';
+import {
+  buildFamilyBackup,
+  exportYearKeepsake,
+  shareFamilyDataExport,
+} from '@/lib/export-data';
+import { mergeBackupIntoLocal, parseFamilyBackup } from '@/lib/import-data';
+import { requestNotificationPermission, scheduleRhythmReminders } from '@/lib/notifications';
 import { prefetchDays, type PrefetchResult } from '@/lib/prefetch';
 import { useTheme } from '@/lib/theme-context';
+import { useFavorites } from '@/store/favorites';
+import { useJournal } from '@/store/journal';
+import { usePrayerList } from '@/store/prayer-list';
 import { useProgress } from '@/store/progress';
-import { useSettings, type SpeechRate, type ThemePreference } from '@/store/settings';
+import {
+  useSettings,
+  type AgeBand,
+  type ReminderTime,
+  type SpeechRate,
+  type ThemePreference,
+} from '@/store/settings';
 
-const REMINDER_OPTIONS: { label: string; value: { hour: number; minute: number } | null }[] = [
-  { label: '7:00 AM', value: { hour: 7, minute: 0 } },
-  { label: '8:00 AM', value: { hour: 8, minute: 0 } },
-  { label: '12:00 PM', value: { hour: 12, minute: 0 } },
-  { label: '6:00 PM', value: { hour: 18, minute: 0 } },
-  { label: '7:30 PM', value: { hour: 19, minute: 30 } },
-  { label: '8:30 PM', value: { hour: 20, minute: 30 } },
-  { label: 'Off', value: null },
+const TIME_PRESETS: ReminderTime[] = [
+  { hour: 7, minute: 0 },
+  { hour: 8, minute: 0 },
+  { hour: 12, minute: 0 },
+  { hour: 18, minute: 0 },
+  { hour: 19, minute: 30 },
+  { hour: 20, minute: 30 },
 ];
 
 const THEME_OPTIONS: { label: string; value: ThemePreference }[] = [
@@ -40,46 +55,121 @@ const SPEECH_RATE_OPTIONS: { label: string; value: SpeechRate }[] = [
   { label: 'Fast', value: 'fast' },
 ];
 
-function formatReminderTime(time: { hour: number; minute: number }): string {
+const AGE_BANDS: { label: string; value: AgeBand }[] = [
+  { label: 'Little', value: 'little' },
+  { label: 'Older', value: 'older' },
+  { label: 'Teen', value: 'teen' },
+];
+
+function formatReminder(time: ReminderTime | null): string {
+  if (!time) return 'Off';
   const d = new Date();
   d.setHours(time.hour, time.minute, 0, 0);
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
 }
 
-function reminderSelectedIndex(reminder: { hour: number; minute: number } | null): number {
-  return REMINDER_OPTIONS.findIndex((o) => {
-    if (reminder === null) return o.value === null;
-    if (o.value === null) return false;
-    return o.value.hour === reminder.hour && o.value.minute === reminder.minute;
-  });
-}
-
-/** Settings: family name, appearance, text size, reminder, and plan restart. */
+/** Settings: rhythm reminders, children, backup, keepsake, and plan options. */
 export default function SettingsScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const settings = useSettings();
-  const presetMatch = settings.reminder
-    ? REMINDER_OPTIONS.find(
-        (o) =>
-          o.value?.hour === settings.reminder?.hour && o.value?.minute === settings.reminder?.minute
-      )
-    : REMINDER_OPTIONS.find((o) => o.value === null);
-  const reminderLabel = presetMatch?.label ?? (settings.reminder ? formatReminderTime(settings.reminder) : 'Off');
+  const [importVisible, setImportVisible] = useState(false);
+  const [importText, setImportText] = useState('');
 
-  const pickReminder = async (option: (typeof REMINDER_OPTIONS)[number]) => {
-    if (option.value) {
+  const pickSlotReminder = async (
+    slot: 'morning' | 'dinner' | 'bedtime',
+    time: ReminderTime | null
+  ) => {
+    if (time) {
       const allowed = await requestNotificationPermission();
       if (!allowed) {
-        Alert.alert(
-          'Notifications are off',
-          'Enable notifications for Faith & Family in your device settings to get the daily reminder.'
-        );
+        Alert.alert('Notifications are off', 'Enable notifications in device settings.');
         return;
       }
     }
-    await scheduleDailyReminder(option.value);
-    settings.setReminder(option.value);
+    const next = {
+      morning: settings.morningReminder,
+      dinner: settings.dinnerReminder,
+      bedtime: settings.bedtimeReminder,
+      [slot]: time,
+    };
+    await scheduleRhythmReminders(next);
+    if (slot === 'morning') settings.setMorningReminder(time);
+    else if (slot === 'dinner') settings.setDinnerReminder(time);
+    else settings.setBedtimeReminder(time);
+  };
+
+  const exportBackup = async () => {
+    const backup = buildFamilyBackup({
+      settings: useSettings.getState(),
+      progress: {
+        completedDays: useProgress.getState().completedDays,
+        devotionalDays: useProgress.getState().devotionalDays,
+        prayerDays: useProgress.getState().prayerDays,
+        practicedWeeks: useProgress.getState().practicedWeeks,
+        slotCompletions: useProgress.getState().slotCompletions,
+        familyChallengesDone: useProgress.getState().familyChallengesDone,
+      },
+      journal: useJournal.getState().entries,
+      favorites: useFavorites.getState().favorites,
+      prayerList: usePrayerList.getState().requests,
+    });
+    const json = JSON.stringify(backup, null, 2);
+    await Clipboard.setStringAsync(json);
+    Alert.alert('Backup copied', 'Family backup JSON is on your clipboard. Paste it into Notes or email to save.');
+  };
+
+  const exportKeepsake = async () => {
+    const md = exportYearKeepsake({
+      settings: useSettings.getState(),
+      progress: {
+        completedDays: useProgress.getState().completedDays,
+        devotionalDays: useProgress.getState().devotionalDays,
+        prayerDays: useProgress.getState().prayerDays,
+        practicedWeeks: useProgress.getState().practicedWeeks,
+        slotCompletions: useProgress.getState().slotCompletions,
+        familyChallengesDone: useProgress.getState().familyChallengesDone,
+      },
+      journal: useJournal.getState().entries,
+      favorites: useFavorites.getState().favorites,
+      prayerList: usePrayerList.getState().requests,
+    });
+    await Clipboard.setStringAsync(md);
+    Alert.alert('Keepsake copied', 'Markdown keepsake is on your clipboard — paste into any app to share or print.');
+  };
+
+  const runImport = () => {
+    const result = parseFamilyBackup(importText);
+    if (!result.ok) {
+      Alert.alert('Import failed', result.error);
+      return;
+    }
+    const merged = mergeBackupIntoLocal(
+      {
+        journal: useJournal.getState().entries,
+        favorites: useFavorites.getState().favorites,
+        prayerList: usePrayerList.getState().requests,
+        progress: {
+          completedDays: useProgress.getState().completedDays,
+          devotionalDays: useProgress.getState().devotionalDays,
+          prayerDays: useProgress.getState().prayerDays,
+          practicedWeeks: useProgress.getState().practicedWeeks,
+          slotCompletions: useProgress.getState().slotCompletions,
+          familyChallengesDone: useProgress.getState().familyChallengesDone,
+        },
+      },
+      result.backup
+    );
+    useProgress.getState().applyImportedProgress(merged.progress);
+    useJournal.setState({ entries: merged.journal });
+    useFavorites.setState({ favorites: merged.favorites });
+    usePrayerList.setState({ requests: merged.prayerList });
+    if (result.backup.settings) {
+      useSettings.getState().applyImportedSettings(result.backup.settings);
+    }
+    setImportVisible(false);
+    setImportText('');
+    Alert.alert('Import complete', 'Your family data was merged — newer entries were kept.');
   };
 
   const restartPlan = () => {
@@ -103,14 +193,10 @@ export default function SettingsScreen() {
   const resetProgressConfirm = () => {
     Alert.alert(
       'Reset all progress?',
-      'Completed days, the streak, and memory-verse practice will be cleared. This cannot be undone.',
+      'Completed days, streaks, and memory-verse practice will be cleared.',
       [
         { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Reset everything',
-          style: 'destructive',
-          onPress: () => useProgress.getState().resetProgress(),
-        },
+        { text: 'Reset everything', style: 'destructive', onPress: () => useProgress.getState().resetProgress() },
       ]
     );
   };
@@ -150,6 +236,47 @@ export default function SettingsScreen() {
         onSave={(name) => settings.setFamilyName(name)}
       />
 
+      <SectionLabel>Children (for age-matched questions)</SectionLabel>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm, marginBottom: theme.spacing.sm }}>
+        {AGE_BANDS.map((band) => (
+          <Pressable
+            key={band.value}
+            onPress={() => settings.addChild({ ageBand: band.value })}
+            style={({ pressed }) => ({
+              backgroundColor: pressed ? theme.colors.surfaceAlt : theme.colors.surface,
+              borderWidth: 1,
+              borderColor: theme.colors.border,
+              borderRadius: theme.radius.pill,
+              paddingHorizontal: theme.spacing.lg,
+              minHeight: theme.minTouch,
+              justifyContent: 'center',
+            })}
+          >
+            <AppText variant="small" semiBold scaled={false}>
+              + {band.label}
+            </AppText>
+          </Pressable>
+        ))}
+      </View>
+      {settings.children.length > 0 ? (
+        <AppText variant="small" color={theme.colors.textMuted}>
+          {settings.children.map((c, i) => `${i + 1}. ${c.ageBand}`).join(' · ')}
+          {' — '}
+          <AppText
+            variant="small"
+            semiBold
+            color={theme.colors.danger}
+            onPress={() => settings.setChildren([])}
+          >
+            Clear all
+          </AppText>
+        </AppText>
+      ) : (
+        <AppText variant="small" color={theme.colors.textMuted}>
+          No children added — all questions will show by default.
+        </AppText>
+      )}
+
       <SectionLabel>Appearance</SectionLabel>
       <OptionRow
         options={THEME_OPTIONS.map((o) => o.label)}
@@ -169,12 +296,70 @@ export default function SettingsScreen() {
         onSelect={(i) => settings.setSpeechRate(SPEECH_RATE_OPTIONS[i].value)}
       />
 
-      <SectionLabel>{`Daily reminder · currently ${reminderLabel}`}</SectionLabel>
+      <SectionLabel>Rhythm reminders</SectionLabel>
+      {(['morning', 'dinner', 'bedtime'] as const).map((slot) => {
+        const current =
+          slot === 'morning'
+            ? settings.morningReminder
+            : slot === 'dinner'
+              ? settings.dinnerReminder
+              : settings.bedtimeReminder;
+        return (
+          <View key={slot} style={{ marginBottom: theme.spacing.md }}>
+            <AppText variant="small" semiBold scaled={false} style={{ marginBottom: theme.spacing.xs }}>
+              {slot.charAt(0).toUpperCase() + slot.slice(1)} · {formatReminder(current)}
+            </AppText>
+            <OptionRow
+              options={[...TIME_PRESETS.map(formatReminder), 'Off']}
+              selectedIndex={
+                current
+                  ? TIME_PRESETS.findIndex(
+                      (t) => t.hour === current.hour && t.minute === current.minute
+                    )
+                  : TIME_PRESETS.length
+              }
+              onSelect={(i) =>
+                pickSlotReminder(slot, i < TIME_PRESETS.length ? TIME_PRESETS[i] : null)
+              }
+            />
+          </View>
+        );
+      })}
+
+      <SectionLabel>Seasonal overlays</SectionLabel>
       <OptionRow
-        options={REMINDER_OPTIONS.map((o) => o.label)}
-        selectedIndex={reminderSelectedIndex(settings.reminder)}
-        onSelect={(i) => pickReminder(REMINDER_OPTIONS[i])}
+        options={['On (Advent, etc.)', 'Off']}
+        selectedIndex={settings.seasonalOverlaysEnabled ? 0 : 1}
+        onSelect={(i) => settings.setSeasonalOverlaysEnabled(i === 0)}
       />
+
+      <SectionLabel>Backup & keepsake</SectionLabel>
+      <View style={{ gap: theme.spacing.md }}>
+        <Card onPress={exportBackup} accessibilityLabel="Export family backup">
+          <AppText variant="body" semiBold>
+            Export family backup
+          </AppText>
+          <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
+            Copies JSON to clipboard for another device.
+          </AppText>
+        </Card>
+        <Card onPress={() => setImportVisible(true)} accessibilityLabel="Import from backup">
+          <AppText variant="body" semiBold>
+            Import from backup
+          </AppText>
+          <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
+            Merge a backup — newer timestamps win.
+          </AppText>
+        </Card>
+        <Card onPress={exportKeepsake} accessibilityLabel="Export year keepsake">
+          <AppText variant="body" semiBold>
+            Export year keepsake
+          </AppText>
+          <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
+            Markdown summary: journal, milestones, favorites, answered prayers.
+          </AppText>
+        </Card>
+      </View>
 
       <SectionLabel>Reading plan</SectionLabel>
       <View style={{ gap: theme.spacing.md }}>
@@ -197,24 +382,15 @@ export default function SettingsScreen() {
           <AppText variant="body" semiBold>
             Replay the welcome setup
           </AppText>
-          <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Walk through family name, start date, and reminder again.
-          </AppText>
         </Card>
         <Card onPress={resetProgressConfirm} accessibilityLabel="Reset all progress">
           <AppText variant="body" semiBold color={theme.colors.danger}>
             Reset all progress
           </AppText>
-          <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Clears completed days, streak history, and memory-verse practice. Cannot be undone.
-          </AppText>
         </Card>
         <Card onPress={clearCacheConfirm} accessibilityLabel="Clear downloaded chapters">
           <AppText variant="body" semiBold>
             Clear downloaded chapters
-          </AppText>
-          <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Frees space; readings will re-download when opened.
           </AppText>
         </Card>
       </View>
@@ -235,16 +411,63 @@ export default function SettingsScreen() {
       <SectionLabel>About</SectionLabel>
       <Card>
         <AppText variant="small" color={theme.colors.textMuted}>
-          Faith & Family v1.0 · Scripture quotations are from the World English Bible (WEB),
-          which is in the public domain. All your family’s progress, favorites, and prayers are
-          stored only on this device.
+          Faith & Family v1.1 · Morning reading, dinner talk, bedtime prayer. Scripture from the
+          World English Bible (public domain). All data stays on this device unless you export a
+          backup.
         </AppText>
       </Card>
+
+      <Modal visible={importVisible} animationType="slide" transparent>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.4)',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: theme.colors.background,
+              borderTopLeftRadius: theme.radius.lg,
+              borderTopRightRadius: theme.radius.lg,
+              padding: theme.spacing.lg,
+              maxHeight: '80%',
+            }}
+          >
+            <AppText variant="heading" semiBold>
+              Import backup
+            </AppText>
+            <AppText variant="small" color={theme.colors.textMuted} style={{ marginVertical: theme.spacing.sm }}>
+              Paste the JSON from a previous export.
+            </AppText>
+            <TextInput
+              value={importText}
+              onChangeText={setImportText}
+              multiline
+              placeholder="Paste backup JSON here…"
+              placeholderTextColor={theme.colors.textMuted}
+              style={{
+                minHeight: 160,
+                borderWidth: 1,
+                borderColor: theme.colors.border,
+                borderRadius: theme.radius.md,
+                padding: theme.spacing.md,
+                color: theme.colors.text,
+                fontFamily: theme.fonts.sans,
+                textAlignVertical: 'top',
+              }}
+            />
+            <View style={{ flexDirection: 'row', gap: theme.spacing.sm, marginTop: theme.spacing.md }}>
+              <AppButton label="Cancel" variant="secondary" onPress={() => setImportVisible(false)} style={{ flex: 1 }} />
+              <AppButton label="Import" onPress={runImport} style={{ flex: 1 }} />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </Screen>
   );
 }
 
-/** Caches the next 30 days of chapters for fully-offline reading. */
 function DownloadAheadCard({ planStartDate }: { planStartDate: string | null }) {
   const theme = useTheme();
   const [result, setResult] = useState<PrefetchResult | null>(null);
@@ -361,10 +584,9 @@ function OptionRow({
         const active = i === selectedIndex;
         return (
           <Pressable
-            key={label}
+            key={`${label}-${i}`}
             onPress={() => onSelect(i)}
             accessibilityRole="button"
-            accessibilityLabel={label}
             accessibilityState={{ selected: active }}
             style={({ pressed }) => ({
               backgroundColor: active

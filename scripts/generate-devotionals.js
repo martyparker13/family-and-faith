@@ -2,12 +2,9 @@
 /**
  * Generates content/devotionals.json — 365 family devotionals.
  *
- * 20 hand-written themes (scripts/data/devotional-themes-*.js) cycle through
- * the year (~18 appearances each). On each appearance a different combination
- * of intro / story / application / verse / questions / challenge is selected,
- * so no two devotionals in the year are identical, while the voice stays
- * consistent. Anchor-verse text is fetched in the WEB translation from
- * bible-api.com (cached in scripts/.cache/verses.json).
+ * 35 hand-written themes (scripts/data/devotional-themes-*.js) are spread
+ * across the year with a shuffled assignment so the pattern does not repeat
+ * every 18 days. Anchor-verse text is fetched in WEB from bible-api.com.
  *
  * Run: node scripts/generate-devotionals.js
  */
@@ -15,7 +12,25 @@ const fs = require('fs');
 const path = require('path');
 const { getVerseText } = require('./lib/web-verses');
 
-const themes = [...require('./data/devotional-themes-1'), ...require('./data/devotional-themes-2')];
+const themes = [
+  ...require('./data/devotional-themes-1'),
+  ...require('./data/devotional-themes-2'),
+  ...require('./data/devotional-themes-batch2'),
+];
+
+/** Spread theme index across 365 days without a fixed short cycle. */
+function themeIndexForDay(day) {
+  return (day * 17 + Math.floor((day - 1) / 11) * 13) % themes.length;
+}
+
+/** How many times this theme appeared on earlier days (drives content rotation). */
+function useCountForDay(day, themeId) {
+  let count = 0;
+  for (let d = 1; d < day; d++) {
+    if (themes[themeIndexForDay(d)].id === themeId) count++;
+  }
+  return count;
+}
 
 /** Bridging sentences between the story and the application paragraph. */
 const BRIDGES = [
@@ -53,9 +68,8 @@ function pickTwo(arr, seed) {
 }
 
 async function main() {
-  if (themes.length !== 20) throw new Error(`Expected 20 themes, got ${themes.length}`);
+  if (themes.length < 35) throw new Error(`Expected at least 35 themes, got ${themes.length}`);
 
-  // Validate theme shape before doing anything slow.
   for (const t of themes) {
     for (const [key, min] of [
       ['titles', 3],
@@ -73,7 +87,6 @@ async function main() {
     }
   }
 
-  // Fetch all anchor verse texts up front (cached after first run).
   const allRefs = [...new Set(themes.flatMap((t) => t.verseRefs))];
   console.log(`Fetching ${allRefs.length} anchor verses (WEB)...`);
   const verseText = {};
@@ -85,10 +98,8 @@ async function main() {
 
   const devotionals = [];
   for (let day = 1; day <= 365; day++) {
-    const theme = themes[(day - 1) % themes.length];
-    // "use" counts how many times this theme has appeared (0-based); it
-    // drives the rotation through every content pool.
-    const use = Math.floor((day - 1) / themes.length);
+    const theme = themes[themeIndexForDay(day)];
+    const use = useCountForDay(day, theme.id);
 
     const intro = theme.intros[use % 3];
     const story = theme.stories[Math.floor(use / 3) % 3];
@@ -116,7 +127,6 @@ async function main() {
     });
   }
 
-  // ---- Validation ----
   if (devotionals.length !== 365) throw new Error('Expected 365 devotionals');
   for (const d of devotionals) {
     const words = d.reflection.split(/\s+/).length;
@@ -126,7 +136,6 @@ async function main() {
     if (!d.scripture.text) throw new Error(`Day ${d.day} missing verse text`);
     if (d.questions.length !== 4) throw new Error(`Day ${d.day} question count`);
   }
-  // No two consecutive days should share a theme (guaranteed by cycling, but verify).
   for (let i = 1; i < devotionals.length; i++) {
     if (devotionals[i].theme === devotionals[i - 1].theme) {
       throw new Error(`Days ${i} and ${i + 1} share a theme`);
@@ -137,7 +146,7 @@ async function main() {
   fs.writeFileSync(outPath, JSON.stringify(devotionals, null, 1));
   const totalWords = devotionals.reduce((s, d) => s + d.reflection.split(/\s+/).length, 0);
   console.log(
-    `✔ Wrote 365 devotionals (avg ${Math.round(totalWords / 365)} words/reflection) to ${outPath}`
+    `✔ Wrote 365 devotionals from ${themes.length} themes (avg ${Math.round(totalWords / 365)} words/reflection) to ${outPath}`
   );
 }
 

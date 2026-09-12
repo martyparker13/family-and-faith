@@ -28,6 +28,10 @@ export interface PlanDay {
   passages: PlanPassage[];
   /** One-sentence kid-friendly summary of the day's reading. */
   kidSummary: string;
+  /** One takeaway for kids and parents — displayed on reading + parent prep. */
+  teachingPoint?: string;
+  /** Shorter bedtime-friendly highlights (2–3 verse references). */
+  bedtimeHighlight?: string[];
 }
 
 export const readingPlan = readingPlanJson as PlanDay[];

@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+import { slotActivity, type RhythmSlot } from '@/lib/rhythm';
+
 /**
  * Tracks the family's progress through the three daily activities.
  *
@@ -22,6 +24,10 @@ interface ProgressState {
   prayerDays: Record<number, string>;
   /** Weeks (0-based index) whose memory verse the family practiced. */
   practicedWeeks: Record<number, string>;
+  /** Per-rhythm-slot completions for slot streaks. */
+  slotCompletions: Record<RhythmSlot, Record<number, string>>;
+  /** Family challenges marked done per plan day. */
+  familyChallengesDone: Record<number, boolean>;
   /** Streak milestone values (7, 30, …) → last calendar date celebrated. */
   celebratedMilestones: Record<number, string>;
 
@@ -29,8 +35,18 @@ interface ProgressState {
   /** Back-compat alias for toggling the reading. */
   toggleDay: (day: number, todayISO: string) => void;
   togglePracticedWeek: (week: number, todayISO: string) => void;
+  markSlotComplete: (slot: RhythmSlot, day: number, todayISO: string) => void;
+  toggleFamilyChallenge: (day: number) => void;
   recordMilestoneCelebration: (streak: number, dateISO: string) => void;
   resetProgress: () => void;
+  applyImportedProgress: (partial: {
+    completedDays?: Record<number, string>;
+    devotionalDays?: Record<number, string>;
+    prayerDays?: Record<number, string>;
+    practicedWeeks?: Record<number, string>;
+    slotCompletions?: Record<RhythmSlot, Record<number, string>>;
+    familyChallengesDone?: Record<number, boolean>;
+  }) => void;
 }
 
 const ACTIVITY_KEY: Record<Activity, 'completedDays' | 'devotionalDays' | 'prayerDays'> = {
@@ -39,6 +55,29 @@ const ACTIVITY_KEY: Record<Activity, 'completedDays' | 'devotionalDays' | 'praye
   prayer: 'prayerDays',
 };
 
+const EMPTY_SLOTS: Record<RhythmSlot, Record<number, string>> = {
+  morning: {},
+  dinner: {},
+  bedtime: {},
+};
+
+function syncSlotFromActivity(
+  activity: Activity,
+  day: number,
+  todayISO: string,
+  slotCompletions: Record<RhythmSlot, Record<number, string>>
+): Record<RhythmSlot, Record<number, string>> {
+  const slotMap: Partial<Record<Activity, RhythmSlot>> = {
+    reading: 'morning',
+    devotional: 'dinner',
+    prayer: 'bedtime',
+  };
+  const slot = slotMap[activity];
+  if (!slot) return slotCompletions;
+  const next = { ...slotCompletions, [slot]: { ...slotCompletions[slot], [day]: todayISO } };
+  return next;
+}
+
 export const useProgress = create<ProgressState>()(
   persist(
     (set) => ({
@@ -46,28 +85,42 @@ export const useProgress = create<ProgressState>()(
       devotionalDays: {},
       prayerDays: {},
       practicedWeeks: {},
+      slotCompletions: { ...EMPTY_SLOTS },
+      familyChallengesDone: {},
       celebratedMilestones: {},
 
       toggleActivity: (activity, day, todayISO) =>
         set((state) => {
           const key = ACTIVITY_KEY[activity];
           const next = { ...state[key] };
+          let slotCompletions = state.slotCompletions;
           if (next[day]) {
             delete next[day];
+            const slot =
+              activity === 'reading' ? 'morning' : activity === 'devotional' ? 'dinner' : 'bedtime';
+            const slotNext = { ...slotCompletions[slot] };
+            delete slotNext[day];
+            slotCompletions = { ...slotCompletions, [slot]: slotNext };
           } else {
             next[day] = todayISO;
+            slotCompletions = syncSlotFromActivity(activity, day, todayISO, slotCompletions);
           }
-          return { [key]: next };
+          return { [key]: next, slotCompletions };
         }),
       toggleDay: (day, todayISO) =>
         set((state) => {
           const next = { ...state.completedDays };
+          let slotCompletions = state.slotCompletions;
           if (next[day]) {
             delete next[day];
+            const slotNext = { ...slotCompletions.morning };
+            delete slotNext[day];
+            slotCompletions = { ...slotCompletions, morning: slotNext };
           } else {
             next[day] = todayISO;
+            slotCompletions = syncSlotFromActivity('reading', day, todayISO, slotCompletions);
           }
-          return { completedDays: next };
+          return { completedDays: next, slotCompletions };
         }),
       togglePracticedWeek: (week, todayISO) =>
         set((state) => {
@@ -79,6 +132,24 @@ export const useProgress = create<ProgressState>()(
           }
           return { practicedWeeks: next };
         }),
+      markSlotComplete: (slot, day, todayISO) =>
+        set((state) => {
+          const activity = slotActivity(slot);
+          const key = ACTIVITY_KEY[activity];
+          const activityNext = { ...state[key], [day]: todayISO };
+          const slotNext = { ...state.slotCompletions[slot], [day]: todayISO };
+          return {
+            [key]: activityNext,
+            slotCompletions: { ...state.slotCompletions, [slot]: slotNext },
+          };
+        }),
+      toggleFamilyChallenge: (day) =>
+        set((state) => {
+          const next = { ...state.familyChallengesDone };
+          if (next[day]) delete next[day];
+          else next[day] = true;
+          return { familyChallengesDone: next };
+        }),
       recordMilestoneCelebration: (streak, dateISO) =>
         set((state) => ({
           celebratedMilestones: { ...state.celebratedMilestones, [streak]: dateISO },
@@ -89,12 +160,39 @@ export const useProgress = create<ProgressState>()(
           devotionalDays: {},
           prayerDays: {},
           practicedWeeks: {},
+          slotCompletions: { ...EMPTY_SLOTS },
+          familyChallengesDone: {},
           celebratedMilestones: {},
         }),
+      applyImportedProgress: (partial) =>
+        set((state) => ({
+          completedDays: partial.completedDays ?? state.completedDays,
+          devotionalDays: partial.devotionalDays ?? state.devotionalDays,
+          prayerDays: partial.prayerDays ?? state.prayerDays,
+          practicedWeeks: partial.practicedWeeks ?? state.practicedWeeks,
+          slotCompletions: partial.slotCompletions ?? state.slotCompletions,
+          familyChallengesDone: partial.familyChallengesDone ?? state.familyChallengesDone,
+        })),
     }),
     {
       name: 'ff-progress',
       storage: createJSONStorage(() => AsyncStorage),
+      version: 1,
+      migrate: (persisted: unknown, version: number) => {
+        const state = persisted as ProgressState;
+        if (version < 1) {
+          if (!state.slotCompletions) {
+            state.slotCompletions = {
+              morning: { ...state.completedDays },
+              dinner: { ...state.devotionalDays },
+              bedtime: { ...state.prayerDays },
+            };
+          }
+          if (!state.familyChallengesDone) state.familyChallengesDone = {};
+          if (!state.celebratedMilestones) state.celebratedMilestones = {};
+        }
+        return state;
+      },
     }
   )
 );
