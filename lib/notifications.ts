@@ -7,6 +7,9 @@ import { Platform } from 'react-native';
 
 import type { ReminderTime } from '@/store/settings';
 
+/** Stable identifier for the legacy single daily reminder API. */
+export const DAILY_REMINDER_ID = 'ff-daily-reminder';
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
@@ -42,6 +45,10 @@ export type ReminderSlot = keyof typeof SLOT_COPY;
 /** Asks for permission. Returns true when notifications are allowed. */
 export async function requestNotificationPermission(): Promise<boolean> {
   if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('daily-reminder', {
+      name: 'Daily reminder',
+      importance: Notifications.AndroidImportance.DEFAULT,
+    });
     for (const slot of Object.keys(SLOT_COPY) as ReminderSlot[]) {
       const { channel, channelName } = SLOT_COPY[slot];
       await Notifications.setNotificationChannelAsync(channel, {
@@ -61,7 +68,7 @@ export async function scheduleSlotReminder(
   slot: ReminderSlot,
   time: ReminderTime | null
 ): Promise<void> {
-  const identifier = `rhythm-${slot}`;
+  const identifier = slotNotificationId(slot);
   await Notifications.cancelScheduledNotificationAsync(identifier).catch(() => {});
 
   if (!time) return;
@@ -89,23 +96,33 @@ export interface RhythmReminders {
   bedtime: ReminderTime | null;
 }
 
-/** Replaces all rhythm reminders with the given times. */
+/** Replaces all rhythm reminders with the given times (scoped per slot). */
 export async function scheduleRhythmReminders(reminders: RhythmReminders): Promise<void> {
-  await Notifications.cancelAllScheduledNotificationsAsync();
   await scheduleSlotReminder('morning', reminders.morning);
   await scheduleSlotReminder('dinner', reminders.dinner);
   await scheduleSlotReminder('bedtime', reminders.bedtime);
 }
 
 /**
- * Back-compat: single daily reminder mapped to morning slot.
+ * Back-compat: single daily reminder with a stable identifier.
  * @deprecated Use scheduleRhythmReminders instead.
  */
 export async function scheduleDailyReminder(time: ReminderTime | null): Promise<void> {
-  await scheduleRhythmReminders({
-    morning: time,
-    dinner: null,
-    bedtime: null,
+  await Notifications.cancelScheduledNotificationAsync(DAILY_REMINDER_ID);
+  if (!time) return;
+
+  await Notifications.scheduleNotificationAsync({
+    identifier: DAILY_REMINDER_ID,
+    content: {
+      title: 'Family time with God 🌿',
+      body: "Today's reading, devotional, and prayer are ready for your family.",
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DAILY,
+      hour: time.hour,
+      minute: time.minute,
+      channelId: Platform.OS === 'android' ? 'daily-reminder' : undefined,
+    },
   });
 }
 

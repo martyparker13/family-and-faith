@@ -88,7 +88,8 @@ export default function ReadingScreen() {
     return () => {
       cancelled = true;
     };
-  }, [day, plan, results]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only refetch when day/plan changes
+  }, [day, plan]);
 
   // Stop any in-progress narration when the day changes or screen unmounts.
   useEffect(() => {
@@ -102,6 +103,7 @@ export default function ReadingScreen() {
   // advancing (or finishing) happens in the speech callbacks.
   useEffect(() => {
     if (speakIndex === null || speakIndex >= utterances.length) return;
+    Speech.stop();
     Speech.speak(utterances[speakIndex].text, {
       rate: SPEECH_RATES[speechRate],
       onDone: () =>

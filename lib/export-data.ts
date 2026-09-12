@@ -1,12 +1,19 @@
 /**
- * Export family data for backup and year-end keepsake.
+ * Export family data for backup, share sheet export, and year-end keepsake.
  */
+import { Share } from 'react-native';
+
 import { getDevotional, getPlanDay } from '@/lib/content';
 import { percentComplete } from '@/store/progress';
 import type { FavoriteVerse } from '@/store/favorites';
+import { useFavorites } from '@/store/favorites';
 import type { JournalEntry } from '@/store/journal';
+import { useJournal } from '@/store/journal';
 import type { PrayerRequest } from '@/store/prayer-list';
+import { usePrayerList } from '@/store/prayer-list';
+import { useProgress } from '@/store/progress';
 import type { SettingsState } from '@/store/settings';
+import { useSettings } from '@/store/settings';
 
 export const BACKUP_VERSION = 1;
 
@@ -37,6 +44,28 @@ export interface ExportStores {
   journal: Record<number, JournalEntry>;
   favorites: FavoriteVerse[];
   prayerList: PrayerRequest[];
+}
+
+export interface FamilyDataExport {
+  exportedAt: string;
+  version: 1;
+  settings: {
+    familyName: string;
+    planStartDate: string | null;
+    reminder: { hour: number; minute: number } | null;
+    themePreference: string;
+    textScaleIndex: number;
+    speechRate: string;
+  };
+  progress: {
+    completedDays: Record<number, string>;
+    devotionalDays: Record<number, string>;
+    prayerDays: Record<number, string>;
+    practicedWeeks: Record<number, string>;
+  };
+  journal: Record<number, { day: number; note: string; dateISO: string }>;
+  favorites: ReturnType<typeof useFavorites.getState>['favorites'];
+  prayerList: ReturnType<typeof usePrayerList.getState>['requests'];
 }
 
 /** Full backup JSON for import on another device. */
@@ -125,4 +154,45 @@ export function exportYearKeepsake(stores: ExportStores): string {
   lines.push([...themes].slice(0, 30).join(' · ') || '_Keep going — your themes will fill in here._');
 
   return lines.join('\n');
+}
+
+/** Builds a snapshot of all persisted family data. */
+export function buildFamilyDataExport(): FamilyDataExport {
+  const settings = useSettings.getState();
+  const progress = useProgress.getState();
+  const journal = useJournal.getState();
+  const favorites = useFavorites.getState();
+  const prayerList = usePrayerList.getState();
+
+  return {
+    exportedAt: new Date().toISOString(),
+    version: 1,
+    settings: {
+      familyName: settings.familyName,
+      planStartDate: settings.planStartDate,
+      reminder: settings.morningReminder ?? settings.reminder ?? null,
+      themePreference: settings.themePreference,
+      textScaleIndex: settings.textScaleIndex,
+      speechRate: settings.speechRate,
+    },
+    progress: {
+      completedDays: progress.completedDays,
+      devotionalDays: progress.devotionalDays,
+      prayerDays: progress.prayerDays,
+      practicedWeeks: progress.practicedWeeks,
+    },
+    journal: journal.entries,
+    favorites: favorites.favorites,
+    prayerList: prayerList.requests,
+  };
+}
+
+/** Opens the system share sheet with a JSON backup of family data. */
+export async function shareFamilyDataExport(): Promise<void> {
+  const payload = buildFamilyDataExport();
+  const json = JSON.stringify(payload, null, 2);
+  await Share.share({
+    message: json,
+    title: 'Faith & Family backup',
+  });
 }

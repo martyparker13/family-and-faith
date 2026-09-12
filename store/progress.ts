@@ -28,6 +28,8 @@ interface ProgressState {
   slotCompletions: Record<RhythmSlot, Record<number, string>>;
   /** Family challenges marked done per plan day. */
   familyChallengesDone: Record<number, boolean>;
+  /** Streak milestone values (7, 30, …) → last calendar date celebrated. */
+  celebratedMilestones: Record<number, string>;
 
   toggleActivity: (activity: Activity, day: number, todayISO: string) => void;
   /** Back-compat alias for toggling the reading. */
@@ -35,6 +37,7 @@ interface ProgressState {
   togglePracticedWeek: (week: number, todayISO: string) => void;
   markSlotComplete: (slot: RhythmSlot, day: number, todayISO: string) => void;
   toggleFamilyChallenge: (day: number) => void;
+  recordMilestoneCelebration: (streak: number, dateISO: string) => void;
   resetProgress: () => void;
   applyImportedProgress: (partial: {
     completedDays?: Record<number, string>;
@@ -84,6 +87,7 @@ export const useProgress = create<ProgressState>()(
       practicedWeeks: {},
       slotCompletions: { ...EMPTY_SLOTS },
       familyChallengesDone: {},
+      celebratedMilestones: {},
 
       toggleActivity: (activity, day, todayISO) =>
         set((state) => {
@@ -146,6 +150,10 @@ export const useProgress = create<ProgressState>()(
           else next[day] = true;
           return { familyChallengesDone: next };
         }),
+      recordMilestoneCelebration: (streak, dateISO) =>
+        set((state) => ({
+          celebratedMilestones: { ...state.celebratedMilestones, [streak]: dateISO },
+        })),
       resetProgress: () =>
         set({
           completedDays: {},
@@ -154,6 +162,7 @@ export const useProgress = create<ProgressState>()(
           practicedWeeks: {},
           slotCompletions: { ...EMPTY_SLOTS },
           familyChallengesDone: {},
+          celebratedMilestones: {},
         }),
       applyImportedProgress: (partial) =>
         set((state) => ({
@@ -180,6 +189,7 @@ export const useProgress = create<ProgressState>()(
             };
           }
           if (!state.familyChallengesDone) state.familyChallengesDone = {};
+          if (!state.celebratedMilestones) state.celebratedMilestones = {};
         }
         return state;
       },

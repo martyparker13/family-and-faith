@@ -31,6 +31,12 @@ function chapterQueriesForDays(startDay: number, count: number): string[] {
 export interface PrefetchProgress {
   done: number;
   total: number;
+  failed: number;
+}
+
+export interface PrefetchResult extends PrefetchProgress {
+  /** True when every chapter was saved (none failed). */
+  complete: boolean;
 }
 
 /**
@@ -42,10 +48,11 @@ export async function prefetchDays(
   startDay: number,
   count: number,
   onProgress?: (p: PrefetchProgress) => void
-): Promise<PrefetchProgress> {
+): Promise<PrefetchResult> {
   const queries = chapterQueriesForDays(startDay, count);
   const total = queries.length;
   let done = 0;
+  let failed = 0;
 
   for (const query of queries) {
     try {
@@ -57,11 +64,12 @@ export async function prefetchDays(
         await sleep(POLITE_DELAY_MS);
       }
     } catch {
-      // Offline or API hiccup — skip; the reading screen fetches on demand.
+      failed++;
+      done++;
     }
-    onProgress?.({ done, total });
+    onProgress?.({ done, total, failed });
   }
-  return { done, total };
+  return { done, total, failed, complete: failed === 0 };
 }
 
 /**

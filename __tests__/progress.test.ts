@@ -98,4 +98,18 @@ describe('celebrationFor', () => {
     expect(result.size).toBe('big');
     expect(result.message).toContain('week');
   });
+
+  it('does not repeat streak milestones on the same day', () => {
+    const completedDays: Record<number, string> = {};
+    for (let i = 0; i < 7; i++) {
+      completedDays[i + 1] = `2026-06-${String(6 + i).padStart(2, '0')}`;
+    }
+    const state = { completedDays, devotionalDays: { 7: today }, prayerDays: {}, celebratedMilestones: {} };
+    const first = celebrationFor(state, 7, today);
+    expect(first.message).toContain('week');
+
+    const second = celebrationFor(state, 7, today, { 7: today });
+    expect(second.message).toBeNull();
+    expect(second.size).toBe('small');
+  });
 });

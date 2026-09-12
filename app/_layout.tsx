@@ -19,6 +19,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Confetti } from '@/components/Confetti';
 import { deepLinkToRoute } from '@/lib/import-data';
+import { scheduleRhythmReminders } from '@/lib/notifications';
+import { allStoresHydrated, waitForAllStoresHydrated } from '@/lib/store-hydration';
 import { ThemeProvider, useTheme } from '@/lib/theme-context';
 import { useCelebration } from '@/store/celebration';
 import { useSettings } from '@/store/settings';
@@ -26,8 +28,9 @@ import { useSettings } from '@/store/settings';
 SplashScreen.preventAutoHideAsync();
 
 /**
- * Root layout: loads fonts, hydrates settings, handles deep links to rhythm
- * slots, and mounts the navigation stack.
+ * Root layout: loads fonts, waits for all persisted stores to hydrate,
+ * re-registers rhythm reminders from saved settings, handles deep links,
+ * and mounts the navigation stack.
  */
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -39,12 +42,32 @@ export default function RootLayout() {
     Nunito_700Bold,
     Nunito_800ExtraBold,
   });
-  const [hydrated, setHydrated] = useState(useSettings.persist.hasHydrated());
+  const [hydrated, setHydrated] = useState(allStoresHydrated());
+  const morningReminder = useSettings((s) => s.morningReminder);
+  const dinnerReminder = useSettings((s) => s.dinnerReminder);
+  const bedtimeReminder = useSettings((s) => s.bedtimeReminder);
 
   useEffect(() => {
-    const unsub = useSettings.persist.onFinishHydration(() => setHydrated(true));
-    return unsub;
-  }, []);
+    if (hydrated) return;
+    let cancelled = false;
+    waitForAllStoresHydrated().then(() => {
+      if (!cancelled) setHydrated(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    scheduleRhythmReminders({
+      morning: morningReminder,
+      dinner: dinnerReminder,
+      bedtime: bedtimeReminder,
+    }).catch(() => {
+      // Permission or platform issues — user can re-enable in Settings.
+    });
+  }, [hydrated, morningReminder, dinnerReminder, bedtimeReminder]);
 
   useEffect(() => {
     if (fontsLoaded && hydrated) {
