@@ -21,6 +21,7 @@ import { SundayBridgeCard } from '@/components/SundayBridgeCard';
 import { getDevotional, getPlanDay, getPrayer } from '@/lib/content';
 import { calendarDaysSinceStart, catchUpStatus, effectivePlanDay } from '@/lib/catch-up';
 import { currentPlanDay, formatFriendlyDate, todayISO } from '@/lib/dates';
+import { proactiveGuidanceForDay } from '@/lib/proactive-guidance';
 import { effectiveStreak, isVacationActive, shouldSuppressCatchUp } from '@/lib/vacation-mode';
 import { memoryVerseForDay } from '@/lib/memory-verse';
 import { buildParentPrep } from '@/lib/parent-prep';
@@ -74,6 +75,7 @@ export default function TodayScreen() {
   const percent = percentComplete(completedDays);
   const onVacation = isVacationActive(vacationMode, today);
   const planDaySinceStart = planStartDate ? calendarDaysSinceStart(planStartDate, today) : 0;
+  const guidanceMatch = proactiveGuidanceForDay(day);
 
   const currentSlot = currentRhythmSlot();
   const slots = orderedSlots(currentSlot);
@@ -267,8 +269,12 @@ export default function TodayScreen() {
         </>
       ) : null}
 
-      <SectionLabel>Related guidance</SectionLabel>
-      <ProactiveGuidanceCard day={day} />
+      {guidanceMatch ? (
+        <>
+          <SectionLabel>Related guidance</SectionLabel>
+          <ProactiveGuidanceCard day={day} />
+        </>
+      ) : null}
 
       <SectionLabel>Today together</SectionLabel>
 
