@@ -4,6 +4,7 @@
  * network once — after that the day's reading works fully offline.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18next from 'i18next';
 
 export interface BibleVerse {
   book: string;
@@ -18,7 +19,10 @@ export interface PassageText {
 }
 
 const CACHE_PREFIX = 'ff-bible:';
-const FETCH_TIMEOUT_MS = 15_000;
+
+function bibleTranslation(): string {
+  return i18next.language === 'es' ? 'rvr1960' : 'web';
+}
 
 interface ApiVerse {
   book_name: string;
@@ -27,68 +31,23 @@ interface ApiVerse {
   text: string;
 }
 
-function isValidPassage(value: unknown): value is PassageText {
-  if (!value || typeof value !== 'object') return false;
-  const p = value as PassageText;
-  return typeof p.reference === 'string' && Array.isArray(p.verses);
-}
-
-function isValidApiResponse(data: unknown): data is { reference: string; verses: ApiVerse[] } {
-  if (!data || typeof data !== 'object') return false;
-  const d = data as { reference?: unknown; verses?: unknown };
-  return typeof d.reference === 'string' && Array.isArray(d.verses);
-}
-
-async function readCachedPassage(cacheKey: string): Promise<PassageText | null> {
-  const cached = await AsyncStorage.getItem(cacheKey);
-  if (!cached) return null;
-  try {
-    const parsed: unknown = JSON.parse(cached);
-    if (!isValidPassage(parsed)) {
-      await AsyncStorage.removeItem(cacheKey);
-      return null;
-    }
-    return parsed;
-  } catch {
-    await AsyncStorage.removeItem(cacheKey);
-    return null;
-  }
-}
-
-async function fetchWithTimeout(url: string): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-  try {
-    return await fetch(url, { signal: controller.signal });
-  } catch (e) {
-    if (e instanceof Error && e.name === 'AbortError') {
-      throw new Error('Could not load passage (timed out). Check your connection and try again.');
-    }
-    throw e;
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
 /**
  * Loads a passage by bible-api query (e.g. "genesis 1-2", "psalms 23").
  * Returns cached text when available; otherwise fetches and caches.
  */
 export async function fetchPassage(apiQuery: string): Promise<PassageText> {
-  const cacheKey = CACHE_PREFIX + apiQuery;
-  const fromCache = await readCachedPassage(cacheKey);
-  if (fromCache) return fromCache;
+  const cacheKey = `${CACHE_PREFIX}${bibleTranslation()}:${apiQuery}`;
+  const cached = await AsyncStorage.getItem(cacheKey);
+  if (cached) {
+    return JSON.parse(cached) as PassageText;
+  }
 
-  const url = `https://bible-api.com/${encodeURIComponent(apiQuery)}?translation=web`;
-  const res = await fetchWithTimeout(url);
+  const url = `https://bible-api.com/${encodeURIComponent(apiQuery)}?translation=${bibleTranslation()}`;
+  const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`Could not load passage (${res.status}). Check your connection and try again.`);
   }
-
-  const data: unknown = await res.json();
-  if (!isValidApiResponse(data) || data.verses.length === 0) {
-    throw new Error('Could not load passage (unexpected response). Try again later.');
-  }
+  const data = (await res.json()) as { reference: string; verses: ApiVerse[] };
 
   const passage: PassageText = {
     reference: data.reference,
@@ -106,7 +65,7 @@ export async function fetchPassage(apiQuery: string): Promise<PassageText> {
 
 /** True when the passage is already cached (i.e. readable offline). */
 export async function isPassageCached(apiQuery: string): Promise<boolean> {
-  return (await readCachedPassage(CACHE_PREFIX + apiQuery)) != null;
+  return (await AsyncStorage.getItem(`${CACHE_PREFIX}${bibleTranslation()}:${apiQuery}`)) != null;
 }
 
 /** Removes every cached chapter (Settings → free up space / fresh start). */

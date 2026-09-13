@@ -20,52 +20,30 @@ const STREAK_MILESTONES: Record<number, string> = {
   365: '🏆 A FULL YEAR — you did it!',
 };
 
-interface ProgressSnapshot {
-  completedDays: Record<number, string>;
-  devotionalDays: Record<number, string>;
-  prayerDays: Record<number, string>;
-}
-
 /**
  * Decides how to celebrate after an activity was just marked complete.
- * Call with the *post-toggle* store state.
- *
- * `celebratedMilestonesToday` maps streak milestone values (7, 30, …) to
- * the calendar date they were last celebrated — prevents firing the same
- * milestone up to three times when finishing reading, devotional, and prayer.
+ * Call with the *post-toggle* reading completions, plus whether devotional
+ * and prayer are done today (sourced from `useDailyContent`).
  */
 export function celebrationFor(
-  state: ProgressSnapshot,
-  day: number,
-  todayISO: string,
-  celebratedMilestonesToday: Record<number, string> = {}
+  completedDays: Record<number, string>,
+  readingDay: number,
+  devotionalDone: boolean,
+  prayerDone: boolean,
+  dailyDates: (string | null)[],
+  todayISO: string
 ): Celebration {
-  const allThreeDone = Boolean(
-    state.completedDays[day] && state.devotionalDays[day] && state.prayerDays[day]
-  );
-  const streak = currentStreak(allActivityDates(state), todayISO);
-  const milestoneMessage = STREAK_MILESTONES[streak];
-  const milestoneAlreadyCelebrated = celebratedMilestonesToday[streak] === todayISO;
+  const allThreeDone = Boolean(completedDays[readingDay]) && devotionalDone && prayerDone;
+  const streak = currentStreak(allActivityDates(completedDays, dailyDates), todayISO);
+  const milestone = STREAK_MILESTONES[streak];
 
-  if (milestoneMessage && !milestoneAlreadyCelebrated) {
-    return { message: milestoneMessage, size: 'big' };
+  if (milestone) {
+    return { message: milestone, size: 'big' };
   }
   if (allThreeDone) {
     return { message: '🎉 Reading, devotional & prayer — all done today!', size: 'big' };
   }
   return { message: null, size: 'small' };
-}
-
-/** Returns true when the celebration is a streak milestone worth recording. */
-export function isStreakMilestoneCelebration(
-  state: ProgressSnapshot,
-  todayISO: string,
-  celebration: Celebration
-): number | null {
-  if (celebration.size !== 'big' || !celebration.message) return null;
-  const streak = currentStreak(allActivityDates(state), todayISO);
-  if (STREAK_MILESTONES[streak] === celebration.message) return streak;
-  return null;
 }
 
 /** Haptic feedback matched to the celebration size (no-op on web). */

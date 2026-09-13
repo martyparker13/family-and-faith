@@ -16,7 +16,10 @@ interface ConfettiProps {
 interface Piece {
   startX: number;
   drift: number;
-  duration: number;
+  /** Fraction of total duration before this piece starts falling (0–0.45). */
+  delay: number;
+  /** Fraction of total duration the piece takes to cross the screen (0.38–0.70). */
+  speed: number;
   rotateTo: number;
   color: string;
   width: number;
@@ -36,29 +39,29 @@ function mulberry32(seed: number): () => number {
 
 /**
  * A lightweight, dependency-free confetti burst: colored paper pieces fall
- * from the top of the screen with drift and spin, then the overlay removes
- * itself. Purely decorative — hidden from screen readers.
+ * from the top of the screen with staggered timing, drift, and spin, then
+ * the overlay removes itself. Purely decorative — hidden from screen readers.
  */
 export function Confetti({ burst, message, size = 'small' }: ConfettiProps) {
   const theme = useTheme();
   const { width, height } = useWindowDimensions();
   const [progress] = useState(() => new Animated.Value(0));
-  // The burst whose animation has finished — hides the overlay again.
   const [finishedBurst, setFinishedBurst] = useState(0);
 
   const pieces: Piece[] = useMemo(() => {
     if (burst === 0) return [];
     const rand = mulberry32(burst * 9301 + 49297);
     const colors = [theme.colors.gold, theme.colors.blue, theme.colors.green, theme.colors.clay];
-    const count = size === 'big' ? 56 : 28;
+    const count = size === 'big' ? 80 : 40;
     return Array.from({ length: count }, (_, i) => ({
       startX: rand() * width,
-      drift: (rand() - 0.5) * 180,
-      duration: 1600 + rand() * 900,
-      rotateTo: (rand() - 0.5) * 720,
+      drift: (rand() - 0.5) * 220,
+      delay: rand() * 0.45,
+      speed: 0.38 + rand() * 0.32,
+      rotateTo: (rand() - 0.5) * 900,
       color: colors[i % colors.length],
-      width: 8 + rand() * 6,
-      height: 12 + rand() * 8,
+      width: 7 + rand() * 9,
+      height: 10 + rand() * 12,
     }));
   }, [burst, size, width, theme]);
 
@@ -67,7 +70,7 @@ export function Confetti({ burst, message, size = 'small' }: ConfettiProps) {
     progress.setValue(0);
     const animation = Animated.timing(progress, {
       toValue: 1,
-      duration: 2800,
+      duration: 3200,
       easing: Easing.linear,
       useNativeDriver: true,
     });
@@ -87,28 +90,40 @@ export function Confetti({ burst, message, size = 'small' }: ConfettiProps) {
       style={StyleSheet.absoluteFill}
     >
       {pieces.map((piece, i) => {
+        // Each piece has its own active window [p0, p1] within the 0→1 progress.
+        // extrapolate:'clamp' keeps pieces off-screen before/after their window.
+        const p0 = piece.delay;
+        const p1 = Math.min(1.0, piece.delay + piece.speed);
+        const pFade = p0 + (p1 - p0) * 0.72;
+
         const fall = progress.interpolate({
-          inputRange: [0, 1],
-          outputRange: [-60, height + 60],
+          inputRange: [p0, p1],
+          outputRange: [-80, height + 80],
+          extrapolate: 'clamp',
         });
         const sway = progress.interpolate({
-          inputRange: [0, 0.5, 1],
-          outputRange: [0, piece.drift, piece.drift * 1.6],
+          inputRange: [p0, p1],
+          outputRange: [0, piece.drift],
+          extrapolate: 'clamp',
         });
         const spin = progress.interpolate({
-          inputRange: [0, 1],
+          inputRange: [p0, p1],
           outputRange: ['0deg', `${piece.rotateTo}deg`],
+          extrapolate: 'clamp',
         });
         const fade = progress.interpolate({
-          inputRange: [0, 0.75, 1],
+          inputRange: [p0, pFade, p1],
           outputRange: [1, 1, 0],
+          extrapolate: 'clamp',
         });
+
         return (
           <Animated.View
             key={`${burst}-${i}`}
             style={{
               position: 'absolute',
               left: piece.startX,
+              top: 0,
               width: piece.width,
               height: piece.height,
               borderRadius: 2,

@@ -1,40 +1,77 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useMemo, useRef } from 'react';
-import { FlatList, Pressable, View } from 'react-native';
+import { FlatList, Pressable, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@/components/AppText';
 import { ProgressBar } from '@/components/ProgressBar';
 import { MAX_CONTENT_WIDTH } from '@/components/Screen';
-import { readingPlan, type PlanDay } from '@/lib/content';
-import { currentPlanDay, dateForPlanDay, formatShortDate, todayISO } from '@/lib/dates';
+import { currentPlanDay, dateToISO, isoToDate, todayISO } from '@/lib/dates';
 import { useTheme } from '@/lib/theme-context';
 import { percentComplete, useProgress } from '@/store/progress';
 import { useSettings } from '@/store/settings';
 
-const ROW_HEIGHT = 84;
+const WEEK_ROWS = 6; // every month renders 6 rows so cards are uniform height
+const CELL_HEIGHT = 46;
+const MONTH_HEADER_HEIGHT = 64;
+const MONTH_CARD_HEIGHT = MONTH_HEADER_HEIGHT + WEEK_ROWS * CELL_HEIGHT + 24;
+
+interface MonthEntry {
+  key: string;
+  year: number;
+  /** 0-based month. */
+  month: number;
+}
+
+/** Months spanned by the 365-day plan, first to last. */
+function planMonths(planStartISO: string): MonthEntry[] {
+  const start = isoToDate(planStartISO);
+  const end = isoToDate(planStartISO);
+  end.setDate(end.getDate() + 364);
+
+  const months: MonthEntry[] = [];
+  const cursor = new Date(start.getFullYear(), start.getMonth(), 1, 12);
+  while (cursor.getFullYear() < end.getFullYear() ||
+         (cursor.getFullYear() === end.getFullYear() && cursor.getMonth() <= end.getMonth())) {
+    months.push({
+      key: `${cursor.getFullYear()}-${cursor.getMonth()}`,
+      year: cursor.getFullYear(),
+      month: cursor.getMonth(),
+    });
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+  return months;
+}
 
 /**
- * The full 365-day plan as a scrollable list, opened to today. Completed
- * days show a check; tapping any day opens its reading — perfect for
- * catching up on missed days or reading ahead.
+ * The Plan tab as a calendar: one card per month across the family's
+ * 365-day journey. Completed readings show a small gold cross; today is
+ * ringed in gold. Tapping any in-plan date opens that day's reading.
  */
 export default function PlanScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const planStartDate = useSettings((s) => s.planStartDate);
+  const planStartDate = useSettings((s) => s.planStartDate) ?? todayISO();
   const completedDays = useProgress((s) => s.completedDays);
-  const listRef = useRef<FlatList<PlanDay>>(null);
+  const listRef = useRef<FlatList<MonthEntry>>(null);
 
-  const today = planStartDate ? currentPlanDay(planStartDate, todayISO()) : 1;
+  const today = todayISO();
+  const todayPlanDay = currentPlanDay(planStartDate, today);
   const percent = percentComplete(completedDays);
-  const initialIndex = Math.max(0, today - 2);
+
+  const months = useMemo(() => planMonths(planStartDate), [planStartDate]);
+
+  // Open the list on the current month.
+  const todayDate = isoToDate(today);
+  const initialIndex = Math.max(
+    0,
+    months.findIndex((m) => m.year === todayDate.getFullYear() && m.month === todayDate.getMonth())
+  );
 
   const getItemLayout = useMemo(
     () => (_: unknown, index: number) => ({
-      length: ROW_HEIGHT,
-      offset: ROW_HEIGHT * index,
+      length: MONTH_CARD_HEIGHT,
+      offset: MONTH_CARD_HEIGHT * index,
       index,
     }),
     []
@@ -65,32 +102,24 @@ export default function PlanScreen() {
 
       <FlatList
         ref={listRef}
-        data={readingPlan}
-        keyExtractor={(item) => String(item.day)}
+        data={months}
+        keyExtractor={(m) => m.key}
         initialScrollIndex={initialIndex}
         getItemLayout={getItemLayout}
-        onScrollToIndexFailed={(info) => {
-          listRef.current?.scrollToOffset({
-            offset: info.averageItemLength * info.index,
-            animated: false,
-          });
-          setTimeout(() => {
-            listRef.current?.scrollToIndex({ index: info.index, animated: false });
-          }, 100);
-        }}
         contentContainerStyle={{
           paddingBottom: insets.bottom + theme.spacing.xl,
-          // Book-width column on tablets, matching the Screen wrapper.
+          paddingHorizontal: theme.spacing.lg,
           width: '100%',
           maxWidth: MAX_CONTENT_WIDTH,
           alignSelf: 'center',
         }}
         renderItem={({ item }) => (
-          <DayRow
-            item={item}
-            isToday={item.day === today}
-            done={Boolean(completedDays[item.day])}
-            date={planStartDate ? formatShortDate(dateForPlanDay(planStartDate, item.day)) : ''}
+          <MonthCard
+            entry={item}
+            planStartISO={planStartDate}
+            todayISOString={today}
+            todayPlanDay={todayPlanDay}
+            completedDays={completedDays}
           />
         )}
       />
@@ -98,66 +127,141 @@ export default function PlanScreen() {
   );
 }
 
-function DayRow({
-  item,
-  isToday,
-  done,
-  date,
+function MonthCard({
+  entry,
+  planStartISO,
+  todayISOString,
+  todayPlanDay,
+  completedDays,
 }: {
-  item: PlanDay;
-  isToday: boolean;
-  done: boolean;
-  date: string;
+  entry: MonthEntry;
+  planStartISO: string;
+  todayISOString: string;
+  todayPlanDay: number;
+  completedDays: Record<number, string>;
 }) {
   const theme = useTheme();
+  const { width } = useWindowDimensions();
+
+  const monthTitle = new Date(entry.year, entry.month, 1, 12).toLocaleDateString(undefined, {
+    month: 'long',
+    year: 'numeric',
+  });
+
+  // Sunday-first weekday letters, localized.
+  const weekdayLetters = useMemo(() => {
+    const letters: string[] = [];
+    const d = new Date(2026, 5, 7, 12); // a Sunday
+    for (let i = 0; i < 7; i++) {
+      letters.push(d.toLocaleDateString(undefined, { weekday: 'narrow' }));
+      d.setDate(d.getDate() + 1);
+    }
+    return letters;
+  }, []);
+
+  const firstWeekday = new Date(entry.year, entry.month, 1, 12).getDay();
+  const daysInMonth = new Date(entry.year, entry.month + 1, 0, 12).getDate();
+  const start = isoToDate(planStartISO);
+
+  const cells: ({ dateNum: number; planDay: number | null; iso: string } | null)[] = [];
+  for (let i = 0; i < firstWeekday; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(entry.year, entry.month, d, 12);
+    const diff = Math.round((date.getTime() - start.getTime()) / 86_400_000);
+    const planDay = diff >= 0 && diff < 365 ? diff + 1 : null;
+    cells.push({ dateNum: d, planDay, iso: dateToISO(date) });
+  }
+  while (cells.length < WEEK_ROWS * 7) cells.push(null);
+
+  const gridWidth = Math.min(width, MAX_CONTENT_WIDTH) - theme.spacing.lg * 2;
+  const cellWidth = gridWidth / 7;
+
   return (
-    <Pressable
-      onPress={() => router.push(`/day/${item.day}/reading`)}
-      accessibilityRole="button"
-      accessibilityLabel={`Day ${item.day}${done ? ', completed' : ''}${isToday ? ', today' : ''}: ${item.passages.map((p) => p.reference).join(' and ')}`}
-      style={({ pressed }) => ({
-        height: ROW_HEIGHT,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: theme.spacing.md,
-        paddingHorizontal: theme.spacing.lg,
-        backgroundColor: pressed
-          ? theme.colors.surfaceAlt
-          : isToday
-            ? theme.colors.surface
-            : 'transparent',
-        borderLeftWidth: isToday ? 4 : 0,
-        borderLeftColor: theme.colors.gold,
-      })}
-    >
-      <View
-        style={{
-          width: 44,
-          height: 44,
-          borderRadius: 22,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: done ? theme.colors.green : theme.colors.surfaceAlt,
-        }}
-      >
-        {done ? (
-          <Ionicons name="checkmark" size={24} color={theme.colors.onAccent} />
-        ) : (
-          <AppText variant="small" bold scaled={false}>
-            {item.day}
-          </AppText>
-        )}
+    <View style={{ height: MONTH_CARD_HEIGHT, paddingTop: theme.spacing.lg }}>
+      <AppText variant="title" semiBold accessibilityRole="header">
+        {monthTitle}
+      </AppText>
+      <View style={{ flexDirection: 'row', marginTop: theme.spacing.sm }}>
+        {weekdayLetters.map((letter, i) => (
+          <View key={i} style={{ width: cellWidth, alignItems: 'center' }}>
+            <AppText variant="caption" bold scaled={false} color={theme.colors.textMuted}>
+              {letter}
+            </AppText>
+          </View>
+        ))}
       </View>
-      <View style={{ flex: 1 }}>
-        <AppText variant="body" semiBold scaled={false} numberOfLines={1}>
-          {item.passages.map((p) => p.reference).join('  •  ')}
-        </AppText>
-        <AppText variant="caption" scaled={false} numberOfLines={1}>
-          {isToday ? 'Today · ' : ''}
-          {date}
-        </AppText>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 4 }}>
+        {cells.map((cell, i) => {
+          if (!cell) {
+            return <View key={i} style={{ width: cellWidth, height: CELL_HEIGHT }} />;
+          }
+          const inPlan = cell.planDay !== null;
+          const done = inPlan && Boolean(completedDays[cell.planDay!]);
+          const isToday = cell.iso === todayISOString;
+          const isFuture = inPlan && cell.planDay! > todayPlanDay;
+
+          return (
+            <Pressable
+              key={i}
+              disabled={!inPlan}
+              onPress={() => router.push(`/day/${cell.planDay}/reading`)}
+              accessibilityRole="button"
+              accessibilityLabel={
+                inPlan
+                  ? `Day ${cell.planDay}${done ? ', completed' : ''}${isToday ? ', today' : ''}`
+                  : undefined
+              }
+              style={({ pressed }) => ({
+                width: cellWidth,
+                height: CELL_HEIGHT,
+                alignItems: 'center',
+                justifyContent: 'center',
+                opacity: pressed ? 0.6 : 1,
+              })}
+            >
+              <View
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 19,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: done ? theme.colors.green : 'transparent',
+                  borderWidth: isToday ? 2 : 0,
+                  borderColor: theme.colors.gold,
+                }}
+              >
+                {done ? (
+                  <AppText
+                    variant="body"
+                    bold
+                    scaled={false}
+                    color={theme.colors.onAccent}
+                    style={{ lineHeight: 22 }}
+                  >
+                    ✝
+                  </AppText>
+                ) : (
+                  <AppText
+                    variant="small"
+                    semiBold={isToday}
+                    scaled={false}
+                    color={
+                      !inPlan
+                        ? theme.colors.border
+                        : isFuture
+                          ? theme.colors.textMuted
+                          : theme.colors.text
+                    }
+                  >
+                    {cell.dateNum}
+                  </AppText>
+                )}
+              </View>
+            </Pressable>
+          );
+        })}
       </View>
-      <Ionicons name="chevron-forward" size={20} color={theme.colors.textMuted} />
-    </Pressable>
+    </View>
   );
 }

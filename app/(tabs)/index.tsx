@@ -1,99 +1,91 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
-import { ExpandableCard } from '@/components/ExpandableCard';
-import { MemoryVersePractice } from '@/components/MemoryVersePractice';
 import { ProgressBar } from '@/components/ProgressBar';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
-import { SlotStreakIndicators } from '@/components/SlotStreakIndicators';
 import { StreakBadge } from '@/components/StreakBadge';
 import { getDevotional, getPlanDay, getPrayer } from '@/lib/content';
-import { catchUpStatus, effectivePlanDay } from '@/lib/catch-up';
+import { celebrationHaptics } from '@/lib/celebrate';
+import { syncWidget } from '@/lib/widget-sync';
 import { currentPlanDay, formatFriendlyDate, todayISO } from '@/lib/dates';
 import { memoryVerseForDay } from '@/lib/memory-verse';
-import { buildParentPrep } from '@/lib/parent-prep';
 import { prefetchUpcomingWeek } from '@/lib/prefetch';
-import {
-  currentRhythmSlot,
-  orderedSlots,
-  SLOT_LABELS,
-  slotActivity,
-  type RhythmSlot,
-} from '@/lib/rhythm';
-import { activeSeasonalOverlay, seasonalDayInfo } from '@/lib/seasonal';
-import { isRecapDay } from '@/lib/weekly-recap';
 import { useTheme } from '@/lib/theme-context';
+import { useCelebration } from '@/store/celebration';
+import { todayContentIndex, useDailyContent } from '@/store/daily-content';
 import { allActivityDates, currentStreak, percentComplete, useProgress } from '@/store/progress';
 import { useSettings } from '@/store/settings';
 
-/**
- * The "Today" dashboard: time-aware rhythm hero, streaks, parent prep,
- * catch-up banner, seasonal overlay, and the three daily cards.
- */
+/** First incomplete reading day >= `from`, capped at 365. */
+function activeReadingDay(completed: Record<number, string>, from: number): number {
+  let d = from;
+  while (d < 365 && completed[d]) d++;
+  return d;
+}
+
 export default function TodayScreen() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const familyName = useSettings((s) => s.familyName);
   const planStartDate = useSettings((s) => s.planStartDate);
-  const children = useSettings((s) => s.children);
-  const catchUpChoice = useSettings((s) => s.catchUpChoice);
-  const setCatchUpChoice = useSettings((s) => s.setCatchUpChoice);
-  const seasonalEnabled = useSettings((s) => s.seasonalOverlaysEnabled);
-
   const completedDays = useProgress((s) => s.completedDays);
-  const devotionalDays = useProgress((s) => s.devotionalDays);
-  const prayerDays = useProgress((s) => s.prayerDays);
-  const slotCompletions = useProgress((s) => s.slotCompletions);
+
+  const contentIndex = useDailyContent(todayContentIndex);
+  const devotionalDoneDate = useDailyContent((s) => s.devotionalDoneDate);
+  const prayerDoneDate = useDailyContent((s) => s.prayerDoneDate);
+  const lastAdvancedDate = useDailyContent((s) => s.lastAdvancedDate);
+  const advance = useDailyContent((s) => s.advance);
 
   const today = todayISO();
-  const day = planStartDate
-    ? effectivePlanDay(planStartDate, today, catchUpChoice)
-    : planStartDate
-      ? currentPlanDay(planStartDate, today)
-      : 1;
-  const plan = getPlanDay(day);
-  const devotional = getDevotional(day);
-  const prayer = getPrayer(day);
-  const parentPrep = buildParentPrep(day, children);
+  const day = planStartDate ? currentPlanDay(planStartDate, today) : 1;
+  const readingDay = activeReadingDay(completedDays, day);
+
+  // Advance to today's devotional/prayer if the date has changed (midnight rollover).
+  useEffect(() => {
+    if (lastAdvancedDate !== today) advance(today);
+  }, [today, lastAdvancedDate, advance]);
+
+  const plan = getPlanDay(readingDay);
+  const devotional = getDevotional(contentIndex);
+  const prayer = getPrayer(contentIndex);
 
   const streak = currentStreak(
-    allActivityDates({ completedDays, devotionalDays, prayerDays }),
+    allActivityDates(completedDays, [devotionalDoneDate, prayerDoneDate]),
     today
   );
   const percent = percentComplete(completedDays);
 
-  const currentSlot = currentRhythmSlot();
-  const slots = orderedSlots(currentSlot);
-  const nextSlot = slots.find(
-    (s) => !Boolean(slotCompletions[s][day])
-  ) ?? currentSlot;
-
-  const catchUp = planStartDate
-    ? catchUpStatus(
-        planStartDate,
-        today,
-        { completedDays, devotionalDays, prayerDays },
-        catchUpChoice
-      )
-    : null;
-  const seasonal = activeSeasonalOverlay(today, seasonalEnabled);
-  const seasonalInfo = seasonal ? seasonalDayInfo(seasonal, today) : null;
+  const devotionalDone = devotionalDoneDate === today;
+  const prayerDone = prayerDoneDate === today;
 
   useEffect(() => {
-    prefetchUpcomingWeek(day);
-  }, [day]);
+    prefetchUpcomingWeek(readingDay);
+  }, [readingDay]);
 
-  const greeting = familyName ? `Hello, ${familyName}!` : 'Hello, friends!';
+  useEffect(() => {
+    syncWidget({
+      day,
+      readingDone: Boolean(completedDays[readingDay]),
+      devotionalDone,
+      prayerDone,
+    });
+  }, [day, readingDay, completedDays, devotionalDone, prayerDone]);
+
+  const greeting = familyName
+    ? t('today.greeting_name', { name: familyName })
+    : t('today.greeting_default');
 
   return (
     <Screen contentStyle={{ paddingTop: insets.top + theme.spacing.lg }}>
+      {/* Header */}
       <View
         style={{
           flexDirection: 'row',
@@ -110,113 +102,14 @@ export default function TodayScreen() {
             {greeting}
           </AppText>
           <AppText variant="small" color={theme.colors.goldDeep} semiBold scaled={false}>
-            Day {day} of 365
+            {t('common.day_of_365', { day })}
           </AppText>
         </View>
         <StreakBadge streak={streak} />
       </View>
 
-      {seasonalInfo ? (
-        <Card accent={theme.colors.gold} style={{ marginBottom: theme.spacing.md }}>
-          <AppText variant="small" semiBold color={theme.colors.goldDeep}>
-            {seasonalInfo.label}
-          </AppText>
-          {seasonalInfo.readingNote ? (
-            <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 4 }}>
-              {seasonalInfo.readingNote}
-            </AppText>
-          ) : null}
-        </Card>
-      ) : null}
-
-      {catchUp?.shouldOfferCatchUp ? (
-        <Card accent={theme.colors.clay} style={{ marginBottom: theme.spacing.md }}>
-          <AppText variant="body" semiBold>
-            Life got busy — pick up where you left off
-          </AppText>
-          <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.xs }}>
-            The calendar says day {catchUp.planDay}, but your last completed day is{' '}
-            {catchUp.lastCompletedDay || 'none yet'}. No guilt — just choose what works today.
-          </AppText>
-          <View style={{ flexDirection: 'row', gap: theme.spacing.sm, marginTop: theme.spacing.md }}>
-            <AppButton
-              label="Continue today"
-              variant="secondary"
-              onPress={() => setCatchUpChoice('continue')}
-              style={{ flex: 1 }}
-            />
-            <AppButton
-              label="Today only"
-              onPress={() => setCatchUpChoice('today-only')}
-              style={{ flex: 1 }}
-            />
-          </View>
-        </Card>
-      ) : null}
-
-      <UpNextHero slot={nextSlot} day={day} done={Boolean(slotCompletions[nextSlot][day])} />
-
-      <View style={{ marginVertical: theme.spacing.md }}>
-        <SlotStreakIndicators todayISO={today} />
-      </View>
-
-      <ExpandableCard
-        eyebrow="Parent prep"
-        eyebrowColor={theme.colors.goldDeep}
-        title="Lead tonight’s family time"
-        defaultOpen={false}
-      >
-        <AppText variant="body" semiBold>
-          {parentPrep.bigIdea}
-        </AppText>
-        <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm }}>
-          Takeaway: {parentPrep.teachingPoint}
-        </AppText>
-        <AppText variant="body" style={{ marginTop: theme.spacing.md }}>
-          {parentPrep.leadIn}
-        </AppText>
-        <AppText variant="small" semiBold color={theme.colors.green} style={{ marginTop: theme.spacing.sm }}>
-          {parentPrep.questionHint}
-        </AppText>
-        {parentPrep.parentNoteTrigger ? (
-          <View
-            style={{
-              marginTop: theme.spacing.md,
-              paddingTop: theme.spacing.md,
-              borderTopWidth: 1,
-              borderTopColor: theme.colors.border,
-            }}
-          >
-            <AppText variant="caption" bold scaled={false} color={theme.colors.clay}>
-              SENSITIVE READING · {parentPrep.parentNoteTrigger.toUpperCase()}
-            </AppText>
-            <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 4 }}>
-              {parentPrep.parentNotePreview}
-            </AppText>
-          </View>
-        ) : null}
-      </ExpandableCard>
-
-      <Pressable
-        onPress={() => router.push(`/quick-evening?day=${day}`)}
-        accessibilityRole="button"
-        accessibilityLabel="Short on time? Try a five-minute family moment"
-        style={({ pressed }) => ({
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: theme.spacing.sm,
-          marginTop: theme.spacing.md,
-          opacity: pressed ? 0.75 : 1,
-        })}
-      >
-        <Ionicons name="timer-outline" size={18} color={theme.colors.goldDeep} />
-        <AppText variant="small" semiBold color={theme.colors.goldDeep}>
-          Short on time? 5-minute family moment →
-        </AppText>
-      </Pressable>
-
-      <Card style={{ marginTop: theme.spacing.md }}>
+      {/* Progress through the Bible */}
+      <Card>
         <View
           style={{
             flexDirection: 'row',
@@ -225,50 +118,53 @@ export default function TodayScreen() {
           }}
         >
           <AppText variant="small" semiBold scaled={false}>
-            Bible journey
+            {t('today.bible_journey')}
           </AppText>
           <AppText variant="small" semiBold scaled={false} color={theme.colors.green}>
-            {percent}% complete
+            {t('common.percent_complete', { percent })}
           </AppText>
         </View>
         <ProgressBar percent={percent} />
       </Card>
 
-      {isRecapDay(today) ? (
-        <>
-          <SectionLabel>Weekly recap</SectionLabel>
-          <Card onPress={() => router.push('/recap')} accessibilityLabel="Open weekly recap">
-            <AppText variant="body" semiBold>
-              See this week together
-            </AppText>
-            <AppText variant="small" color={theme.colors.textMuted}>
-              Readings, themes, journal entries, and answered prayers.
-            </AppText>
-          </Card>
-        </>
-      ) : null}
-
-      <SectionLabel>Today together</SectionLabel>
+      <SectionLabel>{t('today.today_together')}</SectionLabel>
 
       <View style={{ gap: theme.spacing.md }}>
-        {slots.map((slot) => (
-          <RhythmDashboardCard
-            key={slot}
-            slot={slot}
-            day={day}
-            plan={plan}
-            devotional={devotional}
-            prayer={prayer}
-            done={Boolean(slotCompletions[slot][day])}
-            highlight={slot === nextSlot}
-          />
-        ))}
+        <DashboardCard
+          icon="book"
+          accent={theme.colors.blue}
+          eyebrow={readingDay === day
+            ? t('today.eyebrow_reading_today')
+            : t('today.eyebrow_reading_day', { day: readingDay })}
+          title={plan.passages.map((p) => p.reference).join('  •  ')}
+          subtitle={plan.kidSummary}
+          done={Boolean(completedDays[readingDay])}
+          onPress={() => router.push(`/day/${readingDay}/reading`)}
+        />
+        <DashboardCard
+          icon="chatbubbles"
+          accent={theme.colors.clay}
+          eyebrow={t('today.eyebrow_devotional_today')}
+          title={devotional.title}
+          subtitle={devotional.scripture.reference}
+          done={devotionalDone}
+          onPress={() => router.push('/devotional')}
+        />
+        <DashboardCard
+          icon="rose"
+          accent={theme.colors.green}
+          eyebrow={t('today.eyebrow_prayer_today')}
+          title={prayer.title}
+          subtitle={`A ${prayer.theme.toLowerCase()} prayer to pray aloud together`}
+          done={prayerDone}
+          onPress={() => router.push('/prayer')}
+        />
       </View>
 
-      <SectionLabel>Memory verse of the week</SectionLabel>
-      <MemoryVersePractice verse={memoryVerseForDay(day)} day={day} />
+      <SectionLabel>{t('today.memory_verse')}</SectionLabel>
+      <MemoryVerseCard day={day} />
 
-      <SectionLabel>Need guidance?</SectionLabel>
+      <SectionLabel>{t('today.need_guidance')}</SectionLabel>
       <Card
         accent={theme.colors.gold}
         onPress={() => router.push('/guidance')}
@@ -290,172 +186,104 @@ export default function TodayScreen() {
           </View>
           <View style={{ flex: 1 }}>
             <AppText variant="title" semiBold>
-              Scripture Guidance
+              {t('today.guidance_title')}
             </AppText>
             <AppText variant="small" color={theme.colors.textMuted}>
-              Wisdom for whatever your family is facing — search any struggle.
+              {t('today.guidance_subtitle')}
             </AppText>
           </View>
           <Ionicons name="chevron-forward" size={22} color={theme.colors.textMuted} />
         </View>
       </Card>
 
+      {/* Quick links: journal & prayer list */}
       <View style={{ flexDirection: 'row', gap: theme.spacing.md, marginTop: theme.spacing.lg }}>
         <QuickLink
           icon="create"
-          label="Family Journal"
+          label={t('today.journal')}
           onPress={() => router.push('/journal')}
-          hint="One line a day about your family's journey"
+          hint={t('today.journal_hint')}
         />
         <QuickLink
           icon="rose"
-          label="Prayer List"
+          label={t('today.prayer_list')}
           onPress={() => router.push('/prayer-list')}
-          hint="Requests and answered prayers"
+          hint={t('today.prayer_list_hint')}
         />
       </View>
     </Screen>
   );
 }
 
-function UpNextHero({
-  slot,
-  day,
-  done,
-}: {
-  slot: RhythmSlot;
-  day: number;
-  done: boolean;
-}) {
+function MemoryVerseCard({ day }: { day: number }) {
+  const { t } = useTranslation();
   const theme = useTheme();
-  const labels = SLOT_LABELS[slot];
-  const activity = slotActivity(slot);
+  const verse = memoryVerseForDay(day);
+  const practiced = useProgress((s) => Boolean(s.practicedWeeks[verse.week]));
+  const togglePracticed = useProgress((s) => s.togglePracticedWeek);
+  const fire = useCelebration((s) => s.fire);
 
-  return (
-    <Card accent={theme.colors.gold}>
-      <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-        UP NEXT
-      </AppText>
-      <AppText variant="title" semiBold style={{ marginTop: theme.spacing.xs }}>
-        {labels.title}
-      </AppText>
-      <AppText variant="small" color={theme.colors.textMuted}>
-        {done ? 'Done for today — great work!' : `Day ${day} · ${activity}`}
-      </AppText>
-      {!done ? (
-        <AppButton
-          label={labels.startLabel}
-          icon="play"
-          onPress={() => router.push(`/rhythm/${slot}`)}
-          style={{ marginTop: theme.spacing.md }}
-        />
-      ) : null}
-    </Card>
-  );
-}
-
-function RhythmDashboardCard({
-  slot,
-  day,
-  plan,
-  devotional,
-  prayer,
-  done,
-  highlight,
-}: {
-  slot: RhythmSlot;
-  day: number;
-  plan: ReturnType<typeof getPlanDay>;
-  devotional: ReturnType<typeof getDevotional>;
-  prayer: ReturnType<typeof getPrayer>;
-  done: boolean;
-  highlight: boolean;
-}) {
-  const theme = useTheme();
-  const labels = SLOT_LABELS[slot];
-  const iconMap = { sunny: 'sunny', restaurant: 'restaurant', moon: 'moon' } as const;
-  const accentMap = { morning: theme.colors.blue, dinner: theme.colors.clay, bedtime: theme.colors.green };
-
-  const eyebrow = labels.short;
-  const title =
-    slot === 'morning'
-      ? plan.passages.map((p) => p.reference).join('  •  ')
-      : slot === 'dinner'
-        ? devotional.title
-        : prayer.title;
-  const subtitle =
-    slot === 'morning'
-      ? plan.teachingPoint ?? plan.kidSummary
-      : slot === 'dinner'
-        ? devotional.scripture.reference
-        : `A ${prayer.theme.toLowerCase()} prayer to pray aloud together`;
-
-  const onPress = () => {
-    if (slot === 'morning') router.push(`/day/${day}/reading`);
-    else if (slot === 'dinner') router.push(`/day/${day}/devotional`);
-    else router.push(`/day/${day}/prayer`);
+  const onPracticed = () => {
+    togglePracticed(verse.week, todayISO());
+    if (!practiced) {
+      fire({ message: t('today.hidden_in_hearts'), size: 'small' });
+      celebrationHaptics('small');
+    }
   };
 
   return (
-    <Card
-      accent={accentMap[slot]}
-      onPress={onPress}
-      style={highlight ? { borderWidth: 2, borderColor: theme.colors.gold } : undefined}
-      accessibilityLabel={`${eyebrow}: ${title}`}
-      accessibilityHint="Opens the full screen"
-    >
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.md }}>
-        <Ionicons name={iconMap[labels.icon]} size={26} color={accentMap[slot]} />
-        <AppText variant="caption" bold scaled={false} style={{ letterSpacing: 0.6, flex: 1 }}>
-          {eyebrow.toUpperCase()}
+    <Card accent={theme.colors.blue}>
+      <AppText variant="scripture" italic>
+        "{verse.text}"
+      </AppText>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginTop: theme.spacing.md,
+        }}
+      >
+        <AppText variant="small" semiBold color={theme.colors.goldDeep} style={{ flex: 1 }}>
+          {verse.reference}
         </AppText>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm }}>
-          {slot === 'morning' && plan.parentNotes ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 4,
-                backgroundColor: theme.colors.surfaceAlt,
-                borderRadius: theme.radius.pill,
-                paddingHorizontal: 8,
-                paddingVertical: 2,
-              }}
-            >
-              <Ionicons name="shield-checkmark-outline" size={14} color={theme.colors.clay} />
-              <AppText variant="caption" semiBold scaled={false} color={theme.colors.clay}>
-                Parent note
-              </AppText>
-            </View>
-          ) : null}
-          {done ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-              <Ionicons name="checkmark-circle" size={20} color={theme.colors.success} />
-              <AppText variant="caption" semiBold scaled={false} color={theme.colors.success}>
-                Done
-              </AppText>
-            </View>
-          ) : null}
-        </View>
-      </View>
-      <AppText variant="title" semiBold style={{ marginTop: theme.spacing.sm }}>
-        {title}
-      </AppText>
-      <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.xs }}>
-        {subtitle}
-      </AppText>
-      {!done ? (
         <Pressable
-          onPress={() => router.push(`/rhythm/${slot}`)}
-          style={{ marginTop: theme.spacing.sm }}
+          onPress={onPracticed}
           accessibilityRole="button"
-          accessibilityLabel={`Guided ${labels.short.toLowerCase()} flow`}
+          accessibilityLabel={
+            practiced ? 'Practiced this week — tap to undo' : 'Mark memory verse as practiced'
+          }
+          style={({ pressed }) => ({
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 6,
+            borderWidth: 1,
+            borderColor: practiced ? theme.colors.green : theme.colors.border,
+            backgroundColor: practiced
+              ? theme.colors.surfaceAlt
+              : pressed
+                ? theme.colors.surfaceAlt
+                : 'transparent',
+            borderRadius: theme.radius.pill,
+            paddingHorizontal: theme.spacing.md,
+            minHeight: theme.minTouch - 8,
+          })}
         >
-          <AppText variant="small" semiBold color={theme.colors.goldDeep}>
-            Guided flow →
+          <Ionicons
+            name={practiced ? 'checkmark-circle' : 'mic-outline'}
+            size={18}
+            color={practiced ? theme.colors.green : theme.colors.textMuted}
+          />
+          <AppText
+            variant="small"
+            semiBold
+            scaled={false}
+            color={practiced ? theme.colors.green : theme.colors.text}
+          >
+            {practiced ? t('today.practiced') : t('today.we_practiced')}
           </AppText>
         </Pressable>
-      ) : null}
+      </View>
     </Card>
   );
 }
@@ -482,6 +310,60 @@ function QuickLink({
       <Ionicons name={icon} size={24} color={theme.colors.goldDeep} />
       <AppText variant="body" semiBold scaled={false} style={{ marginTop: theme.spacing.sm }}>
         {label}
+      </AppText>
+    </Card>
+  );
+}
+
+function DashboardCard({
+  icon,
+  accent,
+  eyebrow,
+  title,
+  subtitle,
+  done,
+  onPress,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  accent: string;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  done?: boolean;
+  onPress: () => void;
+}) {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  return (
+    <Card
+      accent={accent}
+      onPress={onPress}
+      accessibilityLabel={`${eyebrow}: ${title}`}
+      accessibilityHint="Opens the full screen"
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.md }}>
+        <Ionicons name={icon} size={26} color={accent} />
+        <AppText variant="caption" bold scaled={false} style={{ letterSpacing: 0.6, flex: 1 }}>
+          {eyebrow.toUpperCase()}
+        </AppText>
+        {done ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <Ionicons name="checkmark-circle" size={20} color={theme.colors.success} />
+            <AppText variant="caption" semiBold scaled={false} color={theme.colors.success}>
+              {t('common.done')}
+            </AppText>
+          </View>
+        ) : null}
+      </View>
+      <AppText variant="title" semiBold style={{ marginTop: theme.spacing.sm }}>
+        {title}
+      </AppText>
+      <AppText
+        variant="small"
+        color={theme.colors.textMuted}
+        style={{ marginTop: theme.spacing.xs }}
+      >
+        {subtitle}
       </AppText>
     </Card>
   );

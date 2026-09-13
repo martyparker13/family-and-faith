@@ -54,13 +54,17 @@ describe('percentComplete', () => {
 });
 
 describe('allActivityDates', () => {
-  it('merges dates from all three activities', () => {
-    const dates = allActivityDates({
-      completedDays: { 1: '2026-06-10' },
-      devotionalDays: { 1: '2026-06-11' },
-      prayerDays: { 2: '2026-06-12' },
-    });
+  it('merges reading dates with daily-content dates', () => {
+    const dates = allActivityDates(
+      { 1: '2026-06-10' },
+      ['2026-06-11', '2026-06-12']
+    );
     expect(dates.sort()).toEqual(['2026-06-10', '2026-06-11', '2026-06-12']);
+  });
+
+  it('filters out null daily dates', () => {
+    const dates = allActivityDates({ 1: '2026-06-10' }, [null, '2026-06-11']);
+    expect(dates.sort()).toEqual(['2026-06-10', '2026-06-11']);
   });
 });
 
@@ -69,8 +73,11 @@ describe('celebrationFor', () => {
 
   it('gives a small celebration for a single activity', () => {
     const result = celebrationFor(
-      { completedDays: { 1: today }, devotionalDays: {}, prayerDays: {} },
+      { 1: today },
       1,
+      false,
+      false,
+      [null, null],
       today
     );
     expect(result.size).toBe('small');
@@ -78,12 +85,14 @@ describe('celebrationFor', () => {
   });
 
   it('gives a big celebration when all three are done for the day', () => {
-    const state = {
-      completedDays: { 1: today },
-      devotionalDays: { 1: today },
-      prayerDays: { 1: today },
-    };
-    const result = celebrationFor(state, 1, today);
+    const result = celebrationFor(
+      { 1: today },
+      1,
+      true,
+      true,
+      [today, today],
+      today
+    );
     expect(result.size).toBe('big');
     expect(result.message).toContain('all done');
   });
@@ -94,22 +103,8 @@ describe('celebrationFor', () => {
     for (let i = 0; i < 7; i++) {
       completedDays[i + 1] = `2026-06-${String(6 + i).padStart(2, '0')}`;
     }
-    const result = celebrationFor({ completedDays, devotionalDays: {}, prayerDays: {} }, 7, today);
+    const result = celebrationFor(completedDays, 7, false, false, [], today);
     expect(result.size).toBe('big');
     expect(result.message).toContain('week');
-  });
-
-  it('does not repeat streak milestones on the same day', () => {
-    const completedDays: Record<number, string> = {};
-    for (let i = 0; i < 7; i++) {
-      completedDays[i + 1] = `2026-06-${String(6 + i).padStart(2, '0')}`;
-    }
-    const state = { completedDays, devotionalDays: { 7: today }, prayerDays: {}, celebratedMilestones: {} };
-    const first = celebrationFor(state, 7, today);
-    expect(first.message).toContain('week');
-
-    const second = celebrationFor(state, 7, today, { 7: today });
-    expect(second.message).toBeNull();
-    expect(second.size).toBe('small');
   });
 });

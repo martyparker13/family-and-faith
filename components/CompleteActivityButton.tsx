@@ -1,58 +1,52 @@
 import React from 'react';
 
 import { AppButton } from './AppButton';
-import {
-  celebrationFor,
-  celebrationHaptics,
-  isStreakMilestoneCelebration,
-  undoHaptics,
-} from '@/lib/celebrate';
+import { celebrationFor, celebrationHaptics, undoHaptics } from '@/lib/celebrate';
 import { todayISO } from '@/lib/dates';
 import { useCelebration } from '@/store/celebration';
-import { useProgress, type Activity } from '@/store/progress';
+import { useDailyContent } from '@/store/daily-content';
+import { useProgress } from '@/store/progress';
 
-const LABELS: Record<Activity, { todo: string; done: string }> = {
-  reading: { todo: 'Mark reading as complete', done: 'Reading completed — tap to undo' },
-  devotional: { todo: 'We talked about it!', done: 'Devotional completed — tap to undo' },
-  prayer: { todo: 'We prayed together!', done: 'Prayer completed — tap to undo' },
+const LABELS = {
+  todo: 'Mark reading as complete',
+  done: 'Reading completed — tap to undo',
 };
 
 /**
- * Mark-as-complete button for a daily activity. Completing triggers haptics
- * and a confetti burst — bigger when it finishes all three activities for
- * the day or hits a streak milestone.
+ * Mark-as-complete button for the daily reading. Completing triggers haptics
+ * and a confetti burst — bigger when all three daily activities are done or
+ * a streak milestone is hit.
  */
-export function CompleteActivityButton({ activity, day }: { activity: Activity; day: number }) {
-  const progress = useProgress();
-  const recordKey =
-    activity === 'reading'
-      ? 'completedDays'
-      : activity === 'devotional'
-        ? 'devotionalDays'
-        : 'prayerDays';
-  const done = Boolean(progress[recordKey][day]);
+export function CompleteActivityButton({ day }: { day: number }) {
+  const completedDays = useProgress((s) => s.completedDays);
+  const toggleDay = useProgress((s) => s.toggleDay);
+  const done = Boolean(completedDays[day]);
   const fire = useCelebration((s) => s.fire);
 
   const toggle = () => {
     const today = todayISO();
-    progress.toggleActivity(activity, day, today);
+    toggleDay(day, today);
     if (done) {
       undoHaptics();
       return;
     }
     const after = useProgress.getState();
-    const celebration = celebrationFor(after, day, today, after.celebratedMilestones);
+    const daily = useDailyContent.getState();
+    const celebration = celebrationFor(
+      after.completedDays,
+      day,
+      Boolean(daily.devotionalDoneDate),
+      Boolean(daily.prayerDoneDate),
+      [daily.devotionalDoneDate, daily.prayerDoneDate],
+      today
+    );
     fire(celebration);
     celebrationHaptics(celebration.size);
-    const milestone = isStreakMilestoneCelebration(after, today, celebration);
-    if (milestone !== null) {
-      after.recordMilestoneCelebration(milestone, today);
-    }
   };
 
   return (
     <AppButton
-      label={done ? LABELS[activity].done : LABELS[activity].todo}
+      label={done ? LABELS.done : LABELS.todo}
       icon={done ? 'checkmark-circle' : 'ellipse-outline'}
       variant={done ? 'secondary' : 'primary'}
       onPress={toggle}

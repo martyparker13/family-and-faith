@@ -40,8 +40,7 @@ eas build --profile production  # store-ready build
 
 | Feature | Where | Notes |
 | --- | --- | --- |
-| **Today dashboard** | `app/(tabs)/index.tsx` | Time-aware "Up next" hero, three rhythm slots, per-slot streaks, parent prep, catch-up banner, Advent overlay, weekly recap link |
-| **Guided rhythm flow** | `app/rhythm/[slot].tsx` | Morning / dinner / bedtime guided flows with completion celebration |
+| **Today dashboard** | `app/(tabs)/index.tsx` | Date, "Day N of 365", streak flame, the three daily cards, Guidance entry |
 | **Daily Readings** | `app/day/[day]/reading.tsx` | WEB text from bible-api.com with permanent on-device caching, kid recap, text size, read-aloud (expo-speech), mark complete |
 | **Reading Plan list** | `app/(tabs)/plan.tsx` | All 365 days, catch up on missed days |
 | **Devotionals** | `app/day/[day]/devotional.tsx` | Anchor verse, reflection, tiered tap-to-reveal questions, family challenge |
@@ -52,9 +51,8 @@ eas build --profile production  # store-ready build
 | **Family Journal** | `app/journal.tsx` | One line a day — a keepsake of the family's year in the Word |
 | **Memory verse** | Today screen | Weekly verse with "we practiced it" tracking |
 | **Celebrations** | `components/Confetti.tsx`, `lib/celebrate.ts` | Haptics + confetti on completions, streak milestones, answered prayers |
-| **Onboarding** | `app/onboarding.tsx` | Family name, children, three-rhythm reminders (7am/6pm/8pm presets), plan start date |
-| **Settings** | `app/(tabs)/settings.tsx` | Rhythm reminders, children, backup import/export, keepsake, seasonal toggle, offline download |
-| **Weekly recap** | `app/recap.tsx` | Sunday summary of readings, themes, journal, answered prayers |
+| **Onboarding** | `app/onboarding.tsx` | Family name, plan start date, daily reminder time (presets or custom picker) |
+| **Settings** | `app/(tabs)/settings.tsx` | Theme, text size, read-aloud speed, reminder, offline download, restart/reset options |
 
 ## Project structure
 

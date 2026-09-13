@@ -30,22 +30,52 @@ export default function JournalScreen() {
 
   const entries = useJournal((s) => s.entries);
   const saveEntry = useJournal((s) => s.saveEntry);
+  const [note, setNote] = useState(entries[day]?.note ?? '');
+  const [saved, setSaved] = useState(false);
 
   const history = Object.values(entries)
     .filter((e) => e.day !== day)
     .sort((a, b) => b.day - a.day);
+
+  const save = () => {
+    saveEntry(day, note, today);
+    setSaved(true);
+  };
 
   return (
     <Screen>
       <Stack.Screen options={{ title: 'Family Journal' }} />
 
       <SectionLabel>{`Day ${day} — what did we talk about?`}</SectionLabel>
-      <JournalEditor
-        key={day}
-        day={day}
-        initialNote={entries[day]?.note ?? ''}
-        onSave={(note) => saveEntry(day, note, today)}
-      />
+      <Card accent={theme.colors.gold}>
+        <TextInput
+          value={note}
+          onChangeText={(text) => {
+            setNote(text);
+            setSaved(false);
+          }}
+          placeholder="One line is plenty: something someone said, noticed, or prayed…"
+          placeholderTextColor={theme.colors.textMuted}
+          multiline
+          accessibilityLabel={`Journal note for day ${day}`}
+          style={{
+            minHeight: 100,
+            textAlignVertical: 'top',
+            color: theme.colors.text,
+            fontFamily: theme.fonts.sans,
+            fontSize: theme.fontSizes.bodyLarge,
+            lineHeight: theme.lineHeights.bodyLarge,
+          }}
+        />
+        <AppButton
+          label={saved ? 'Saved ✓' : 'Save note'}
+          icon={saved ? 'checkmark-circle' : 'create'}
+          variant={saved ? 'secondary' : 'primary'}
+          onPress={save}
+          disabled={saved}
+          style={{ marginTop: theme.spacing.md }}
+        />
+      </Card>
 
       <SectionLabel>Our story so far</SectionLabel>
       {history.length === 0 ? (
@@ -62,57 +92,6 @@ export default function JournalScreen() {
         </View>
       )}
     </Screen>
-  );
-}
-
-function JournalEditor({
-  day,
-  initialNote,
-  onSave,
-}: {
-  day: number;
-  initialNote: string;
-  onSave: (note: string) => void;
-}) {
-  const theme = useTheme();
-  const [note, setNote] = useState(initialNote);
-  const [saved, setSaved] = useState(false);
-
-  const save = () => {
-    onSave(note);
-    setSaved(true);
-  };
-
-  return (
-    <Card accent={theme.colors.gold}>
-      <TextInput
-        value={note}
-        onChangeText={(text) => {
-          setNote(text);
-          setSaved(false);
-        }}
-        placeholder="One line is plenty: something someone said, noticed, or prayed…"
-        placeholderTextColor={theme.colors.textMuted}
-        multiline
-        accessibilityLabel={`Journal note for day ${day}`}
-        style={{
-          minHeight: 100,
-          textAlignVertical: 'top',
-          color: theme.colors.text,
-          fontFamily: theme.fonts.sans,
-          fontSize: theme.fontSizes.bodyLarge,
-          lineHeight: theme.lineHeights.bodyLarge,
-        }}
-      />
-      <AppButton
-        label={saved ? 'Saved ✓' : 'Save note'}
-        icon={saved ? 'checkmark-circle' : 'create'}
-        variant={saved ? 'secondary' : 'primary'}
-        onPress={save}
-        disabled={saved}
-        style={{ marginTop: theme.spacing.md }}
-      />
-    </Card>
   );
 }
 

@@ -10,7 +10,6 @@ import { EmptyState } from '@/components/EmptyState';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
 import { VerseCard } from '@/components/VerseCard';
-import { getPrayer } from '@/lib/content';
 import { useTheme } from '@/lib/theme-context';
 import { useFavorites, type FavoriteVerse } from '@/store/favorites';
 
@@ -82,29 +81,28 @@ export default function FavoritesScreen() {
   );
 }
 
-/** A saved daily prayer: preview with a link back to the full prayer screen. */
+/** A saved daily prayer: preview with a link to today's prayer screen. */
 function FavoritePrayerCard({ favorite }: { favorite: FavoriteVerse }) {
   const theme = useTheme();
   const removeFavorite = useFavorites((s) => s.removeFavorite);
-  const day = favorite.day;
-  // Pull the live prayer content for the saved day (text is bundled).
-  const prayer = day ? getPrayer(day) : null;
+  // The full prayer text was stored at save time — show the first line as a preview.
+  const firstLine = favorite.text.split('\n')[0];
 
   return (
     <Card
       accent={theme.colors.green}
-      onPress={day ? () => router.push(`/day/${day}/prayer`) : undefined}
+      onPress={() => router.push('/prayer')}
       accessibilityLabel={favorite.reference}
-      accessibilityHint="Opens this prayer to pray it together"
+      accessibilityHint="Opens today's prayer screen"
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm }}>
         <Ionicons name="rose" size={20} color={theme.colors.green} />
         <View style={{ flex: 1 }}>
           <AppText variant="body" semiBold scaled={false}>
-            {prayer ? prayer.title : favorite.reference}
+            {favorite.reference}
           </AppText>
           <AppText variant="caption" scaled={false}>
-            {prayer ? `Day ${day} · ${prayer.theme}` : 'Daily prayer'}
+            Saved family prayer
           </AppText>
         </View>
         <Pressable
@@ -124,7 +122,7 @@ function FavoritePrayerCard({ favorite }: { favorite: FavoriteVerse }) {
           <Ionicons name="heart" size={22} color={theme.colors.clay} />
         </Pressable>
       </View>
-      {prayer ? (
+      {firstLine ? (
         <AppText
           variant="body"
           italic
@@ -133,7 +131,7 @@ function FavoritePrayerCard({ favorite }: { favorite: FavoriteVerse }) {
           color={theme.colors.textMuted}
           style={{ marginTop: theme.spacing.sm }}
         >
-          “{prayer.lines[0]}”
+          "{firstLine}"
         </AppText>
       ) : null}
     </Card>
