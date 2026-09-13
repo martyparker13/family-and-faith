@@ -33,7 +33,7 @@ export function parseFamilyBackup(raw: string): ParseResult {
   }
 
   const backup = parsed as FamilyBackup;
-  if (backup.version !== BACKUP_VERSION) {
+  if (backup.version !== BACKUP_VERSION && backup.version !== 1) {
     return {
       ok: false,
       error: `Unsupported backup version (${String((backup as FamilyBackup).version)}).`,

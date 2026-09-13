@@ -14,11 +14,15 @@ import { ParentNoteBanner } from '@/components/ParentNoteBanner';
 import { ParentTipBanner } from '@/components/ParentTipBanner';
 import { Screen } from '@/components/Screen';
 import { TextSizeControl } from '@/components/TextSizeControl';
+import { KidQuestionModal } from '@/components/KidQuestionModal';
+import { ProactiveGuidanceCard } from '@/components/ProactiveGuidanceCard';
 import { fetchPassageGroup, groupByChapter, type PassageText } from '@/lib/bible';
+import { configureSpeechAudioSession } from '@/lib/audio-session';
 import { getPlanDay } from '@/lib/content';
-import { dateForPlanDay, formatShortDate } from '@/lib/dates';
+import { dateForPlanDay, formatShortDate, todayISO } from '@/lib/dates';
 import { useTheme } from '@/lib/theme-context';
 import { SPEECH_RATES, useSettings, useTextScale } from '@/store/settings';
+import { useKidQuestions } from '@/store/kid-questions';
 
 /**
  * Feature 1 — Daily Reading screen.
@@ -44,7 +48,9 @@ export default function ReadingScreen() {
   // Index into the utterance queue currently being read aloud (null = idle).
   const [speakIndex, setSpeakIndex] = useState<number | null>(null);
   const [bedtimeMode, setBedtimeMode] = useState(false);
+  const [questionModalVisible, setQuestionModalVisible] = useState(false);
   const speaking = speakIndex !== null;
+  const addQuestion = useKidQuestions((s) => s.addQuestion);
 
   const result = results[day];
   const passages = result && 'passages' in result ? result.passages : null;
@@ -91,6 +97,10 @@ export default function ReadingScreen() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only refetch when day/plan changes
   }, [day, plan]);
+
+  useEffect(() => {
+    configureSpeechAudioSession().catch(() => {});
+  }, []);
 
   // Stop any in-progress narration when the day changes or screen unmounts.
   useEffect(() => {
@@ -314,6 +324,23 @@ export default function ReadingScreen() {
           </View>
         ))
       )}
+
+      <ProactiveGuidanceCard day={day} />
+
+      <AppButton
+        label="Log a question"
+        icon="help-circle-outline"
+        variant="ghost"
+        onPress={() => setQuestionModalVisible(true)}
+        style={{ marginTop: theme.spacing.md }}
+      />
+
+      <KidQuestionModal
+        visible={questionModalVisible}
+        day={day}
+        onClose={() => setQuestionModalVisible(false)}
+        onSave={(q) => addQuestion(day, q, todayISO())}
+      />
 
       {/* Mark complete */}
       <View style={{ marginTop: theme.spacing.lg }}>

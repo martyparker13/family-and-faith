@@ -9,7 +9,7 @@ import { useTheme } from '@/lib/theme-context';
  * The family streak flame. Grows warmer with longer streaks — a small,
  * joyful reward for showing up together day after day.
  */
-export function StreakBadge({ streak }: { streak: number }) {
+export function StreakBadge({ streak, frozen }: { streak: number; frozen?: boolean }) {
   const theme = useTheme();
   const active = streak > 0;
   const flameColor = !active
@@ -21,7 +21,11 @@ export function StreakBadge({ streak }: { streak: number }) {
   return (
     <View
       accessibilityLabel={
-        active ? `${streak} day family streak` : 'No streak yet — read today to start one'
+        frozen && active
+          ? `${streak} day family streak, frozen during vacation`
+          : active
+            ? `${streak} day family streak`
+            : 'No streak yet — read today to start one'
       }
       style={{
         flexDirection: 'row',

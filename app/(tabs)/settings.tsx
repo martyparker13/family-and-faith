@@ -11,6 +11,8 @@ import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
 import { TextSizeControl } from '@/components/TextSizeControl';
+import { VacationModeCard } from '@/components/VacationModeCard';
+import { completedBooks } from '@/lib/book-milestones';
 import { clearBibleCache } from '@/lib/bible';
 import { currentPlanDay, todayISO } from '@/lib/dates';
 import {
@@ -109,6 +111,9 @@ export default function SettingsScreen() {
         practicedWeeks: useProgress.getState().practicedWeeks,
         slotCompletions: useProgress.getState().slotCompletions,
         familyChallengesDone: useProgress.getState().familyChallengesDone,
+        familyChallengeNotes: useProgress.getState().familyChallengeNotes,
+        prayerParticipation: useProgress.getState().prayerParticipation,
+        celebratedBookMilestones: useProgress.getState().celebratedBookMilestones,
       },
       journal: useJournal.getState().entries,
       favorites: useFavorites.getState().favorites,
@@ -129,6 +134,9 @@ export default function SettingsScreen() {
         practicedWeeks: useProgress.getState().practicedWeeks,
         slotCompletions: useProgress.getState().slotCompletions,
         familyChallengesDone: useProgress.getState().familyChallengesDone,
+        familyChallengeNotes: useProgress.getState().familyChallengeNotes,
+        prayerParticipation: useProgress.getState().prayerParticipation,
+        celebratedBookMilestones: useProgress.getState().celebratedBookMilestones,
       },
       journal: useJournal.getState().entries,
       favorites: useFavorites.getState().favorites,
@@ -156,6 +164,9 @@ export default function SettingsScreen() {
           practicedWeeks: useProgress.getState().practicedWeeks,
           slotCompletions: useProgress.getState().slotCompletions,
           familyChallengesDone: useProgress.getState().familyChallengesDone,
+          familyChallengeNotes: useProgress.getState().familyChallengeNotes,
+          prayerParticipation: useProgress.getState().prayerParticipation,
+          celebratedBookMilestones: useProgress.getState().celebratedBookMilestones,
         },
       },
       result.backup
@@ -325,6 +336,25 @@ export default function SettingsScreen() {
           </View>
         );
       })}
+
+      <SectionLabel>Vacation / travel</SectionLabel>
+      <VacationModeCard />
+
+      <SectionLabel>Bible book milestones</SectionLabel>
+      <Card>
+        {(() => {
+          const books = completedBooks(useProgress.getState().completedDays);
+          return books.length > 0 ? (
+            <AppText variant="body">
+              {books.join(' · ')}
+            </AppText>
+          ) : (
+            <AppText variant="small" color={theme.colors.textMuted}>
+              Complete a whole book of the Bible to see milestones here.
+            </AppText>
+          );
+        })()}
+      </Card>
 
       <SectionLabel>Seasonal overlays</SectionLabel>
       <OptionRow

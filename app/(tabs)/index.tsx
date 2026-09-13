@@ -8,15 +8,20 @@ import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
 import { ExpandableCard } from '@/components/ExpandableCard';
+import { BookMilestoneBadge } from '@/components/BookMilestoneBadge';
+import { DisciplingTipBanner } from '@/components/DisciplingTipBanner';
 import { MemoryVersePractice } from '@/components/MemoryVersePractice';
+import { ProactiveGuidanceCard } from '@/components/ProactiveGuidanceCard';
 import { ProgressBar } from '@/components/ProgressBar';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
 import { SlotStreakIndicators } from '@/components/SlotStreakIndicators';
 import { StreakBadge } from '@/components/StreakBadge';
+import { SundayBridgeCard } from '@/components/SundayBridgeCard';
 import { getDevotional, getPlanDay, getPrayer } from '@/lib/content';
-import { catchUpStatus, effectivePlanDay } from '@/lib/catch-up';
+import { calendarDaysSinceStart, catchUpStatus, effectivePlanDay } from '@/lib/catch-up';
 import { currentPlanDay, formatFriendlyDate, todayISO } from '@/lib/dates';
+import { effectiveStreak, isVacationActive, shouldSuppressCatchUp } from '@/lib/vacation-mode';
 import { memoryVerseForDay } from '@/lib/memory-verse';
 import { buildParentPrep } from '@/lib/parent-prep';
 import { prefetchUpcomingWeek } from '@/lib/prefetch';
@@ -30,7 +35,7 @@ import {
 import { activeSeasonalOverlay, seasonalDayInfo } from '@/lib/seasonal';
 import { isRecapDay } from '@/lib/weekly-recap';
 import { useTheme } from '@/lib/theme-context';
-import { allActivityDates, currentStreak, percentComplete, useProgress } from '@/store/progress';
+import { allActivityDates, percentComplete, useProgress } from '@/store/progress';
 import { useSettings } from '@/store/settings';
 
 /**
@@ -46,6 +51,7 @@ export default function TodayScreen() {
   const catchUpChoice = useSettings((s) => s.catchUpChoice);
   const setCatchUpChoice = useSettings((s) => s.setCatchUpChoice);
   const seasonalEnabled = useSettings((s) => s.seasonalOverlaysEnabled);
+  const vacationMode = useSettings((s) => s.vacationMode);
 
   const completedDays = useProgress((s) => s.completedDays);
   const devotionalDays = useProgress((s) => s.devotionalDays);
@@ -63,11 +69,11 @@ export default function TodayScreen() {
   const prayer = getPrayer(day);
   const parentPrep = buildParentPrep(day, children);
 
-  const streak = currentStreak(
-    allActivityDates({ completedDays, devotionalDays, prayerDays }),
-    today
-  );
+  const activityDates = allActivityDates({ completedDays, devotionalDays, prayerDays });
+  const streak = effectiveStreak(activityDates, today, vacationMode);
   const percent = percentComplete(completedDays);
+  const onVacation = isVacationActive(vacationMode, today);
+  const planDaySinceStart = planStartDate ? calendarDaysSinceStart(planStartDate, today) : 0;
 
   const currentSlot = currentRhythmSlot();
   const slots = orderedSlots(currentSlot);
@@ -113,8 +119,20 @@ export default function TodayScreen() {
             Day {day} of 365
           </AppText>
         </View>
-        <StreakBadge streak={streak} />
+        <StreakBadge streak={streak} frozen={onVacation} />
       </View>
+
+      {onVacation ? (
+        <Card accent={theme.colors.blue} style={{ marginBottom: theme.spacing.md }}>
+          <AppText variant="small" semiBold color={theme.colors.blue}>
+            Vacation mode — reminders paused, streak frozen
+          </AppText>
+        </Card>
+      ) : null}
+
+      <DisciplingTipBanner planDaySinceStart={planDaySinceStart} />
+
+      <BookMilestoneBadge />
 
       {seasonalInfo ? (
         <Card accent={theme.colors.gold} style={{ marginBottom: theme.spacing.md }}>
@@ -129,7 +147,7 @@ export default function TodayScreen() {
         </Card>
       ) : null}
 
-      {catchUp?.shouldOfferCatchUp ? (
+      {catchUp?.shouldOfferCatchUp && !shouldSuppressCatchUp(vacationMode, today) ? (
         <Card accent={theme.colors.clay} style={{ marginBottom: theme.spacing.md }}>
           <AppText variant="body" semiBold>
             Life got busy — pick up where you left off
@@ -236,6 +254,7 @@ export default function TodayScreen() {
 
       {isRecapDay(today) ? (
         <>
+          <SundayBridgeCard todayISO={today} />
           <SectionLabel>Weekly recap</SectionLabel>
           <Card onPress={() => router.push('/recap')} accessibilityLabel="Open weekly recap">
             <AppText variant="body" semiBold>
@@ -247,6 +266,9 @@ export default function TodayScreen() {
           </Card>
         </>
       ) : null}
+
+      <SectionLabel>Related guidance</SectionLabel>
+      <ProactiveGuidanceCard day={day} />
 
       <SectionLabel>Today together</SectionLabel>
 
@@ -312,6 +334,15 @@ export default function TodayScreen() {
           label="Prayer List"
           onPress={() => router.push('/prayer-list')}
           hint="Requests and answered prayers"
+        />
+      </View>
+
+      <View style={{ flexDirection: 'row', gap: theme.spacing.md, marginTop: theme.spacing.md }}>
+        <QuickLink
+          icon="help-circle-outline"
+          label="Kid Questions"
+          onPress={() => router.push('/kid-questions')}
+          hint="Questions children wondered during reading"
         />
       </View>
     </Screen>

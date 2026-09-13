@@ -54,7 +54,18 @@ eas build --profile production  # store-ready build
 | **Celebrations** | `components/Confetti.tsx`, `lib/celebrate.ts` | Haptics + confetti on completions, streak milestones, answered prayers |
 | **Onboarding** | `app/onboarding.tsx` | Family name, children, three-rhythm reminders (7am/6pm/8pm presets), plan start date |
 | **Settings** | `app/(tabs)/settings.tsx` | Rhythm reminders, children, backup import/export, keepsake, seasonal toggle, offline download |
-| **Weekly recap** | `app/recap.tsx` | Sunday summary of readings, themes, journal, answered prayers |
+| **Weekly recap** | `app/recap.tsx` | Sunday summary of readings, themes, journal, answered prayers; share with grandparents; printable weekly sheet |
+| **Vacation / travel mode** | `app/(tabs)/settings.tsx` | Pause reminders, freeze streaks, suppress catch-up guilt while away |
+| **Kid question log** | `app/kid-questions.tsx`, reading + devotional screens | Quick capture of children's questions; list view from Today |
+| **Background read-aloud** | `app/day/[day]/reading.tsx`, `lib/audio-session.ts` | Read-aloud continues when app backgrounds (expo-av audio session) |
+| **Book milestones** | `components/BookMilestoneBadge.tsx`, Settings | Celebration when a whole Bible book is finished |
+| **Tap-along prayer** | `app/day/[day]/prayer.tsx` | Kids tap when ready — per-child buttons when configured |
+| **Voice note journal** | `app/journal.tsx` | Text or voice journal entries with playback |
+| **Family challenge capture** | `app/day/[day]/devotional.tsx` | Optional note + photo after completing the family challenge |
+| **Sunday bridge** | `components/SundayBridgeCard.tsx` | Capture what you heard at church; surfaces in weekly recap |
+| **Printable weekly sheet** | `lib/weekly-sheet.ts`, recap + Today | HTML/text sheet with readings, memory verse, prayer theme |
+| **Proactive Guidance** | `components/ProactiveGuidanceCard.tsx` | Related Scripture Guidance card on Today and reading screens |
+| **Discipling tips (days 1–14)** | `components/DisciplingTipBanner.tsx` | Collapsible first-time tips on Today; dismissible per tip |
 
 ## Project structure
 

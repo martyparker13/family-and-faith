@@ -3,6 +3,8 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import type { CatchUpChoice } from '@/lib/catch-up';
+import type { VacationMode } from '@/lib/vacation-mode';
+import { DEFAULT_VACATION_MODE } from '@/lib/vacation-mode';
 
 export type ThemePreference = 'system' | 'light' | 'dark';
 export type SpeechRate = 'slow' | 'normal' | 'fast';
@@ -55,6 +57,12 @@ export interface SettingsState {
   textScaleIndex: number;
   /** Read-aloud narration speed. */
   speechRate: SpeechRate;
+  /** Pause reminders and freeze streaks while traveling. */
+  vacationMode: VacationMode;
+  /** "What did we hear at church?" keyed by week-start Sunday YYYY-MM-DD. */
+  sundayNotes: Record<string, string>;
+  /** Discipling tip ids dismissed during days 1–14. */
+  dismissedDisciplingTips: string[];
 
   setFamilyName: (name: string) => void;
   completeOnboarding: (opts: {
@@ -84,6 +92,10 @@ export interface SettingsState {
   setThemePreference: (pref: ThemePreference) => void;
   setTextScaleIndex: (index: number) => void;
   setSpeechRate: (rate: SpeechRate) => void;
+  setVacationMode: (mode: VacationMode) => void;
+  resumeFromVacation: () => void;
+  setSundayNote: (weekKey: string, note: string) => void;
+  dismissDisciplingTip: (tipId: string) => void;
   /** Sends the user back through onboarding on next launch of the tabs. */
   replayOnboarding: () => void;
   /** Apply settings from an imported backup (merge at call site). */
@@ -111,6 +123,9 @@ export const useSettings = create<SettingsState>()(
       themePreference: 'system',
       textScaleIndex: 1,
       speechRate: 'normal',
+      vacationMode: { ...DEFAULT_VACATION_MODE },
+      sundayNotes: {},
+      dismissedDisciplingTips: [],
 
       setFamilyName: (familyName) => set({ familyName }),
       completeOnboarding: ({
@@ -151,13 +166,30 @@ export const useSettings = create<SettingsState>()(
       setTextScaleIndex: (textScaleIndex) =>
         set({ textScaleIndex: Math.max(0, Math.min(TEXT_SCALE_STEPS.length - 1, textScaleIndex)) }),
       setSpeechRate: (speechRate) => set({ speechRate }),
+      setVacationMode: (vacationMode) => set({ vacationMode }),
+      resumeFromVacation: () =>
+        set({ vacationMode: { active: false, startDate: undefined, endDate: undefined } }),
+      setSundayNote: (weekKey, note) =>
+        set((s) => {
+          const next = { ...s.sundayNotes };
+          const trimmed = note.trim();
+          if (trimmed) next[weekKey] = trimmed;
+          else delete next[weekKey];
+          return { sundayNotes: next };
+        }),
+      dismissDisciplingTip: (tipId) =>
+        set((s) => ({
+          dismissedDisciplingTips: s.dismissedDisciplingTips.includes(tipId)
+            ? s.dismissedDisciplingTips
+            : [...s.dismissedDisciplingTips, tipId],
+        })),
       replayOnboarding: () => set({ onboarded: false }),
       applyImportedSettings: (partial) => set((s) => ({ ...s, ...partial, onboarded: true })),
     }),
     {
       name: 'ff-settings',
       storage: createJSONStorage(() => AsyncStorage),
-      version: 1,
+      version: 2,
       migrate: (persisted: unknown, version: number) => {
         const state = persisted as SettingsState & { reminder?: ReminderTime | null };
         if (version < 1) {
@@ -170,6 +202,11 @@ export const useSettings = create<SettingsState>()(
           if (!state.children) state.children = [];
           if (state.seasonalOverlaysEnabled === undefined) state.seasonalOverlaysEnabled = true;
           if (state.catchUpChoice === undefined) state.catchUpChoice = null;
+        }
+        if (version < 2) {
+          if (!state.vacationMode) state.vacationMode = { ...DEFAULT_VACATION_MODE };
+          if (!state.sundayNotes) state.sundayNotes = {};
+          if (!state.dismissedDisciplingTips) state.dismissedDisciplingTips = [];
         }
         return state as SettingsState;
       },
