@@ -7,6 +7,7 @@ import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
+import { useTranslation } from '@/i18n/context';
 import { celebrationHaptics } from '@/lib/celebrate';
 import { effectivePlanDay } from '@/lib/catch-up';
 import { buildQuickEvening } from '@/lib/quick-evening';
@@ -22,6 +23,7 @@ import { useSettings } from '@/store/settings';
  */
 export default function QuickEveningScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ day?: string }>();
   const planStartDate = useSettings((s) => s.planStartDate);
   const catchUpChoice = useSettings((s) => s.catchUpChoice);
@@ -41,11 +43,13 @@ export default function QuickEveningScreen() {
   const fire = useCelebration((s) => s.fire);
 
   const audienceLabel =
-    content.questionAudience === 'little' ? 'For little ones' : 'For older kids & parents';
+    content.questionAudience === 'little'
+      ? t('common.forLittleOnes')
+      : t('common.forOlderKidsParents');
 
   const onComplete = () => {
     completeQuickEvening(day, today);
-    fire({ message: 'Family moment complete!', size: 'small' });
+    fire({ message: t('celebrations.familyMoment'), size: 'small' });
     celebrationHaptics('small');
   };
 
@@ -54,16 +58,16 @@ export default function QuickEveningScreen() {
       <View style={{ alignItems: 'center', marginBottom: theme.spacing.lg }}>
         <Ionicons name="timer-outline" size={36} color={theme.colors.goldDeep} />
         <AppText variant="display" center accessibilityRole="header">
-          Five-minute family moment
+          {t('quickEvening.title')}
         </AppText>
         <AppText variant="small" color={theme.colors.textMuted} center>
-          Day {day} · about 5 minutes
+          {t('common.fiveMinutesAbout', { day })}
         </AppText>
       </View>
 
       <Card accent={theme.colors.blue}>
         <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-          TEACHING POINT
+          {t('quickEvening.teachingPoint')}
         </AppText>
         <AppText variant="bodyLarge" style={{ marginTop: theme.spacing.sm }}>
           {content.teachingPoint}
@@ -72,7 +76,7 @@ export default function QuickEveningScreen() {
 
       <Card accent={theme.colors.clay} style={{ marginTop: theme.spacing.md }}>
         <AppText variant="caption" bold scaled={false} color={theme.colors.clay}>
-          ONE QUESTION · {audienceLabel.toUpperCase()}
+          {t('common.oneQuestionAudience', { audience: audienceLabel.toUpperCase() })}
         </AppText>
         <AppText variant="bodyLarge" style={{ marginTop: theme.spacing.sm }}>
           {content.question}
@@ -81,7 +85,7 @@ export default function QuickEveningScreen() {
 
       <Card accent={theme.colors.green} style={{ marginTop: theme.spacing.md }}>
         <AppText variant="caption" bold scaled={false} color={theme.colors.green}>
-          SHORT PRAYER
+          {t('quickEvening.shortPrayer')}
         </AppText>
         {content.prayerLines.map((line, i) => (
           <AppText key={i} variant="bodyLarge" style={{ marginTop: theme.spacing.sm }}>
@@ -89,7 +93,7 @@ export default function QuickEveningScreen() {
           </AppText>
         ))}
         <AppText variant="body" semiBold style={{ marginTop: theme.spacing.md }}>
-          Together: {content.togetherLine}
+          {t('common.togetherPrefix', { line: content.togetherLine })}
         </AppText>
       </Card>
 
@@ -105,8 +109,8 @@ export default function QuickEveningScreen() {
       <AppButton
         label={
           devotionalDone && prayerDone
-            ? 'Devotional & prayer marked done'
-            : 'We shared this moment — mark done'
+            ? t('common.devotionalPrayerDone')
+            : t('common.markMomentDone')
         }
         icon="checkmark-circle"
         variant={devotionalDone && prayerDone ? 'secondary' : 'primary'}
@@ -115,7 +119,7 @@ export default function QuickEveningScreen() {
       />
 
       <AppButton
-        label="Open full reading later"
+        label={t('common.openFullReadingLater')}
         icon="book-outline"
         variant="ghost"
         onPress={() => router.push(`/day/${day}/reading`)}
@@ -123,7 +127,7 @@ export default function QuickEveningScreen() {
       />
 
       <AppButton
-        label="Back to Today"
+        label={t('common.backToToday')}
         variant="ghost"
         onPress={() => router.back()}
         style={{ marginTop: theme.spacing.sm }}

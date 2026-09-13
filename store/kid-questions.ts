@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+import { t } from '@/i18n/index';
+
 export interface KidQuestion {
   id: string;
   day: number;
@@ -22,8 +24,8 @@ function newId(): string {
 /** Validates kid question text before save. */
 export function validateKidQuestion(question: string): string | null {
   const trimmed = question.trim();
-  if (!trimmed) return 'Please enter a question.';
-  if (trimmed.length > 500) return 'Question is too long (500 characters max).';
+  if (!trimmed) return t('validation.questionRequired');
+  if (trimmed.length > 500) return t('validation.questionTooLong');
   return null;
 }
 

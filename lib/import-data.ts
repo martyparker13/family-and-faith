@@ -1,6 +1,7 @@
 /**
  * Import family backup with merge-keep-newer strategy.
  */
+import { t } from '@/i18n/index';
 import { BACKUP_VERSION, type FamilyBackup } from '@/lib/export-data';
 import type { FavoriteVerse } from '@/store/favorites';
 import type { JournalEntry } from '@/store/journal';
@@ -25,22 +26,22 @@ export function parseFamilyBackup(raw: string): ParseResult {
   try {
     parsed = JSON.parse(raw);
   } catch {
-    return { ok: false, error: 'Invalid JSON — could not read this file.' };
+    return { ok: false, error: t('importErrors.invalidJson') };
   }
 
   if (!parsed || typeof parsed !== 'object') {
-    return { ok: false, error: 'Backup file is empty or malformed.' };
+    return { ok: false, error: t('importErrors.emptyOrMalformed') };
   }
 
   const backup = parsed as FamilyBackup;
   if (backup.version !== BACKUP_VERSION && backup.version !== 1) {
     return {
       ok: false,
-      error: `Unsupported backup version (${String((backup as FamilyBackup).version)}).`,
+      error: t('importErrors.unsupportedVersion', { version: String((backup as FamilyBackup).version) }),
     };
   }
   if (!backup.progress || !backup.settings) {
-    return { ok: false, error: 'Missing settings or progress in backup.' };
+    return { ok: false, error: t('importErrors.missingData') };
   }
 
   return { ok: true, backup, warnings: [] };

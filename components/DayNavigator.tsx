@@ -3,6 +3,7 @@ import React from 'react';
 import { Pressable, View } from 'react-native';
 
 import { AppText } from './AppText';
+import { useTranslation } from '@/i18n/context';
 import { useTheme } from '@/lib/theme-context';
 
 interface DayNavigatorProps {
@@ -18,6 +19,7 @@ interface DayNavigatorProps {
  */
 export function DayNavigator({ day, subtitle, onChange }: DayNavigatorProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View
@@ -30,13 +32,13 @@ export function DayNavigator({ day, subtitle, onChange }: DayNavigatorProps) {
     >
       <NavButton
         icon="chevron-back"
-        label="Previous day"
+        label={t('common.previousDay')}
         disabled={day <= 1}
         onPress={() => onChange(day - 1)}
       />
       <View style={{ alignItems: 'center' }}>
         <AppText variant="title" semiBold accessibilityRole="header">
-          Day {day} of 365
+          {t('common.dayOf365', { day })}
         </AppText>
         {subtitle ? (
           <AppText variant="caption" scaled={false}>
@@ -46,7 +48,7 @@ export function DayNavigator({ day, subtitle, onChange }: DayNavigatorProps) {
       </View>
       <NavButton
         icon="chevron-forward"
-        label="Next day"
+        label={t('common.nextDay')}
         disabled={day >= 365}
         onPress={() => onChange(day + 1)}
       />

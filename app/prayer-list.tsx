@@ -14,6 +14,7 @@ import { celebrationHaptics } from '@/lib/celebrate';
 import { useTheme } from '@/lib/theme-context';
 import { useCelebration } from '@/store/celebration';
 import { usePrayerList, type PrayerRequest } from '@/store/prayer-list';
+import { useTranslation } from '@/i18n/context';
 
 /**
  * The family prayer list: add requests, mark them answered, and revisit the
@@ -22,6 +23,7 @@ import { usePrayerList, type PrayerRequest } from '@/store/prayer-list';
  */
 export default function PrayerListScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const requests = usePrayerList((s) => s.requests);
   const addRequest = usePrayerList((s) => s.addRequest);
 
@@ -40,19 +42,18 @@ export default function PrayerListScreen() {
 
   return (
     <Screen>
-      <Stack.Screen options={{ title: 'Prayer List' }} />
+      <Stack.Screen options={{ title: t('navigation.prayerList') }} />
 
-      {/* Add a request */}
       <Card style={{ marginTop: theme.spacing.lg }}>
         <AppText variant="title" semiBold>
-          Add a prayer request
+          {t('prayerList.addRequestTitle')}
         </AppText>
         <TextInput
           value={title}
           onChangeText={setTitle}
-          placeholder="Who or what are we praying for?"
+          placeholder={t('prayerList.requestPlaceholder')}
           placeholderTextColor={theme.colors.textMuted}
-          accessibilityLabel="Prayer request"
+          accessibilityLabel={t('prayerList.addRequestTitle')}
           style={{
             marginTop: theme.spacing.md,
             minHeight: theme.minTouch,
@@ -69,9 +70,9 @@ export default function PrayerListScreen() {
         <TextInput
           value={note}
           onChangeText={setNote}
-          placeholder="Anything more? (optional)"
+          placeholder={t('prayerList.notePlaceholder')}
           placeholderTextColor={theme.colors.textMuted}
-          accessibilityLabel="Details (optional)"
+          accessibilityLabel={t('prayerList.detailsA11y')}
           style={{
             marginTop: theme.spacing.sm,
             minHeight: theme.minTouch,
@@ -86,7 +87,7 @@ export default function PrayerListScreen() {
           }}
         />
         <AppButton
-          label="Add to our list"
+          label={t('common.addToList')}
           icon="add-circle"
           onPress={submit}
           disabled={!title.trim()}
@@ -95,12 +96,12 @@ export default function PrayerListScreen() {
       </Card>
 
       {/* Active requests */}
-      <SectionLabel>We’re praying for</SectionLabel>
+      <SectionLabel>{t('prayerList.prayingFor')}</SectionLabel>
       {active.length === 0 ? (
         <EmptyState
           icon="rose-outline"
-          title="No requests yet"
-          message="Add the people and needs your family is praying for — then watch what God does."
+          title={t('prayerList.emptyTitle')}
+          message={t('prayerList.emptyMessage')}
         />
       ) : (
         <View style={{ gap: theme.spacing.md }}>
@@ -113,7 +114,7 @@ export default function PrayerListScreen() {
       {/* Answered prayers */}
       {answered.length > 0 && (
         <>
-          <SectionLabel color={theme.colors.green}>Answered prayers 🎉</SectionLabel>
+          <SectionLabel color={theme.colors.green}>{t('prayerList.answeredSection')}</SectionLabel>
           <View style={{ gap: theme.spacing.md }}>
             {answered.map((r) => (
               <AnsweredCard key={r.id} request={r} />
@@ -127,6 +128,7 @@ export default function PrayerListScreen() {
 
 function RequestCard({ request }: { request: PrayerRequest }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const markAnswered = usePrayerList((s) => s.markAnswered);
   const removeRequest = usePrayerList((s) => s.removeRequest);
   const fire = useCelebration((s) => s.fire);
@@ -135,14 +137,14 @@ function RequestCard({ request }: { request: PrayerRequest }) {
   const confirmAnswered = (note: string) => {
     setAnswering(false);
     markAnswered(request.id, note);
-    fire({ message: '🙌 An answered prayer!', size: 'big' });
+    fire({ message: t('celebrations.answeredPrayer'), size: 'big' });
     celebrationHaptics('big');
   };
 
   const confirmRemove = () => {
-    Alert.alert('Remove request?', `Remove "${request.title}" from the list?`, [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Remove', style: 'destructive', onPress: () => removeRequest(request.id) },
+    Alert.alert(t('alerts.removeRequestTitle'), t('common.removeRequestMessage', { title: request.title }), [
+      { text: t('common.cancel'), style: 'cancel' },
+      { text: t('common.remove'), style: 'destructive', onPress: () => removeRequest(request.id) },
     ]);
   };
 
@@ -160,7 +162,7 @@ function RequestCard({ request }: { request: PrayerRequest }) {
         <Pressable
           onPress={() => setAnswering(true)}
           accessibilityRole="button"
-          accessibilityLabel={`Mark "${request.title}" as answered`}
+          accessibilityLabel={t('common.markAnsweredA11y', { title: request.title })}
           style={({ pressed }) => ({
             flexDirection: 'row',
             alignItems: 'center',
@@ -175,13 +177,13 @@ function RequestCard({ request }: { request: PrayerRequest }) {
         >
           <Ionicons name="checkmark-circle" size={20} color={theme.colors.green} />
           <AppText variant="small" semiBold scaled={false} color={theme.colors.green}>
-            Answered!
+            {t('common.answeredButton')}
           </AppText>
         </Pressable>
         <Pressable
           onPress={confirmRemove}
           accessibilityRole="button"
-          accessibilityLabel={`Remove "${request.title}"`}
+          accessibilityLabel={t('common.removeRequestA11y', { title: request.title })}
           hitSlop={8}
           style={({ pressed }) => ({
             alignItems: 'center',
@@ -204,6 +206,7 @@ function RequestCard({ request }: { request: PrayerRequest }) {
 
 function AnsweredCard({ request }: { request: PrayerRequest }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const reopenRequest = usePrayerList((s) => s.reopenRequest);
   const answeredDate = request.answeredAt
     ? new Date(request.answeredAt).toLocaleDateString(undefined, {
@@ -227,16 +230,16 @@ function AnsweredCard({ request }: { request: PrayerRequest }) {
         </AppText>
       ) : null}
       <AppText variant="caption" scaled={false} style={{ marginTop: theme.spacing.xs }}>
-        Answered {answeredDate}
+        {t('common.answered', { date: answeredDate })}
       </AppText>
       <Pressable
         onPress={() => reopenRequest(request.id)}
         accessibilityRole="button"
-        accessibilityLabel={`Move "${request.title}" back to the active list`}
+        accessibilityLabel={t('common.reopenRequestA11y', { title: request.title })}
         style={({ pressed }) => ({ marginTop: theme.spacing.sm, opacity: pressed ? 0.6 : 1 })}
       >
         <AppText variant="caption" semiBold scaled={false} color={theme.colors.blue}>
-          Keep praying for this
+          {t('common.keepPraying')}
         </AppText>
       </Pressable>
     </Card>

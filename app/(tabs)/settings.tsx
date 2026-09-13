@@ -12,6 +12,7 @@ import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
 import { TextSizeControl } from '@/components/TextSizeControl';
 import { VacationModeCard } from '@/components/VacationModeCard';
+import { useTranslation } from '@/i18n/context';
 import { completedBooks } from '@/lib/book-milestones';
 import { clearBibleCache } from '@/lib/bible';
 import { currentPlanDay, todayISO } from '@/lib/dates';
@@ -31,6 +32,7 @@ import { useProgress } from '@/store/progress';
 import {
   useSettings,
   type AgeBand,
+  type AppLanguage,
   type ReminderTime,
   type SpeechRate,
   type ThemePreference,
@@ -45,26 +47,32 @@ const TIME_PRESETS: ReminderTime[] = [
   { hour: 20, minute: 30 },
 ];
 
-const THEME_OPTIONS: { label: string; value: ThemePreference }[] = [
-  { label: 'System', value: 'system' },
-  { label: 'Light', value: 'light' },
-  { label: 'Dark', value: 'dark' },
+const THEME_OPTION_KEYS: { key: string; value: ThemePreference }[] = [
+  { key: 'settings.themeSystem', value: 'system' },
+  { key: 'settings.themeLight', value: 'light' },
+  { key: 'settings.themeDark', value: 'dark' },
 ];
 
-const SPEECH_RATE_OPTIONS: { label: string; value: SpeechRate }[] = [
-  { label: 'Slow', value: 'slow' },
-  { label: 'Normal', value: 'normal' },
-  { label: 'Fast', value: 'fast' },
+const SPEECH_RATE_KEYS: { key: string; value: SpeechRate }[] = [
+  { key: 'settings.speechSlow', value: 'slow' },
+  { key: 'settings.speechNormal', value: 'normal' },
+  { key: 'settings.speechFast', value: 'fast' },
 ];
 
-const AGE_BANDS: { label: string; value: AgeBand }[] = [
-  { label: 'Little', value: 'little' },
-  { label: 'Older', value: 'older' },
-  { label: 'Teen', value: 'teen' },
+const AGE_BAND_KEYS: { key: string; value: AgeBand }[] = [
+  { key: 'settings.ageBandLittle', value: 'little' },
+  { key: 'settings.ageBandOlder', value: 'older' },
+  { key: 'settings.ageBandTeen', value: 'teen' },
 ];
 
-function formatReminder(time: ReminderTime | null): string {
-  if (!time) return 'Off';
+const LANGUAGE_OPTIONS: { key: string; value: AppLanguage }[] = [
+  { key: 'settings.languageDevice', value: 'device' },
+  { key: 'settings.languageEn', value: 'en' },
+  { key: 'settings.languageEs', value: 'es' },
+];
+
+function formatReminder(time: ReminderTime | null, offLabel: string): string {
+  if (!time) return offLabel;
   const d = new Date();
   d.setHours(time.hour, time.minute, 0, 0);
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
@@ -73,10 +81,26 @@ function formatReminder(time: ReminderTime | null): string {
 /** Settings: rhythm reminders, children, backup, keepsake, and plan options. */
 export default function SettingsScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const settings = useSettings();
   const [importVisible, setImportVisible] = useState(false);
   const [importText, setImportText] = useState('');
+
+  const themeOptions = THEME_OPTION_KEYS.map((o) => ({ label: t(o.key), value: o.value }));
+  const speechRateOptions = SPEECH_RATE_KEYS.map((o) => ({ label: t(o.key), value: o.value }));
+  const ageBands = AGE_BAND_KEYS.map((o) => ({ label: t(o.key), value: o.value }));
+  const languageOptions = LANGUAGE_OPTIONS.map((o) => ({ label: t(o.key), value: o.value }));
+  const offLabel = t('common.off');
+
+  const changeLanguage = async (language: AppLanguage) => {
+    settings.setLanguage(language);
+    await scheduleRhythmReminders({
+      morning: settings.morningReminder,
+      dinner: settings.dinnerReminder,
+      bedtime: settings.bedtimeReminder,
+    });
+  };
 
   const pickSlotReminder = async (
     slot: 'morning' | 'dinner' | 'bedtime',
@@ -85,7 +109,7 @@ export default function SettingsScreen() {
     if (time) {
       const allowed = await requestNotificationPermission();
       if (!allowed) {
-        Alert.alert('Notifications are off', 'Enable notifications in device settings.');
+        Alert.alert(t('alerts.notificationsOffTitle'), t('alerts.notificationsOffMessage'));
         return;
       }
     }
@@ -121,7 +145,7 @@ export default function SettingsScreen() {
     });
     const json = JSON.stringify(backup, null, 2);
     await Clipboard.setStringAsync(json);
-    Alert.alert('Backup copied', 'Family backup JSON is on your clipboard. Paste it into Notes or email to save.');
+    Alert.alert(t('alerts.backupCopiedTitle'), t('alerts.backupCopiedMessage'));
   };
 
   const exportKeepsake = async () => {
@@ -143,13 +167,13 @@ export default function SettingsScreen() {
       prayerList: usePrayerList.getState().requests,
     });
     await Clipboard.setStringAsync(md);
-    Alert.alert('Keepsake copied', 'Markdown keepsake is on your clipboard — paste into any app to share or print.');
+    Alert.alert(t('alerts.keepsakeCopiedTitle'), t('alerts.keepsakeCopiedMessage'));
   };
 
   const runImport = () => {
     const result = parseFamilyBackup(importText);
     if (!result.ok) {
-      Alert.alert('Import failed', result.error);
+      Alert.alert(t('alerts.importFailedTitle'), result.error);
       return;
     }
     const merged = mergeBackupIntoLocal(
@@ -180,17 +204,17 @@ export default function SettingsScreen() {
     }
     setImportVisible(false);
     setImportText('');
-    Alert.alert('Import complete', 'Your family data was merged — newer entries were kept.');
+    Alert.alert(t('alerts.importCompleteTitle'), t('alerts.importCompleteMessage'));
   };
 
   const restartPlan = () => {
     Alert.alert(
-      'Restart the plan?',
-      'Day 1 will become today and all completed-day checkmarks will be cleared so progress matches the new calendar. Your journal, favorites, and prayer list stay saved.',
+      t('alerts.restartPlanTitle'),
+      t('alerts.restartPlanMessage'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         {
-          text: 'Restart',
+          text: t('common.restart'),
           style: 'destructive',
           onPress: () => {
             settings.setPlanStartDate(todayISO());
@@ -203,24 +227,24 @@ export default function SettingsScreen() {
 
   const resetProgressConfirm = () => {
     Alert.alert(
-      'Reset all progress?',
-      'Completed days, streaks, and memory-verse practice will be cleared.',
+      t('alerts.resetProgressTitle'),
+      t('alerts.resetProgressMessage'),
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Reset everything', style: 'destructive', onPress: () => useProgress.getState().resetProgress() },
+        { text: t('common.cancel'), style: 'cancel' },
+        { text: t('common.resetEverything'), style: 'destructive', onPress: () => useProgress.getState().resetProgress() },
       ]
     );
   };
 
   const clearCacheConfirm = () => {
-    Alert.alert('Clear downloaded chapters?', 'Readings will re-download when opened.', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('alerts.clearCacheTitle'), t('alerts.clearCacheMessage'), [
+      { text: t('common.cancel'), style: 'cancel' },
       {
-        text: 'Clear',
+        text: t('common.clear'),
         style: 'destructive',
         onPress: async () => {
           const removed = await clearBibleCache();
-          Alert.alert('Done', `${removed} cached chapters removed.`);
+          Alert.alert(t('alerts.doneTitle'), t('common.cachedChaptersRemoved', { count: removed }));
         },
       },
     ]);
@@ -230,26 +254,33 @@ export default function SettingsScreen() {
     try {
       await shareFamilyDataExport();
     } catch {
-      Alert.alert('Export failed', 'Could not open the share sheet. Please try again.');
+      Alert.alert(t('alerts.exportFailedTitle'), t('alerts.exportFailedMessage'));
     }
   };
 
   return (
     <Screen contentStyle={{ paddingTop: insets.top + theme.spacing.lg }}>
       <AppText variant="heading" semiBold accessibilityRole="header">
-        Settings
+        {t('settings.title')}
       </AppText>
 
-      <SectionLabel>Family name</SectionLabel>
+      <SectionLabel>{t('settings.language')}</SectionLabel>
+      <OptionRow
+        options={languageOptions.map((o) => o.label)}
+        selectedIndex={languageOptions.findIndex((o) => o.value === settings.language)}
+        onSelect={(i) => changeLanguage(languageOptions[i].value)}
+      />
+
+      <SectionLabel>{t('settings.familyName')}</SectionLabel>
       <FamilyNameInput
         key={settings.familyName}
         familyName={settings.familyName}
         onSave={(name) => settings.setFamilyName(name)}
       />
 
-      <SectionLabel>Children (for age-matched questions)</SectionLabel>
+      <SectionLabel>{t('settings.childrenSection')}</SectionLabel>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm, marginBottom: theme.spacing.sm }}>
-        {AGE_BANDS.map((band) => (
+        {ageBands.map((band) => (
           <Pressable
             key={band.value}
             onPress={() => settings.addChild({ ageBand: band.value })}
@@ -264,7 +295,7 @@ export default function SettingsScreen() {
             })}
           >
             <AppText variant="small" semiBold scaled={false}>
-              + {band.label}
+              {t('common.addChild', { label: band.label })}
             </AppText>
           </Pressable>
         ))}
@@ -279,35 +310,35 @@ export default function SettingsScreen() {
             color={theme.colors.danger}
             onPress={() => settings.setChildren([])}
           >
-            Clear all
+            {t('common.clearAll')}
           </AppText>
         </AppText>
       ) : (
         <AppText variant="small" color={theme.colors.textMuted}>
-          No children added — all questions will show by default.
+          {t('settings.noChildren')}
         </AppText>
       )}
 
-      <SectionLabel>Appearance</SectionLabel>
+      <SectionLabel>{t('settings.appearance')}</SectionLabel>
       <OptionRow
-        options={THEME_OPTIONS.map((o) => o.label)}
-        selectedIndex={THEME_OPTIONS.findIndex((o) => o.value === settings.themePreference)}
-        onSelect={(i) => settings.setThemePreference(THEME_OPTIONS[i].value)}
+        options={themeOptions.map((o) => o.label)}
+        selectedIndex={themeOptions.findIndex((o) => o.value === settings.themePreference)}
+        onSelect={(i) => settings.setThemePreference(themeOptions[i].value)}
       />
 
-      <SectionLabel>Reading text size</SectionLabel>
+      <SectionLabel>{t('settings.readingTextSize')}</SectionLabel>
       <View style={{ alignItems: 'flex-start' }}>
         <TextSizeControl />
       </View>
 
-      <SectionLabel>Read-aloud speed</SectionLabel>
+      <SectionLabel>{t('settings.readAloudSpeed')}</SectionLabel>
       <OptionRow
-        options={SPEECH_RATE_OPTIONS.map((o) => o.label)}
-        selectedIndex={SPEECH_RATE_OPTIONS.findIndex((o) => o.value === settings.speechRate)}
-        onSelect={(i) => settings.setSpeechRate(SPEECH_RATE_OPTIONS[i].value)}
+        options={speechRateOptions.map((o) => o.label)}
+        selectedIndex={speechRateOptions.findIndex((o) => o.value === settings.speechRate)}
+        onSelect={(i) => settings.setSpeechRate(speechRateOptions[i].value)}
       />
 
-      <SectionLabel>Rhythm reminders</SectionLabel>
+      <SectionLabel>{t('settings.rhythmReminders')}</SectionLabel>
       {(['morning', 'dinner', 'bedtime'] as const).map((slot) => {
         const current =
           slot === 'morning'
@@ -315,13 +346,14 @@ export default function SettingsScreen() {
             : slot === 'dinner'
               ? settings.dinnerReminder
               : settings.bedtimeReminder;
+        const slotLabel = t(`rhythm.${slot}.short`);
         return (
           <View key={slot} style={{ marginBottom: theme.spacing.md }}>
             <AppText variant="small" semiBold scaled={false} style={{ marginBottom: theme.spacing.xs }}>
-              {slot.charAt(0).toUpperCase() + slot.slice(1)} · {formatReminder(current)}
+              {slotLabel} · {formatReminder(current, offLabel)}
             </AppText>
             <OptionRow
-              options={[...TIME_PRESETS.map(formatReminder), 'Off']}
+              options={[...TIME_PRESETS.map((time) => formatReminder(time, offLabel)), offLabel]}
               selectedIndex={
                 current
                   ? TIME_PRESETS.findIndex(
@@ -337,10 +369,10 @@ export default function SettingsScreen() {
         );
       })}
 
-      <SectionLabel>Vacation / travel</SectionLabel>
+      <SectionLabel>{t('settings.vacationTravel')}</SectionLabel>
       <VacationModeCard />
 
-      <SectionLabel>Bible book milestones</SectionLabel>
+      <SectionLabel>{t('settings.bibleBookMilestones')}</SectionLabel>
       <Card>
         {(() => {
           const books = completedBooks(useProgress.getState().completedDays);
@@ -350,56 +382,55 @@ export default function SettingsScreen() {
             </AppText>
           ) : (
             <AppText variant="small" color={theme.colors.textMuted}>
-              Complete a whole book of the Bible to see milestones here.
+              {t('settings.milestonesEmpty')}
             </AppText>
           );
         })()}
       </Card>
 
-      <SectionLabel>Seasonal overlays</SectionLabel>
+      <SectionLabel>{t('settings.seasonalOverlays')}</SectionLabel>
       <OptionRow
-        options={['On (Advent, etc.)', 'Off']}
+        options={[t('settings.seasonalOn'), t('settings.seasonalOff')]}
         selectedIndex={settings.seasonalOverlaysEnabled ? 0 : 1}
         onSelect={(i) => settings.setSeasonalOverlaysEnabled(i === 0)}
       />
 
-      <SectionLabel>Backup & keepsake</SectionLabel>
+      <SectionLabel>{t('settings.backupKeepsake')}</SectionLabel>
       <View style={{ gap: theme.spacing.md }}>
-        <Card onPress={exportBackup} accessibilityLabel="Export family backup">
+        <Card onPress={exportBackup} accessibilityLabel={t('common.exportBackupA11y')}>
           <AppText variant="body" semiBold>
-            Export family backup
+            {t('common.exportFamilyBackup')}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Copies JSON to clipboard for another device.
+            {t('settings.backupDescription')}
           </AppText>
         </Card>
-        <Card onPress={() => setImportVisible(true)} accessibilityLabel="Import from backup">
+        <Card onPress={() => setImportVisible(true)} accessibilityLabel={t('common.importBackupA11y')}>
           <AppText variant="body" semiBold>
-            Import from backup
+            {t('common.importFromBackup')}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Merge a backup — newer timestamps win.
+            {t('settings.importDescription')}
           </AppText>
         </Card>
-        <Card onPress={exportKeepsake} accessibilityLabel="Export year keepsake">
+        <Card onPress={exportKeepsake} accessibilityLabel={t('common.exportKeepsakeA11y')}>
           <AppText variant="body" semiBold>
-            Export year keepsake
+            {t('common.exportYearKeepsake')}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Markdown summary: journal, milestones, favorites, answered prayers.
+            {t('settings.keepsakeDescription')}
           </AppText>
         </Card>
       </View>
 
-      <SectionLabel>Reading plan</SectionLabel>
+      <SectionLabel>{t('settings.readingPlan')}</SectionLabel>
       <View style={{ gap: theme.spacing.md }}>
-        <Card onPress={restartPlan} accessibilityLabel="Restart the 365-day plan from today">
+        <Card onPress={restartPlan} accessibilityLabel={t('common.restartPlanA11y')}>
           <AppText variant="body" semiBold>
-            Restart the plan from today
+            {t('common.restartFromToday')}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-            Day 1 started {settings.planStartDate ?? '—'}. Restarting makes today Day 1 again and
-            clears checkmarks so they match the new calendar.
+            {t('common.restartPlanStarted', { date: settings.planStartDate ?? '—' })}
           </AppText>
         </Card>
         <Card
@@ -407,43 +438,41 @@ export default function SettingsScreen() {
             settings.replayOnboarding();
             router.replace('/onboarding');
           }}
-          accessibilityLabel="Replay the welcome setup"
+          accessibilityLabel={t('common.replayOnboardingA11y')}
         >
           <AppText variant="body" semiBold>
-            Replay the welcome setup
+            {t('common.replayWelcome')}
           </AppText>
         </Card>
-        <Card onPress={resetProgressConfirm} accessibilityLabel="Reset all progress">
+        <Card onPress={resetProgressConfirm} accessibilityLabel={t('common.resetProgressA11y')}>
           <AppText variant="body" semiBold color={theme.colors.danger}>
-            Reset all progress
+            {t('common.resetAllProgress')}
           </AppText>
         </Card>
-        <Card onPress={clearCacheConfirm} accessibilityLabel="Clear downloaded chapters">
+        <Card onPress={clearCacheConfirm} accessibilityLabel={t('common.clearCacheA11y')}>
           <AppText variant="body" semiBold>
-            Clear downloaded chapters
+            {t('common.clearDownloaded')}
           </AppText>
         </Card>
       </View>
 
-      <SectionLabel>Offline reading</SectionLabel>
+      <SectionLabel>{t('settings.offlineReading')}</SectionLabel>
       <DownloadAheadCard planStartDate={settings.planStartDate} />
 
-      <SectionLabel>Your data</SectionLabel>
-      <Card onPress={exportData} accessibilityLabel="Export family data as JSON backup">
+      <SectionLabel>{t('settings.yourData')}</SectionLabel>
+      <Card onPress={exportData} accessibilityLabel={t('common.exportDataA11y')}>
         <AppText variant="body" semiBold>
-          Export family data
+          {t('common.exportFamilyData')}
         </AppText>
         <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-          Save journal, prayers, favorites, and progress as a JSON file you can keep or share.
+          {t('settings.exportDataDescription')}
         </AppText>
       </Card>
 
-      <SectionLabel>About</SectionLabel>
+      <SectionLabel>{t('settings.about')}</SectionLabel>
       <Card>
         <AppText variant="small" color={theme.colors.textMuted}>
-          Faith & Family v1.1 · Morning reading, dinner talk, bedtime prayer. Scripture from the
-          World English Bible (public domain). All data stays on this device unless you export a
-          backup.
+          {t('settings.aboutText')}
         </AppText>
       </Card>
 
@@ -465,16 +494,16 @@ export default function SettingsScreen() {
             }}
           >
             <AppText variant="heading" semiBold>
-              Import backup
+              {t('settings.importModalTitle')}
             </AppText>
             <AppText variant="small" color={theme.colors.textMuted} style={{ marginVertical: theme.spacing.sm }}>
-              Paste the JSON from a previous export.
+              {t('settings.importModalHint')}
             </AppText>
             <TextInput
               value={importText}
               onChangeText={setImportText}
               multiline
-              placeholder="Paste backup JSON here…"
+              placeholder={t('settings.importPlaceholder')}
               placeholderTextColor={theme.colors.textMuted}
               style={{
                 minHeight: 160,
@@ -488,8 +517,8 @@ export default function SettingsScreen() {
               }}
             />
             <View style={{ flexDirection: 'row', gap: theme.spacing.sm, marginTop: theme.spacing.md }}>
-              <AppButton label="Cancel" variant="secondary" onPress={() => setImportVisible(false)} style={{ flex: 1 }} />
-              <AppButton label="Import" onPress={runImport} style={{ flex: 1 }} />
+              <AppButton label={t('common.cancel')} variant="secondary" onPress={() => setImportVisible(false)} style={{ flex: 1 }} />
+              <AppButton label={t('common.import')} onPress={runImport} style={{ flex: 1 }} />
             </View>
           </View>
         </View>
@@ -500,6 +529,7 @@ export default function SettingsScreen() {
 
 function DownloadAheadCard({ planStartDate }: { planStartDate: string | null }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [result, setResult] = useState<PrefetchResult | null>(null);
   const [running, setRunning] = useState(false);
 
@@ -518,23 +548,30 @@ function DownloadAheadCard({ planStartDate }: { planStartDate: string | null }) 
   const finished = !running && result !== null;
   const savedCount = result ? result.done - result.failed : 0;
   const label = running
-    ? `Downloading… ${result ? `${result.done} of ${result.total} chapters` : ''}`
+    ? t('common.downloadProgress', {
+        done: result?.done ?? 0,
+        total: result?.total ?? 0,
+      })
     : finished
       ? result.complete
-        ? `Done — all ${result.total} chapters saved`
-        : `${savedCount} of ${result.total} chapters saved · ${result.failed} failed`
-      : 'Download the next 30 days';
+        ? t('common.downloadDoneAll', { total: result.total })
+        : t('common.downloadDonePartial', {
+            saved: savedCount,
+            total: result.total,
+            failed: result.failed,
+          })
+      : t('common.downloadNext30');
 
   const subtitle = finished
     ? result.complete
-      ? 'Upcoming chapters are on this device for offline reading.'
-      : 'Some chapters could not download. Tap to retry.'
-    : 'Saves upcoming chapters on this device so readings work without internet.';
+      ? t('common.downloadSubtitleDone')
+      : t('common.downloadSubtitleRetry')
+    : t('common.downloadSubtitleIdle');
 
   return (
     <Card
       onPress={running ? undefined : start}
-      accessibilityLabel="Download the next 30 days of readings for offline use"
+      accessibilityLabel={t('common.downloadOfflineA11y')}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.md }}>
         {running ? (
@@ -573,6 +610,7 @@ function FamilyNameInput({
   onSave: (name: string) => void;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [name, setName] = useState(familyName);
 
   return (
@@ -580,9 +618,9 @@ function FamilyNameInput({
       value={name}
       onChangeText={setName}
       onEndEditing={() => onSave(name.trim())}
-      placeholder="e.g. The Parker Family"
+      placeholder={t('settings.familyNamePlaceholder')}
       placeholderTextColor={theme.colors.textMuted}
-      accessibilityLabel="Family name"
+      accessibilityLabel={t('common.familyNameA11y')}
       style={{
         minHeight: theme.minTouch + 4,
         borderWidth: 1,

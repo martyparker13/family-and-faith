@@ -4,6 +4,7 @@ import { TextInput, View } from 'react-native';
 import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
+import { useTranslation } from '@/i18n/context';
 import { weekKeyForDate } from '@/lib/week-key';
 import { useTheme } from '@/lib/theme-context';
 import { useSettings } from '@/store/settings';
@@ -11,6 +12,7 @@ import { useSettings } from '@/store/settings';
 /** Sunday card: capture what the family heard at church. */
 export function SundayBridgeCard({ todayISO }: { todayISO: string }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const weekKey = weekKeyForDate(todayISO);
   const savedNote = useSettings((s) => s.sundayNotes[weekKey] ?? '');
   const setSundayNote = useSettings((s) => s.setSundayNote);
@@ -25,24 +27,24 @@ export function SundayBridgeCard({ todayISO }: { todayISO: string }) {
   return (
     <Card accent={theme.colors.gold} style={{ marginBottom: theme.spacing.md }}>
       <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-        SUNDAY BRIDGE
+        {t('sundayBridge.eyebrow')}
       </AppText>
       <AppText variant="body" semiBold style={{ marginTop: theme.spacing.xs }}>
-        What did we hear at church?
+        {t('sundayBridge.title')}
       </AppText>
       <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 4 }}>
-        One line from the sermon, a song, or something a child noticed — it shows up in your weekly recap.
+        {t('sundayBridge.description')}
       </AppText>
       <TextInput
         value={note}
-        onChangeText={(t) => {
-          setNote(t);
+        onChangeText={(text) => {
+          setNote(text);
           setSaved(false);
         }}
-        placeholder="e.g. God is faithful even when we are afraid…"
+        placeholder={t('sundayBridge.placeholder')}
         placeholderTextColor={theme.colors.textMuted}
         multiline
-        accessibilityLabel="Sunday church note"
+        accessibilityLabel={t('common.sundayNoteA11y')}
         style={{
           minHeight: 72,
           marginTop: theme.spacing.md,
@@ -58,7 +60,7 @@ export function SundayBridgeCard({ todayISO }: { todayISO: string }) {
       />
       <View style={{ marginTop: theme.spacing.sm }}>
         <AppButton
-          label={saved ? 'Saved ✓' : 'Save for this week'}
+          label={saved ? t('common.saved') : t('common.saveForWeek')}
           variant={saved ? 'secondary' : 'primary'}
           onPress={save}
           disabled={saved}

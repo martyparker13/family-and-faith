@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '@/components/AppText';
 import { ProgressBar } from '@/components/ProgressBar';
 import { MAX_CONTENT_WIDTH } from '@/components/Screen';
+import { useTranslation } from '@/i18n/context';
 import { readingPlan, type PlanDay } from '@/lib/content';
 import { currentPlanDay, dateForPlanDay, formatShortDate, todayISO } from '@/lib/dates';
 import { useTheme } from '@/lib/theme-context';
@@ -22,6 +23,7 @@ const ROW_HEIGHT = 84;
  */
 export default function PlanScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const planStartDate = useSettings((s) => s.planStartDate);
   const completedDays = useProgress((s) => s.completedDays);
@@ -53,12 +55,15 @@ export default function PlanScreen() {
         }}
       >
         <AppText variant="heading" accessibilityRole="header" semiBold>
-          Reading Plan
+          {t('plan.title')}
         </AppText>
         <View style={{ marginTop: theme.spacing.md, gap: theme.spacing.xs }}>
           <ProgressBar percent={percent} />
           <AppText variant="caption" scaled={false}>
-            {Object.keys(completedDays).length} of 365 days · {percent}% of the journey
+            {t('common.planProgress', {
+              completed: Object.keys(completedDays).length,
+              percent,
+            })}
           </AppText>
         </View>
       </View>
@@ -80,7 +85,6 @@ export default function PlanScreen() {
         }}
         contentContainerStyle={{
           paddingBottom: insets.bottom + theme.spacing.xl,
-          // Book-width column on tablets, matching the Screen wrapper.
           width: '100%',
           maxWidth: MAX_CONTENT_WIDTH,
           alignSelf: 'center',
@@ -110,11 +114,18 @@ function DayRow({
   date: string;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
+  const references = item.passages.map((p) => p.reference).join(' and ');
   return (
     <Pressable
       onPress={() => router.push(`/day/${item.day}/reading`)}
       accessibilityRole="button"
-      accessibilityLabel={`Day ${item.day}${done ? ', completed' : ''}${isToday ? ', today' : ''}: ${item.passages.map((p) => p.reference).join(' and ')}`}
+      accessibilityLabel={t('common.planDayA11y', {
+        day: item.day,
+        completed: done ? t('common.planDayCompleted') : '',
+        today: isToday ? t('common.planDayToday') : '',
+        references,
+      })}
       style={({ pressed }) => ({
         height: ROW_HEIGHT,
         flexDirection: 'row',
@@ -153,7 +164,7 @@ function DayRow({
           {item.passages.map((p) => p.reference).join('  •  ')}
         </AppText>
         <AppText variant="caption" scaled={false} numberOfLines={1}>
-          {isToday ? 'Today · ' : ''}
+          {isToday ? t('common.planTodayPrefix') : ''}
           {date}
         </AppText>
       </View>

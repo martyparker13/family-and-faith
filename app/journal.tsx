@@ -15,6 +15,7 @@ import { currentPlanDay, todayISO } from '@/lib/dates';
 import { useTheme } from '@/lib/theme-context';
 import { useJournal } from '@/store/journal';
 import { useSettings } from '@/store/settings';
+import { useTranslation } from '@/i18n/context';
 
 /**
  * The family Bible journal: one line per day about what the family read,
@@ -23,6 +24,7 @@ import { useSettings } from '@/store/settings';
  */
 export default function JournalScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ day?: string }>();
   const planStartDate = useSettings((s) => s.planStartDate);
 
@@ -39,9 +41,9 @@ export default function JournalScreen() {
 
   return (
     <Screen>
-      <Stack.Screen options={{ title: 'Family Journal' }} />
+      <Stack.Screen options={{ title: t('navigation.familyJournal') }} />
 
-      <SectionLabel>{`Day ${day} — what did we talk about?`}</SectionLabel>
+      <SectionLabel>{t('journal.dayPrompt', { day })}</SectionLabel>
       <JournalEditor
         key={day}
         day={day}
@@ -51,12 +53,12 @@ export default function JournalScreen() {
         onSave={(note, voice) => saveEntry(day, note, today, voice)}
       />
 
-      <SectionLabel>Our story so far</SectionLabel>
+      <SectionLabel>{t('journal.storySoFar')}</SectionLabel>
       {history.length === 0 ? (
         <EmptyState
           icon="book-outline"
-          title="The first page is yours"
-          message="Add a line each day. A year from now, this will be one of your family's favorite things to read."
+          title={t('journal.emptyTitle')}
+          message={t('journal.emptyMessage')}
         />
       ) : (
         <View style={{ gap: theme.spacing.md }}>
@@ -83,6 +85,7 @@ function JournalEditor({
   onSave: (note: string, voice?: { voiceUri?: string; voiceDurationMs?: number }) => void;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [note, setNote] = useState(initialNote);
   const [saved, setSaved] = useState(false);
   const [mode, setMode] = useState<'text' | 'voice'>(initialVoiceUri ? 'voice' : 'text');
@@ -153,13 +156,13 @@ function JournalEditor({
     <Card accent={theme.colors.gold}>
       <View style={{ flexDirection: 'row', gap: theme.spacing.sm, marginBottom: theme.spacing.md }}>
         <AppButton
-          label="Text"
+          label={t('common.textMode')}
           variant={mode === 'text' ? 'primary' : 'secondary'}
           onPress={() => setMode('text')}
           style={{ flex: 1 }}
         />
         <AppButton
-          label="Voice"
+          label={t('common.voiceMode')}
           variant={mode === 'voice' ? 'primary' : 'secondary'}
           onPress={() => setMode('voice')}
           style={{ flex: 1 }}
@@ -173,10 +176,10 @@ function JournalEditor({
             setNote(text);
             setSaved(false);
           }}
-          placeholder="One line is plenty: something someone said, noticed, or prayed…"
+          placeholder={t('journal.placeholder')}
           placeholderTextColor={theme.colors.textMuted}
           multiline
-          accessibilityLabel={`Journal note for day ${day}`}
+          accessibilityLabel={t('common.journalNoteA11y', { day })}
           style={{
             minHeight: 100,
             textAlignVertical: 'top',
@@ -189,7 +192,7 @@ function JournalEditor({
       ) : (
         <View style={{ alignItems: 'center', gap: theme.spacing.md, paddingVertical: theme.spacing.md }}>
           <AppButton
-            label={recording ? 'Stop recording' : voiceUri ? 'Re-record' : 'Start recording'}
+            label={recording ? t('common.stopRecording') : voiceUri ? t('common.rerecord') : t('common.startRecording')}
             icon={recording ? 'stop-circle' : 'mic'}
             variant={recording ? 'secondary' : 'primary'}
             onPress={recording ? stopRecording : startRecording}
@@ -198,25 +201,25 @@ function JournalEditor({
             <Pressable
               onPress={togglePlayback}
               accessibilityRole="button"
-              accessibilityLabel={playing ? 'Stop playback' : 'Play voice note'}
+              accessibilityLabel={playing ? t('common.stopPlayback') : t('common.playVoiceNote')}
               style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm }}
             >
               <Ionicons name={playing ? 'pause-circle' : 'play-circle'} size={32} color={theme.colors.goldDeep} />
               <AppText variant="body" semiBold>
-                {playing ? 'Playing…' : 'Play voice note'}
+                {playing ? t('common.playing') : t('common.playVoiceNote')}
                 {voiceDurationMs ? ` (${Math.round(voiceDurationMs / 1000)}s)` : ''}
               </AppText>
             </Pressable>
           ) : (
             <AppText variant="small" color={theme.colors.textMuted} center>
-              Record a short voice note — perfect when little ones want to tell the story.
+              {t('common.voiceNoteHint')}
             </AppText>
           )}
         </View>
       )}
 
       <AppButton
-        label={saved ? 'Saved ✓' : 'Save note'}
+        label={saved ? t('common.saved') : t('common.saveNote')}
         icon={saved ? 'checkmark-circle' : 'create'}
         variant={saved ? 'secondary' : 'primary'}
         onPress={save}
@@ -241,18 +244,19 @@ function HistoryCard({
   voiceDurationMs?: number;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const removeEntry = useJournal((s) => s.removeEntry);
 
   return (
     <Card>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep} style={{ flex: 1 }}>
-          DAY {day} · {dateISO}
+          {t('common.dayHistory', { day, date: dateISO })}
         </AppText>
         <Pressable
           onPress={() => removeEntry(day)}
           accessibilityRole="button"
-          accessibilityLabel={`Delete journal note for day ${day}`}
+          accessibilityLabel={t('common.deleteJournalA11y', { day })}
           hitSlop={10}
         >
           <Ionicons name="trash-outline" size={18} color={theme.colors.textMuted} />
@@ -265,7 +269,9 @@ function HistoryCard({
       ) : null}
       {voiceUri ? (
         <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.xs }}>
-          🎙 Voice note{voiceDurationMs ? ` · ${Math.round(voiceDurationMs / 1000)}s` : ''}
+          {voiceDurationMs
+            ? t('common.voiceNoteDuration', { seconds: Math.round(voiceDurationMs / 1000) })
+            : t('common.voiceNote')}
         </AppText>
       ) : null}
     </Card>

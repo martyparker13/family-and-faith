@@ -4,6 +4,7 @@ import { Alert, Pressable, View } from 'react-native';
 import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
+import { useTranslation } from '@/i18n/context';
 import { scheduleRhythmReminders } from '@/lib/notifications';
 import { todayISO } from '@/lib/dates';
 import { validateVacationMode, type VacationMode } from '@/lib/vacation-mode';
@@ -20,6 +21,7 @@ function DateChip({
   onChange: (iso: string | undefined) => void;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   return (
     <View style={{ flex: 1 }}>
       <AppText variant="caption" scaled={false} color={theme.colors.textMuted}>
@@ -42,7 +44,7 @@ function DateChip({
         })}
       >
         <AppText variant="small" semiBold scaled={false}>
-          {value ?? 'Not set'}
+          {value ?? t('common.notSet')}
         </AppText>
       </Pressable>
     </View>
@@ -52,6 +54,7 @@ function DateChip({
 /** Settings card for vacation / travel mode. */
 export function VacationModeCard() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const vacationMode = useSettings((s) => s.vacationMode);
   const setVacationMode = useSettings((s) => s.setVacationMode);
   const resumeFromVacation = useSettings((s) => s.resumeFromVacation);
@@ -64,7 +67,7 @@ export function VacationModeCard() {
     const next: VacationMode = { ...draft, active: true, startDate: draft.startDate ?? todayISO() };
     const err = validateVacationMode(next);
     if (err) {
-      Alert.alert('Check dates', err);
+      Alert.alert(t('vacationMode.checkDatesTitle'), err);
       return;
     }
     setVacationMode(next);
@@ -84,36 +87,36 @@ export function VacationModeCard() {
   return (
     <Card accent={theme.colors.blue}>
       <AppText variant="body" semiBold>
-        Vacation / travel mode
+        {t('vacationMode.title')}
       </AppText>
       <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 4 }}>
-        Pauses rhythm reminders, hides catch-up guilt, and freezes your streak while you are away.
+        {t('vacationMode.description')}
       </AppText>
 
       {vacationMode.active ? (
         <View style={{ marginTop: theme.spacing.md, gap: theme.spacing.sm }}>
           <AppText variant="small" semiBold color={theme.colors.green}>
-            Active
-            {vacationMode.startDate ? ` since ${vacationMode.startDate}` : ''}
-            {vacationMode.endDate ? ` until ${vacationMode.endDate}` : ''}
+            {t('common.active')}
+            {vacationMode.startDate ? t('common.since', { date: vacationMode.startDate }) : ''}
+            {vacationMode.endDate ? t('common.until', { date: vacationMode.endDate }) : ''}
           </AppText>
-          <AppButton label="We're back — resume" icon="airplane" onPress={resume} />
+          <AppButton label={t('common.resumeVacation')} icon="airplane" onPress={resume} />
         </View>
       ) : (
         <View style={{ marginTop: theme.spacing.md, gap: theme.spacing.md }}>
           <View style={{ flexDirection: 'row', gap: theme.spacing.sm }}>
             <DateChip
-              label="Start (optional)"
+              label={t('vacationMode.startOptional')}
               value={draft.startDate}
               onChange={(iso) => setDraft((d) => ({ ...d, startDate: iso }))}
             />
             <DateChip
-              label="End (optional)"
+              label={t('vacationMode.endOptional')}
               value={draft.endDate}
               onChange={(iso) => setDraft((d) => ({ ...d, endDate: iso }))}
             />
           </View>
-          <AppButton label="Turn on vacation mode" icon="airplane-outline" onPress={enable} />
+          <AppButton label={t('common.turnOnVacation')} icon="airplane-outline" onPress={enable} />
         </View>
       )}
     </Card>

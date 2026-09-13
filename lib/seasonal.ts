@@ -1,7 +1,9 @@
 /**
  * Seasonal overlays — optional reading/devotional/prayer accents by date.
  */
-import adventJson from '@/content/seasonal/advent.json';
+import adventEn from '@/content/seasonal/advent.json';
+import adventEs from '@/content/seasonal/advent.es.json';
+import { getLocale, type AppLocale } from '@/i18n/index';
 
 export interface SeasonalDay {
   week: number;
@@ -14,14 +16,44 @@ export interface SeasonalDay {
 export interface SeasonalOverlay {
   id: string;
   name: string;
-  /** Inclusive start MM-DD (local). */
   startMonthDay: string;
-  /** Inclusive end MM-DD (local). */
   endMonthDay: string;
   days: SeasonalDay[];
 }
 
-export const SEASONAL_OVERLAYS: SeasonalOverlay[] = [adventJson as SeasonalOverlay];
+const OVERLAYS_BY_LOCALE: Record<AppLocale, SeasonalOverlay[]> = {
+  en: [adventEn as SeasonalOverlay],
+  es: [mergeSeasonalOverlay(adventEn as SeasonalOverlay, adventEs as SeasonalOverlay)],
+};
+
+function mergeSeasonalOverlay(en: SeasonalOverlay, es: SeasonalOverlay): SeasonalOverlay {
+  const esDays = new Map(es.days.map((d) => [d.week, d]));
+  return {
+    id: en.id,
+    name: es.name || en.name,
+    startMonthDay: en.startMonthDay,
+    endMonthDay: en.endMonthDay,
+    days: en.days.map((day) => {
+      const translated = esDays.get(day.week);
+      if (!translated) return day;
+      return {
+        week: day.week,
+        label: translated.label || day.label,
+        readingNote: translated.readingNote ?? day.readingNote,
+        devotionalNote: translated.devotionalNote ?? day.devotionalNote,
+        prayerNote: translated.prayerNote ?? day.prayerNote,
+      };
+    }),
+  };
+}
+
+export function getSeasonalOverlays(locale?: AppLocale): SeasonalOverlay[] {
+  const loc = locale ?? getLocale();
+  return OVERLAYS_BY_LOCALE[loc] ?? OVERLAYS_BY_LOCALE.en;
+}
+
+/** @deprecated Use getSeasonalOverlays() */
+export const SEASONAL_OVERLAYS: SeasonalOverlay[] = getSeasonalOverlays('en');
 
 function monthDay(iso: string): string {
   return iso.slice(5, 10);
@@ -37,11 +69,12 @@ export function isDateInRange(dateMD: string, startMD: string, endMD: string): b
 
 export function activeSeasonalOverlay(
   todayISO: string,
-  enabled: boolean
+  enabled: boolean,
+  locale?: AppLocale
 ): SeasonalOverlay | null {
   if (!enabled) return null;
   const md = monthDay(todayISO);
-  for (const overlay of SEASONAL_OVERLAYS) {
+  for (const overlay of getSeasonalOverlays(locale)) {
     if (isDateInRange(md, overlay.startMonthDay, overlay.endMonthDay)) {
       return overlay;
     }
