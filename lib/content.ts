@@ -93,9 +93,15 @@ export interface Devotional {
   familyChallenge: string;
 }
 
+function padByDay<T extends { day: number }>(en: T[], es: T[]): T[] {
+  if (es.length >= en.length) return es;
+  const byDay = new Map(es.map((item) => [item.day, item]));
+  return en.map((item) => byDay.get(item.day) ?? item);
+}
+
 const devotionalsByLocale: Record<AppLocale, Devotional[]> = {
   en: devotionalsEn as Devotional[],
-  es: devotionalsEs as Devotional[],
+  es: padByDay(devotionalsEn as Devotional[], devotionalsEs as Devotional[]),
 };
 
 export const devotionals = devotionalsEn as Devotional[];
@@ -137,7 +143,7 @@ export interface DailyPrayer {
 
 const prayersByLocale: Record<AppLocale, DailyPrayer[]> = {
   en: prayersEn as DailyPrayer[],
-  es: prayersEs as DailyPrayer[],
+  es: padByDay(prayersEn as DailyPrayer[], prayersEs as DailyPrayer[]),
 };
 
 export const prayers = prayersEn as DailyPrayer[];
@@ -178,9 +184,13 @@ export interface GuidanceTopic {
   verses: GuidanceVerse[];
 }
 
+function padGuidanceEs(en: GuidanceTopic[], es: GuidanceTopic[]): GuidanceTopic[] {
+  return en.map((topic, i) => es[i] ?? topic);
+}
+
 const guidanceByLocale: Record<AppLocale, GuidanceTopic[]> = {
   en: guidanceTopicsEn as GuidanceTopic[],
-  es: guidanceTopicsEs as GuidanceTopic[],
+  es: padGuidanceEs(guidanceTopicsEn as GuidanceTopic[], guidanceTopicsEs as GuidanceTopic[]),
 };
 
 export const guidanceTopics = guidanceTopicsEn as GuidanceTopic[];

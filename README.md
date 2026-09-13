@@ -20,8 +20,32 @@ Quality checks:
 ```bash
 npm run lint        # ESLint (expo config + prettier)
 npx tsc --noEmit    # TypeScript
-npm test            # Jest unit tests (streak/date math, content integrity)
+npm test            # Jest unit tests (streak/date math, content integrity, i18n)
 ```
+
+## Internationalization (i18n)
+
+Faith & Family ships with **English** and **Spanish** UI and bundled content.
+
+| Piece | Location | Notes |
+| --- | --- | --- |
+| UI strings | `locales/en.json`, `locales/es.json` | Nested keys; `t('section.key')` via `useTranslation()` |
+| Runtime | `i18n/index.ts`, `i18n/context.tsx` | `expo-localization` for device default; English fallback |
+| Language picker | Onboarding + Settings | `device` (follow phone), `en`, or `es` — stored in `ff-settings` |
+| Devotionals / prayers | `content/*.es.json` | Full Spanish bundles; fallback to EN if a field is missing |
+| Reading plan | `content/reading-plan.es.json` | Overlay for `kidSummary`, `teachingPoint`, `parentNotes` |
+| Guidance | `content/guidance-topics.es.json` | Translated names, keywords (for search), notes, verse text |
+| Seasonal | `content/seasonal/advent.es.json` | Advent overlay copy |
+| Content accessors | `lib/content.ts` | `getDevotional(day)`, `getPrayer(day)`, etc. respect active locale |
+
+Regenerate Spanish content from English sources:
+
+```bash
+node scripts/generate-spanish-content.js
+```
+
+The script uses machine translation (MyMemory + Google Translate fallback) with
+checkpoint resume. Output should be human-reviewed before a major release.
 
 ## Device builds (EAS)
 

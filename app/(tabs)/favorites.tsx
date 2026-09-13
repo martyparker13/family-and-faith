@@ -106,7 +106,7 @@ function FavoritePrayerCard({ favorite }: { favorite: FavoriteVerse }) {
             {prayer ? prayer.title : favorite.reference}
           </AppText>
           <AppText variant="caption" scaled={false}>
-            {prayer
+            {prayer && day
               ? t('common.dayActivity', { day, activity: prayer.theme })
               : t('common.dailyPrayer')}
           </AppText>
