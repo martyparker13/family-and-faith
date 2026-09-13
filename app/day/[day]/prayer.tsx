@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { Animated, Pressable, View } from 'react-native';
 
 import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
@@ -10,9 +10,12 @@ import { ParentTipBanner } from '@/components/ParentTipBanner';
 import { CompleteActivityButton } from '@/components/CompleteActivityButton';
 import { DayNavigator } from '@/components/DayNavigator';
 import { Screen } from '@/components/Screen';
+import { SectionLabel } from '@/components/SectionLabel';
 import { getPrayer } from '@/lib/content';
 import { useTheme } from '@/lib/theme-context';
 import { prayerFavoriteId, useFavorites } from '@/store/favorites';
+import { useProgress } from '@/store/progress';
+import { useSettings } from '@/store/settings';
 
 /**
  * Feature 3 — Daily Family Prayer screen.
@@ -26,6 +29,18 @@ export default function PrayerScreen() {
   const day = Math.min(365, Math.max(1, parseInt(params.day ?? '1', 10) || 1));
   const prayer = getPrayer(day);
   const [prayerMode, setPrayerMode] = useState(false);
+  const children = useSettings((s) => s.children);
+  const participation = useProgress((s) => s.prayerParticipation[day]);
+  const recordPrayerTap = useProgress((s) => s.recordPrayerTap);
+  const [pulse] = useState(() => new Animated.Value(1));
+
+  const onKidTap = (childId?: string) => {
+    recordPrayerTap(day, childId);
+    Animated.sequence([
+      Animated.timing(pulse, { toValue: 1.08, duration: 120, useNativeDriver: true }),
+      Animated.timing(pulse, { toValue: 1, duration: 120, useNativeDriver: true }),
+    ]).start();
+  };
 
   // Saving a prayer stores only its day — the text itself is bundled content.
   const favoriteId = prayerFavoriteId(day);
@@ -92,6 +107,36 @@ export default function PrayerScreen() {
           );
         })}
       </View>
+
+      <SectionLabel color={theme.colors.green}>Kids tap when ready</SectionLabel>
+      <Animated.View style={{ transform: [{ scale: pulse }] }}>
+        <Card accent={theme.colors.green}>
+          {children.length > 0 ? (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm }}>
+              {children.map((child, i) => (
+                <AppButton
+                  key={`child-${i}`}
+                  label={child.name ?? `Child ${i + 1}`}
+                  icon="hand-left-outline"
+                  variant="secondary"
+                  onPress={() => onKidTap(String(i))}
+                />
+              ))}
+            </View>
+          ) : (
+            <AppButton
+              label={`Ready! (${participation?.taps ?? 0} taps)`}
+              icon="hand-left-outline"
+              onPress={() => onKidTap()}
+            />
+          )}
+          {(participation?.taps ?? 0) > 0 ? (
+            <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm }}>
+              {participation?.taps} tap{(participation?.taps ?? 0) === 1 ? '' : 's'} today
+            </AppText>
+          ) : null}
+        </Card>
+      </Animated.View>
 
       {/* Repeat-together closing */}
       <Card

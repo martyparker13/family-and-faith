@@ -30,6 +30,12 @@ interface ProgressState {
   familyChallengesDone: Record<number, boolean>;
   /** Streak milestone values (7, 30, …) → last calendar date celebrated. */
   celebratedMilestones: Record<number, string>;
+  /** Completed Bible books → celebration date ISO. */
+  celebratedBookMilestones: Record<string, string>;
+  /** Tap-along prayer participation per plan day. */
+  prayerParticipation: Record<number, { taps: number; childIds?: string[] }>;
+  /** Optional note + photo when family completes a challenge. */
+  familyChallengeNotes: Record<number, { note?: string; photoUri?: string }>;
 
   toggleActivity: (activity: Activity, day: number, todayISO: string) => void;
   /** Back-compat alias for toggling the reading. */
@@ -38,6 +44,12 @@ interface ProgressState {
   markSlotComplete: (slot: RhythmSlot, day: number, todayISO: string) => void;
   toggleFamilyChallenge: (day: number) => void;
   recordMilestoneCelebration: (streak: number, dateISO: string) => void;
+  recordBookCelebration: (book: string, dateISO: string) => void;
+  recordPrayerTap: (day: number, childId?: string) => void;
+  setFamilyChallengeNote: (
+    day: number,
+    note: { note?: string; photoUri?: string }
+  ) => void;
   /** Marks devotional + prayer (not reading) for the quick evening fallback. */
   completeQuickEvening: (day: number, todayISO: string) => void;
   resetProgress: () => void;
@@ -48,6 +60,9 @@ interface ProgressState {
     practicedWeeks?: Record<number, string>;
     slotCompletions?: Record<RhythmSlot, Record<number, string>>;
     familyChallengesDone?: Record<number, boolean>;
+    prayerParticipation?: Record<number, { taps: number; childIds?: string[] }>;
+    familyChallengeNotes?: Record<number, { note?: string; photoUri?: string }>;
+    celebratedBookMilestones?: Record<string, string>;
   }) => void;
 }
 
@@ -90,6 +105,9 @@ export const useProgress = create<ProgressState>()(
       slotCompletions: { ...EMPTY_SLOTS },
       familyChallengesDone: {},
       celebratedMilestones: {},
+      celebratedBookMilestones: {},
+      prayerParticipation: {},
+      familyChallengeNotes: {},
 
       toggleActivity: (activity, day, todayISO) =>
         set((state) => {
@@ -156,6 +174,30 @@ export const useProgress = create<ProgressState>()(
         set((state) => ({
           celebratedMilestones: { ...state.celebratedMilestones, [streak]: dateISO },
         })),
+      recordBookCelebration: (book, dateISO) =>
+        set((state) => ({
+          celebratedBookMilestones: { ...state.celebratedBookMilestones, [book]: dateISO },
+        })),
+      recordPrayerTap: (day, childId) =>
+        set((state) => {
+          const prev = state.prayerParticipation[day] ?? { taps: 0, childIds: [] as string[] };
+          const childIds = childId
+            ? [...new Set([...(prev.childIds ?? []), childId])]
+            : prev.childIds;
+          return {
+            prayerParticipation: {
+              ...state.prayerParticipation,
+              [day]: { taps: prev.taps + 1, childIds },
+            },
+          };
+        }),
+      setFamilyChallengeNote: (day, note) =>
+        set((state) => ({
+          familyChallengeNotes: {
+            ...state.familyChallengeNotes,
+            [day]: { ...state.familyChallengeNotes[day], ...note },
+          },
+        })),
       completeQuickEvening: (day, todayISO) =>
         set((state) => ({
           devotionalDays: { ...state.devotionalDays, [day]: todayISO },
@@ -175,6 +217,9 @@ export const useProgress = create<ProgressState>()(
           slotCompletions: { ...EMPTY_SLOTS },
           familyChallengesDone: {},
           celebratedMilestones: {},
+          celebratedBookMilestones: {},
+          prayerParticipation: {},
+          familyChallengeNotes: {},
         }),
       applyImportedProgress: (partial) =>
         set((state) => ({
@@ -184,12 +229,16 @@ export const useProgress = create<ProgressState>()(
           practicedWeeks: partial.practicedWeeks ?? state.practicedWeeks,
           slotCompletions: partial.slotCompletions ?? state.slotCompletions,
           familyChallengesDone: partial.familyChallengesDone ?? state.familyChallengesDone,
+          prayerParticipation: partial.prayerParticipation ?? state.prayerParticipation,
+          familyChallengeNotes: partial.familyChallengeNotes ?? state.familyChallengeNotes,
+          celebratedBookMilestones:
+            partial.celebratedBookMilestones ?? state.celebratedBookMilestones,
         })),
     }),
     {
       name: 'ff-progress',
       storage: createJSONStorage(() => AsyncStorage),
-      version: 1,
+      version: 2,
       migrate: (persisted: unknown, version: number) => {
         const state = persisted as ProgressState;
         if (version < 1) {
@@ -202,6 +251,11 @@ export const useProgress = create<ProgressState>()(
           }
           if (!state.familyChallengesDone) state.familyChallengesDone = {};
           if (!state.celebratedMilestones) state.celebratedMilestones = {};
+        }
+        if (version < 2) {
+          if (!state.celebratedBookMilestones) state.celebratedBookMilestones = {};
+          if (!state.prayerParticipation) state.prayerParticipation = {};
+          if (!state.familyChallengeNotes) state.familyChallengeNotes = {};
         }
         return state;
       },

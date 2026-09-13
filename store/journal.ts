@@ -9,6 +9,10 @@ export interface JournalEntry {
   note: string;
   /** Local YYYY-MM-DD the note was written/updated. */
   dateISO: string;
+  /** Local file URI for a voice note (expo-file-system). */
+  voiceUri?: string;
+  /** Voice note length in milliseconds. */
+  voiceDurationMs?: number;
 }
 
 /**
@@ -17,7 +21,12 @@ export interface JournalEntry {
  */
 interface JournalState {
   entries: Record<number, JournalEntry>;
-  saveEntry: (day: number, note: string, dateISO: string) => void;
+  saveEntry: (
+    day: number,
+    note: string,
+    dateISO: string,
+    voice?: { voiceUri?: string; voiceDurationMs?: number }
+  ) => void;
   removeEntry: (day: number) => void;
 }
 
@@ -25,12 +34,20 @@ export const useJournal = create<JournalState>()(
   persist(
     (set) => ({
       entries: {},
-      saveEntry: (day, note, dateISO) =>
+      saveEntry: (day, note, dateISO, voice) =>
         set((state) => {
           const trimmed = note.trim();
+          const prev = state.entries[day];
+          const hasVoice = Boolean(voice?.voiceUri ?? prev?.voiceUri);
           const next = { ...state.entries };
-          if (trimmed) {
-            next[day] = { day, note: trimmed, dateISO };
+          if (trimmed || hasVoice) {
+            next[day] = {
+              day,
+              note: trimmed,
+              dateISO,
+              voiceUri: voice?.voiceUri ?? prev?.voiceUri,
+              voiceDurationMs: voice?.voiceDurationMs ?? prev?.voiceDurationMs,
+            };
           } else {
             delete next[day];
           }
@@ -46,6 +63,14 @@ export const useJournal = create<JournalState>()(
     {
       name: 'ff-journal',
       storage: createJSONStorage(() => AsyncStorage),
+      version: 1,
+      migrate: (persisted: unknown, version: number) => {
+        const state = persisted as JournalState;
+        if (version < 1) {
+          if (!state.entries) state.entries = {};
+        }
+        return state;
+      },
     }
   )
 );

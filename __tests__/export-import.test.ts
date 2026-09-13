@@ -31,6 +31,13 @@ const baseStores = {
     setThemePreference: () => {},
     setTextScaleIndex: () => {},
     setSpeechRate: () => {},
+    vacationMode: { active: false },
+    sundayNotes: {},
+    dismissedDisciplingTips: [],
+    setVacationMode: () => {},
+    resumeFromVacation: () => {},
+    setSundayNote: () => {},
+    dismissDisciplingTip: () => {},
     replayOnboarding: () => {},
     applyImportedSettings: () => {},
   },
@@ -50,7 +57,7 @@ const baseStores = {
 describe('buildFamilyBackup', () => {
   it('includes version and progress', () => {
     const backup = buildFamilyBackup(baseStores);
-    expect(backup.version).toBe(1);
+    expect(backup.version).toBe(2);
     expect(backup.progress.completedDays[1]).toBe('2026-06-01');
   });
 });

@@ -15,7 +15,7 @@ import { useProgress } from '@/store/progress';
 import type { SettingsState } from '@/store/settings';
 import { useSettings } from '@/store/settings';
 
-export const BACKUP_VERSION = 1;
+export const BACKUP_VERSION = 2;
 
 export interface FamilyBackup {
   version: number;
@@ -32,15 +32,21 @@ export interface FamilyBackup {
       bedtime: Record<number, string>;
     };
     familyChallengesDone: Record<number, boolean>;
+    familyChallengeNotes?: Record<number, { note?: string; photoUri?: string }>;
+    prayerParticipation?: Record<number, { taps: number; childIds?: string[] }>;
+    celebratedBookMilestones?: Record<string, string>;
   };
   journal: Record<number, JournalEntry>;
+  kidQuestions?: import('@/store/kid-questions').KidQuestion[];
   favorites: FavoriteVerse[];
   prayerList: PrayerRequest[];
 }
 
 export interface ExportStores {
   settings: SettingsState;
-  progress: FamilyBackup['progress'];
+  progress: FamilyBackup['progress'] & {
+    familyChallengeNotes?: Record<number, { note?: string; photoUri?: string }>;
+  };
   journal: Record<number, JournalEntry>;
   favorites: FavoriteVerse[];
   prayerList: PrayerRequest[];
@@ -87,8 +93,16 @@ export function buildFamilyBackup(stores: ExportStores): FamilyBackup {
       seasonalOverlaysEnabled: settings.seasonalOverlaysEnabled,
       catchUpChoice: settings.catchUpChoice,
       onboarded: settings.onboarded,
+      vacationMode: settings.vacationMode,
+      sundayNotes: settings.sundayNotes,
+      dismissedDisciplingTips: settings.dismissedDisciplingTips,
     },
-    progress,
+    progress: {
+      ...progress,
+      familyChallengeNotes: progress.familyChallengeNotes,
+      prayerParticipation: progress.prayerParticipation,
+      celebratedBookMilestones: progress.celebratedBookMilestones,
+    },
     journal,
     favorites,
     prayerList,
@@ -127,13 +141,25 @@ export function exportYearKeepsake(stores: ExportStores): string {
   const journalDays = Object.keys(journal)
     .map(Number)
     .sort((a, b) => a - b);
+  const challengeNotes = stores.progress.familyChallengeNotes ?? {};
+  const challengeDays = Object.keys(challengeNotes).map(Number).sort((a, b) => a - b);
+  if (challengeDays.length > 0) {
+    lines.push('## Family challenges', '');
+    for (const day of challengeDays) {
+      const note = challengeNotes[day];
+      if (note?.note) lines.push(`- Day ${day}: ${note.note}`);
+    }
+    lines.push('');
+  }
+
   if (journalDays.length > 0) {
     lines.push('## Family journal', '');
     for (const day of journalDays) {
       const entry = journal[day];
       const plan = getPlanDay(day);
       lines.push(`### Day ${day} — ${plan.passages[0]?.reference ?? ''}`);
-      lines.push(entry.note);
+      if (entry.note) lines.push(entry.note);
+      if (entry.voiceUri) lines.push('_Voice note saved_');
       lines.push('');
     }
   }
