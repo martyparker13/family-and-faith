@@ -12,8 +12,9 @@ const { translate } = require('@vitalets/google-translate-api');
 const CONTENT_DIR = path.join(__dirname, '..', 'content');
 const CHECKPOINT_FILE = path.join(__dirname, '.spanish-content-checkpoint.json');
 const SEP = '\n|||FF|||\n';
-const MYMEMORY_DELAY = 350;
-const GOOGLE_DELAY = 2500;
+const MYMEMORY_DELAY = 500;
+const GOOGLE_DELAY = 5000;
+const MAX_RETRIES = 5;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -25,26 +26,71 @@ async function translateMyMemory(text) {
   const res = await fetch(url);
   const data = await res.json();
   await sleep(MYMEMORY_DELAY);
-  if (data.responseStatus === 200 && data.responseData?.translatedText) {
-    return data.responseData.translatedText;
+  const translated = data.responseData?.translatedText;
+  if (translated?.includes('MYMEMORY WARNING')) {
+    throw new Error('MyMemory quota exhausted');
+  }
+  if (data.responseStatus === 200 && translated) {
+    return translated;
   }
   throw new Error(data.responseDetails || 'MyMemory failed');
 }
 
 async function translateGoogle(text) {
-  const result = await translate(text, { from: 'en', to: 'es' });
-  await sleep(GOOGLE_DELAY);
-  return result.text;
+  let lastErr;
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    try {
+      const result = await translate(text, { from: 'en', to: 'es' });
+      await sleep(GOOGLE_DELAY);
+      return result.text;
+    } catch (err) {
+      lastErr = err;
+      const isRateLimit = /too many requests/i.test(String(err.message));
+      if (isRateLimit && attempt < MAX_RETRIES - 1) {
+        const wait = GOOGLE_DELAY * (attempt + 2);
+        console.warn(`  rate limited, retry ${attempt + 1}/${MAX_RETRIES - 1} in ${wait}ms`);
+        await sleep(wait);
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw lastErr;
+}
+
+function splitForTranslation(text, maxLen = 400) {
+  if (text.length <= maxLen) return [text];
+  const sentences = text.match(/[^.!?]+[.!?]+|\s*[^.!?]+$/g) || [text];
+  const chunks = [];
+  let current = '';
+  for (const sentence of sentences) {
+    if ((current + sentence).length > maxLen && current) {
+      chunks.push(current.trim());
+      current = sentence;
+    } else {
+      current += sentence;
+    }
+  }
+  if (current.trim()) chunks.push(current.trim());
+  return chunks;
+}
+
+async function translateLongViaMyMemory(text) {
+  const chunks = splitForTranslation(text);
+  const out = [];
+  for (const chunk of chunks) {
+    out.push(await translateMyMemory(chunk));
+  }
+  return out.join(' ');
 }
 
 async function translateText(text) {
   if (!text?.trim()) return text;
-  if (text.length <= 450) {
-    try {
-      return await translateMyMemory(text);
-    } catch {
-      // fall through
-    }
+  try {
+    if (text.length <= 450) return await translateMyMemory(text);
+    return await translateLongViaMyMemory(text);
+  } catch {
+    // fall through to Google
   }
   try {
     return await translateGoogle(text);
@@ -101,15 +147,18 @@ async function generateGuidance(cp) {
   console.log('  wrote guidance-topics.es.json');
 }
 
+function loadEsArray(filename) {
+  const p = path.join(CONTENT_DIR, filename);
+  return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : [];
+}
+
 async function generateReadingPlanOverlay(cp) {
   console.log('Translating reading plan overlay...');
   const en = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'reading-plan.json'), 'utf8'));
-  const start = cp.readingPlan ?? 0;
-  const es = start > 0 && fs.existsSync(path.join(CONTENT_DIR, 'reading-plan.es.json'))
-    ? JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'reading-plan.es.json'), 'utf8'))
-    : [];
-  for (let i = start; i < en.length; i++) {
+  const es = loadEsArray('reading-plan.es.json');
+  for (let i = 0; i < en.length; i++) {
     const d = en[i];
+    if (es[i]?.kidSummary && es[i].kidSummary !== d.kidSummary) continue;
     if (i % 25 === 0) console.log(`  day ${i + 1}/365`);
     const entry = { day: d.day, kidSummary: await translateText(d.kidSummary) };
     if (d.teachingPoint) entry.teachingPoint = await translateText(d.teachingPoint);
@@ -137,12 +186,10 @@ async function generateReadingPlanOverlay(cp) {
 async function generatePrayers(cp) {
   console.log('Translating prayers...');
   const en = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'prayers.json'), 'utf8'));
-  const start = cp.prayers ?? 0;
-  const es = start > 0 && fs.existsSync(path.join(CONTENT_DIR, 'prayers.es.json'))
-    ? JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'prayers.es.json'), 'utf8'))
-    : [];
-  for (let i = start; i < en.length; i++) {
+  const es = loadEsArray('prayers.es.json');
+  for (let i = 0; i < en.length; i++) {
     const p = en[i];
+    if (es[i]?.title && es[i].title !== p.title) continue;
     if (i % 25 === 0) console.log(`  prayer ${i + 1}/365`);
     const [theme, title, togetherLine] = await translateBatch([p.theme, p.title, p.togetherLine]);
     const lines = await translateBatch(p.lines);
@@ -160,12 +207,10 @@ async function generatePrayers(cp) {
 async function generateDevotionals(cp) {
   console.log('Translating devotionals...');
   const en = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'devotionals.json'), 'utf8'));
-  const start = cp.devotionals ?? 0;
-  const es = start > 0 && fs.existsSync(path.join(CONTENT_DIR, 'devotionals.es.json'))
-    ? JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'devotionals.es.json'), 'utf8'))
-    : [];
-  for (let i = start; i < en.length; i++) {
+  const es = loadEsArray('devotionals.es.json');
+  for (let i = 0; i < en.length; i++) {
     const d = en[i];
+    if (es[i]?.title && es[i].title !== d.title) continue;
     if (i % 10 === 0) console.log(`  devotional ${i + 1}/365`);
     const [title, theme, scriptureText, familyChallenge] = await translateBatch([
       d.title,
@@ -233,6 +278,21 @@ async function generateAdvent() {
   console.log('  wrote seasonal/advent.es.json');
 }
 
+function countTranslated(en, es, field) {
+  let translated = 0;
+  for (let i = 0; i < en.length; i++) {
+    const parts = field.split('.');
+    let a = en[i];
+    let b = es[i];
+    for (const p of parts) {
+      a = a?.[p];
+      b = b?.[p];
+    }
+    if (a !== b) translated++;
+  }
+  return translated;
+}
+
 async function main() {
   const cp = loadCheckpoint();
   await generateAdvent();
@@ -240,8 +300,36 @@ async function main() {
   await generateReadingPlanOverlay(cp);
   await generatePrayers(cp);
   await generateDevotionals(cp);
-  fs.unlinkSync(CHECKPOINT_FILE);
-  console.log('Done!');
+
+  const guidanceEn = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'guidance-topics.json'), 'utf8'));
+  const guidanceEs = loadEsArray('guidance-topics.es.json');
+  const readingEn = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'reading-plan.json'), 'utf8'));
+  const readingEs = loadEsArray('reading-plan.es.json');
+  const prayersEn = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'prayers.json'), 'utf8'));
+  const prayersEs = loadEsArray('prayers.es.json');
+  const devEn = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'devotionals.json'), 'utf8'));
+  const devEs = loadEsArray('devotionals.es.json');
+
+  const complete =
+    guidanceEs.length === guidanceEn.length &&
+    countTranslated(guidanceEn, guidanceEs, 'name') === guidanceEn.length &&
+    countTranslated(readingEn, readingEs, 'kidSummary') === readingEn.length &&
+    countTranslated(prayersEn, prayersEs, 'title') === prayersEn.length &&
+    countTranslated(devEn, devEs, 'title') === devEn.length;
+
+  if (complete) {
+    if (fs.existsSync(CHECKPOINT_FILE)) fs.unlinkSync(CHECKPOINT_FILE);
+    console.log('Done!');
+  } else {
+    saveCheckpoint({
+      guidance: guidanceEs.length,
+      readingPlan: countTranslated(readingEn, readingEs, 'kidSummary'),
+      prayers: countTranslated(prayersEn, prayersEs, 'title'),
+      devotionals: countTranslated(devEn, devEs, 'title'),
+      partial: true,
+    });
+    console.log('Partial — checkpoint saved for resume.');
+  }
 }
 
 main().catch((err) => {

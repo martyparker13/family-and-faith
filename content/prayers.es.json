@@ -1,8 +1,8 @@
 [
  {
   "day": 1,
-  "theme": "Gratitude",
-  "title": "A Thank-You Prayer",
+  "theme": "Gratitud",
+  "title": "Una oración de agradecimiento",
   "lines": [
    "Dear God, thank You for this day You made just for us.",
    "Thank You for our home, our food, and the people sitting beside us.",
@@ -12,12 +12,12 @@
    "God, thank You for putting ______ in my life.",
    "Help us have thankful hearts tomorrow, even if the day is hard."
   ],
-  "togetherLine": "Thank You, God, for everything! Amen."
+  "togetherLine": "¡Gracias, Dios, por todo! Amén."
  },
  {
   "day": 2,
-  "theme": "Family",
-  "title": "A Prayer for Our Family",
+  "theme": "Familia",
+  "title": "Una oración por nuestra familia",
   "lines": [
    "Dear God, thank You for our family — the one You put together on purpose.",
    "Help us to be patient with each other, even on grumpy days.",
@@ -27,87 +27,87 @@
    "One thing I love about our family is ______.",
    "Help our home be a safe, warm place where everyone feels loved."
   ],
-  "togetherLine": "As for our family, we will serve the Lord! Amen."
+  "togetherLine": "¡En cuanto a nuestra familia, serviremos al Señor! Amén."
  },
  {
   "day": 3,
-  "theme": "Forgiveness",
-  "title": "A Fresh-Start Prayer",
+  "theme": "Perdón",
+  "title": "Una oración de nuevo comienzo",
   "lines": [
-   "Dear God, thank You for forgiving us every single time we ask.",
-   "We are sorry for the unkind words and the selfish moments.",
-   "Thank You for never turning us away when we say sorry.",
-   "You throw our sins as far as the east is from the west.",
-   "Help us believe we are really, truly forgiven.",
-   "God, help me say sorry to ______ tomorrow.",
-   "Give us the courage to apologize first, even when it is hard."
+   "Querido Dios, gracias por perdonarnos cada vez que pedimos.",
+   "Lamentamos las palabras poco amables y los momentos egoístas.",
+   "Gracias por nunca rechazarnos cuando pedimos perdón.",
+   "Arrojas nuestros pecados tan lejos como el este está del oeste.",
+   "Ayúdanos a creer que estamos realmente perdonados.",
+   "Dios, ayúdame a disculparme con ______ mañana.",
+   "Danos el valor de disculparnos primero, incluso cuando sea difícil."
   ],
-  "togetherLine": "Thank You, God, for fresh starts! Amen."
+  "togetherLine": "¡Gracias, Dios, por comenzar de nuevo! Amén."
  },
  {
   "day": 4,
-  "theme": "Courage",
-  "title": "A Brave-Heart Prayer",
+  "theme": "Coraje",
+  "title": "Una oración de corazón valiente",
   "lines": [
-   "Dear God, You tell us, \"Do not be afraid, for I am with you.\" Thank You.",
-   "When we feel small, remind us how big You are.",
-   "When we feel alone, remind us You never leave.",
-   "You were with David facing the giant and Daniel in the lions' den.",
-   "You are the very same God with us today.",
-   "Help me be brave enough to ______ this week.",
-   "When fear knocks tomorrow, help us remember who is with us."
+   "Querido Dios, nos dices: \"No temas, porque yo estoy contigo. -Gracias.",
+   "Cuando nos sintamos pequeños, recuérdanos lo grande que eres.",
+   "Cuando nos sintamos solos, recuérdanos que nunca te vas.",
+   "Estabas con David frente al gigante y Daniel en el foso de los leones.",
+   "Eres el mismo Dios con nosotros hoy.",
+   "Ayúdame a ser lo suficientemente valiente como para ______ esta semana.",
+   "Cuando el miedo llame mañana, ayúdanos a recordar quién está con nosotros."
   ],
-  "togetherLine": "Be strong and courageous — God is with us! Amen."
+  "togetherLine": "Sé fuerte y valiente: ¡Dios está con nosotros! Amén."
  },
  {
   "day": 5,
-  "theme": "Kindness",
-  "title": "A Kind-Heart Prayer",
+  "theme": "Amabilidad",
+  "title": "Una oración de buen corazón",
   "lines": [
-   "Dear God, You are kind to us every day. Help us pass it on.",
-   "Give us eyes that notice when someone is sad or left out.",
-   "Give us feet that walk over and hearts that care.",
-   "Help our words be sweet like honey, not sharp like sticks.",
-   "Help us build people up, never tear them down.",
-   "One kind thing I can do tomorrow is ______.",
-   "Help us be kind first, without waiting for kindness to come to us."
+   "Querido Dios, eres amable con nosotros todos los días. Ayúdanos a transmitirlo.",
+   "Danos ojos que noten cuando alguien está triste o se queda fuera.",
+   "Danos pies que caminen y corazones que se preocupen.",
+   "Ayuda a que nuestras palabras sean dulces como la miel, no afiladas como palos.",
+   "Ayúdanos a fortalecer a las personas, nunca a derribarlas.",
+   "Una cosa amable que puedo hacer mañana es ______.",
+   "Ayúdanos a ser amables primero, sin esperar a que la bondad venga a nosotros."
   ],
-  "togetherLine": "Be kind to one another — starting with us! Amen."
+  "togetherLine": "¡Sean amables unos con otros, empezando por nosotros! Amén."
  },
  {
   "day": 6,
-  "theme": "Those in Need",
-  "title": "A Prayer for Others",
+  "theme": "Los necesitados",
+  "title": "Una oración por los demás",
   "lines": [
-   "Dear God, tonight we pray not for ourselves, but for others.",
-   "We pray for kids who are hungry, lonely, or scared tonight.",
-   "Send them helpers, and make us helpers too.",
-   "We pray for people who are sick, and the doctors and nurses caring for them.",
-   "Bring healing, comfort, and hope.",
-   "God, show our family how to help ______.",
-   "Open our eyes tomorrow to one person we can actually help."
+   "Querido Dios, esta noche oramos no por nosotros mismos, sino por los demás.",
+   "Oramos por los niños que tienen hambre, están solos o asustados esta noche.",
+   "Envíales ayudantes y haznos ayudantes a nosotros también.",
+   "Oramos por las personas que están enfermas y por los médicos y enfermeras que las cuidan.",
+   "Trae sanidad, consuelo y esperanza.",
+   "Dios, muestra a nuestra familia cómo ayudar a ______.",
+   "Abre los ojos mañana a una persona a la que realmente podamos ayudar."
   ],
-  "togetherLine": "Make us helpers, God! Amen."
+  "togetherLine": "¡Haznos ayudantes, Dios! Amén."
  },
  {
   "day": 7,
-  "theme": "Trusting God",
-  "title": "A Prayer of Trust",
+  "theme": "Confiando en Dios",
+  "title": "Una oración de confianza",
   "lines": [
-   "Dear God, we put our whole family in Your hands tonight.",
-   "When we worry, remind us to pray instead.",
-   "Trade our heavy worries for Your light peace.",
-   "Help us trust You with the big things and the little things.",
-   "Nothing is too hard for You, and nothing is too small for You.",
-   "Today You took care of me by ______. Thank You.",
-   "When worries sneak back, help us hand them right back to You."
+   "Querido Dios, ponemos a toda nuestra familia en Tus manos esta noche.",
+   "Cuando nos preocupemos, recuérdanos que oremos en su lugar.",
+   "Cambia nuestras pesadas preocupaciones por Tu ligera paz.",
+   "Ayúdanos a confiar en Ti con las cosas grandes y las cosas pequeñas.",
+   "Nada es demasiado difícil para ti, y nada es demasiado pequeño para ti.",
+   "Hoy me cuidaste por ______. Gracias.",
+   "Cuando las preocupaciones vuelvan sigilosamente, ayúdanos a devolvértelas."
   ],
-  "togetherLine": "We trust You, God! Amen."
+  "togetherLine": "¡Confiamos en Ti, Dios! Amén."
  },
  {
   "day": 8,
-  "theme": "School & Learning",
-  "title": "A Prayer for Learning",
+  "theme": "Escuela y aprendizaje",
+  "title": "Una oración por el aprendizaje",
   "lines": [
    "Dear God, thank You for our growing brains and everything they can learn.",
    "Bless our teachers and helpers — give them patience and joy.",
@@ -117,27 +117,27 @@
    "God, something cool I learned recently is ______.",
    "Give us brave hands that raise up even when we are not sure."
   ],
-  "togetherLine": "Help us grow wiser and kinder every day! Amen."
+  "togetherLine": "¡Ayúdanos a ser más sabios y amables cada día! Amén."
  },
  {
   "day": 9,
-  "theme": "Friends",
-  "title": "A Prayer for Friends",
+  "theme": "Amigos",
+  "title": "Una oración por los amigos",
   "lines": [
-   "Dear God, thank You for friends — what a wonderful idea You had!",
-   "Bless our friends tonight, at their own houses, with their own families.",
-   "Keep them safe and let them know You love them.",
-   "Help us be the kind of friend who is loyal and true.",
-   "Quick to share, quick to cheer, quick to forgive.",
-   "Help me be a better friend by ______.",
-   "Help us choose friends who make us kinder and braver."
+   "Querido Dios, gracias por tus amigos, ¡qué maravillosa idea tuviste!",
+   "Bendice a nuestros amigos esta noche, en sus propias casas, con sus propias familias.",
+   "Manténgalos a salvo y hágales saber que los ama.",
+   "Ayúdanos a ser el tipo de amigo que es leal y verdadero.",
+   "Rápido para compartir, rápido para animar, rápido para perdonar.",
+   "Ayúdame a ser un mejor amigo antes de ______.",
+   "Ayúdanos a elegir amigos que nos hagan más amables y valientes."
   ],
-  "togetherLine": "A friend loves at all times! Amen."
+  "togetherLine": "¡Un amigo ama en todo momento! Amén."
  },
  {
   "day": 10,
-  "theme": "God's World",
-  "title": "A Prayer of Wonder",
+  "theme": "El mundo de Dios",
+  "title": "Una oración de asombro",
   "lines": [
    "Dear God, You made everything — and everything You made is amazing.",
    "Thank You for animals — the fast ones, the fluffy ones, the funny ones.",
@@ -147,72 +147,72 @@
    "Today in Your world I noticed ______.",
    "Help us take good care of the world You gave us."
   ],
-  "togetherLine": "You made it all, and it is very good! Amen."
+  "togetherLine": "¡Lo has hecho todo y está muy bien! Amén."
  },
  {
   "day": 11,
-  "theme": "Joy & Praise",
-  "title": "A Happy-Heart Prayer",
+  "theme": "Alegría y alabanza",
+  "title": "Una oración de corazón feliz",
   "lines": [
-   "Dear God, today we just want to tell You how great You are!",
-   "You are good all the time — morning, noon, and night.",
-   "Nothing and nobody is greater than You.",
-   "Thank You for laughter, music, dancing, and happy surprises.",
-   "You invented every good thing we love.",
-   "If my heart had a song today, it would be about ______.",
-   "Fill our home with joy that spills onto everyone who visits."
+   "Querido Dios, ¡hoy solo queremos decirte lo grande que eres!",
+   "Eres bueno todo el tiempo: por la mañana, al mediodía y por la noche.",
+   "Nada ni nadie es más grande que Tú.",
+   "Gracias por las risas, la música, el baile y las sorpresas felices.",
+   "Has inventado todo lo bueno que amamos.",
+   "Si mi corazón tuviera una canción hoy, sería sobre ______.",
+   "Llena nuestra casa de alegría que se derrama sobre todos los que la visitan."
   ],
-  "togetherLine": "This is the day the Lord has made — we will rejoice! Amen."
+  "togetherLine": "Este es el día que Jehová ha hecho — ¡nos regocijaremos! Amén."
  },
  {
   "day": 12,
-  "theme": "Patience",
-  "title": "A Slow-Down Prayer",
+  "theme": "Paciencia",
+  "title": "Una oración lenta",
   "lines": [
-   "Dear God, You are so patient with us. Help us be patient too.",
-   "Help us be quick to listen, slow to speak, and slow to get angry.",
-   "Put a little pause between our feelings and our words.",
-   "When little things bug us, help us take a deep breath.",
-   "Help us answer gently instead of loudly.",
-   "When I feel impatient, help me ______ instead.",
-   "Tomorrow, when we have to wait, remind us to talk to You while we do."
+   "Querido Dios, eres tan paciente con nosotros. Ayúdanos a ser pacientes también.",
+   "Ayúdanos a ser rápidos para escuchar, lentos para hablar y lentos para enojarnos.",
+   "Ponga una pequeña pausa entre nuestros sentimientos y nuestras palabras.",
+   "Cuando las cosas pequeñas nos molestan, ayúdanos a respirar hondo.",
+   "Ayúdanos a responder suavemente en lugar de en voz alta.",
+   "Cuando me sienta impaciente, ayúdame ______ en su lugar.",
+   "Mañana, cuando tengamos que esperar, recuérdanos que hablemos contigo mientras lo hacemos."
   ],
-  "togetherLine": "Quick to listen, slow to anger! Amen."
+  "togetherLine": "¡Rápido para escuchar, lento para enojarse! Amén."
  },
  {
   "day": 13,
-  "theme": "Peace & Rest",
-  "title": "A Quiet-Heart Prayer",
+  "theme": "Paz y descanso",
+  "title": "Una oración de corazón tranquilo",
   "lines": [
-   "Dear God, as this day winds down, we bring You our whole selves.",
-   "Take the busy thoughts, the leftover worries, and the big feelings of today.",
-   "We hand them all to You.",
-   "In peace we will lie down and sleep, for You keep us safe.",
-   "Thank You for staying awake so we do not have to.",
-   "Something peaceful I loved today was ______.",
-   "Guard our hearts and minds with Your peace while we sleep."
+   "Querido Dios, a medida que este día se acerca, te traemos todo nuestro ser.",
+   "Tome los pensamientos ocupados, las preocupaciones sobrantes y los grandes sentimientos de hoy.",
+   "Te las entregamos todas.",
+   "En paz nos acostaremos y dormiremos, porque Tú nos mantienes a salvo.",
+   "Gracias por permanecer despiertos para que no tengamos que hacerlo.",
+   "Algo pacífico que me encantó hoy fue ______.",
+   "Protege nuestros corazones y mentes con Tu paz mientras dormimos."
   ],
-  "togetherLine": "In peace we lie down and sleep! Amen."
+  "togetherLine": "¡En paz nos acostamos y dormimos! Amén."
  },
  {
   "day": 14,
-  "theme": "Serving & Sharing",
-  "title": "A Helping-Hands Prayer",
+  "theme": "Servir y compartir",
+  "title": "Una oración de manos que ayudan",
   "lines": [
-   "Dear God, Jesus came to serve. Make our family like Him.",
-   "Show us the people around us who need a hand.",
-   "Neighbors, classmates, grandparents, strangers — anyone You choose.",
-   "Make us cheerful givers, not grumpy ones.",
-   "Help us share our things, our time, and our smiles.",
-   "Thank You for ______, who served our family recently.",
-   "Open our eyes to one person we can serve tomorrow — then nudge us to do it."
+   "Querido Dios, Jesús vino a servir. Haz que nuestra familia sea como Él.",
+   "Muéstranos a las personas a nuestro alrededor que necesitan una mano.",
+   "Vecinos, compañeros de clase, abuelos, extraños, cualquier persona que elijas.",
+   "Haznos dadores alegres, no gruñones.",
+   "Ayúdanos a compartir nuestras cosas, nuestro tiempo y nuestras sonrisas.",
+   "Gracias por ______, que sirvió a nuestra familia recientemente.",
+   "Abre nuestros ojos a una persona a la que podamos servir mañana, luego danos un empujón para que lo hagamos."
   ],
-  "togetherLine": "Here we are, God — use us! Amen."
+  "togetherLine": "Aquí estamos, Dios — ¡úsanos! Amén."
  },
  {
   "day": 15,
-  "theme": "Gratitude",
-  "title": "Counting Blessings",
+  "theme": "Gratitud",
+  "title": "Contar bendiciones",
   "lines": [
    "Father, we stop right now to say thank You — for everything.",
    "Thank You for our home, our food, and the people sitting beside us.",
@@ -222,207 +222,207 @@
    "One tiny thing I almost forgot to say thank You for is ______.",
    "Help us thank the people around us, too — out loud, like we mean it."
   ],
-  "togetherLine": "You are good, and we are grateful! Amen."
+  "togetherLine": "¡Eres bueno y estamos agradecidos! Amén."
  },
  {
   "day": 16,
-  "theme": "Family",
-  "title": "Bless This House",
+  "theme": "Familia",
+  "title": "Bendice esta casa",
   "lines": [
-   "Father, You knew exactly which people belonged under this roof. Thank You.",
-   "Help us to be patient with each other, even on grumpy days.",
-   "Make our home a place full of kind words and big laughs.",
-   "Watch over the family we love who are far away, too.",
-   "Keep us close to each other and close to You.",
-   "God, bless ______ in a special way this week.",
-   "Keep us loving each other no matter what happens."
+   "Padre, sabías exactamente a qué personas pertenecía bajo este techo. Gracias.",
+   "Ayúdanos a ser pacientes los unos con los otros, incluso en días de mal humor.",
+   "Haz de nuestro hogar un lugar lleno de palabras amables y grandes risas.",
+   "Cuida a la familia que amamos que también está lejos.",
+   "Mantennos cerca unos de otros y cerca de Ti.",
+   "Dios, bendice a ______ de una manera especial esta semana.",
+   "Haz que nos amemos el uno al otro pase lo que pase."
   ],
-  "togetherLine": "Thank You, God, for our family! Amen."
+  "togetherLine": "¡Gracias, Dios, por nuestra familia! Amén."
  },
  {
   "day": 17,
-  "theme": "Forgiveness",
-  "title": "Sorry and Forgiven",
+  "theme": "Perdón",
+  "title": "Lo siento y perdonado",
   "lines": [
-   "Father, we come to You with the things we got wrong today.",
-   "We are sorry for the unkind words and the selfish moments.",
-   "Thank You for never turning us away when we say sorry.",
-   "Sometimes it is hard to forgive other people.",
-   "Make our hearts soft and quick to let go of hurts.",
-   "Take this heavy thing off my heart, God: ______.",
-   "Keep our family quick to repair what gets broken between us."
+   "Padre, venimos a Ti con las cosas que nos equivocamos hoy.",
+   "Lamentamos las palabras poco amables y los momentos egoístas.",
+   "Gracias por nunca rechazarnos cuando pedimos perdón.",
+   "A veces es difícil perdonar a otras personas.",
+   "Haz que nuestros corazones sean suaves y rápidos para dejar ir las heridas.",
+   "Quita esta cosa pesada de mi corazón, Dios: ______.",
+   "Mantenga a nuestra familia rápida para reparar lo que se rompe entre nosotros."
   ],
-  "togetherLine": "Forgiven and forgiving — that is our family! Amen."
+  "togetherLine": "Perdonar y perdonar: ¡esa es nuestra familia! Amén."
  },
  {
   "day": 18,
-  "theme": "Courage",
-  "title": "Strong and Courageous",
+  "theme": "Coraje",
+  "title": "Fuerte y valiente",
   "lines": [
-   "Father, some things coming up feel scary. We bring them to You.",
-   "When we feel small, remind us how big You are.",
-   "When we feel alone, remind us You never leave.",
-   "Make us brave enough to do what is right, even if our voices shake.",
-   "Help us stand up for people who need a friend.",
-   "God, please be extra close to ______, who needs courage too.",
-   "Turn our worries into prayers the moment they show up."
+   "Padre, algunas cosas que vienen dan miedo. Te los traemos.",
+   "Cuando nos sintamos pequeños, recuérdanos lo grande que eres.",
+   "Cuando nos sintamos solos, recuérdanos que nunca te vas.",
+   "Haznos lo suficientemente valientes como para hacer lo correcto, incluso si nuestras voces tiemblan.",
+   "Ayúdanos a defender a las personas que necesitan un amigo.",
+   "Dios, por favor, mantente muy cerca de ______, que también necesita coraje.",
+   "Convierte nuestras preocupaciones en oraciones en el momento en que aparecen."
   ],
-  "togetherLine": "When we are afraid, we will trust in You! Amen."
+  "togetherLine": "¡Cuando tengamos miedo, confiaremos en Ti! Amén."
  },
  {
   "day": 19,
-  "theme": "Kindness",
-  "title": "Hands and Hearts That Help",
+  "theme": "Amabilidad",
+  "title": "Manos y corazones que ayudan",
   "lines": [
-   "Father, make our family famous for kindness.",
-   "Give us eyes that notice when someone is sad or left out.",
-   "Give us feet that walk over and hearts that care.",
-   "Jesus was kind to people everyone else ignored.",
-   "Make us brave enough to be kind like that.",
-   "God, show me someone who needs kindness, especially ______.",
-   "Help us be kind even to people who are not kind to us."
+   "Padre, haz que nuestra familia sea famosa por su amabilidad.",
+   "Danos ojos que noten cuando alguien está triste o se queda fuera.",
+   "Danos pies que caminen y corazones que se preocupen.",
+   "Jesús fue amable con las personas que todos los demás ignoraban.",
+   "Haznos lo suficientemente valientes como para ser amables así.",
+   "Dios, muéstrame a alguien que necesite bondad, especialmente ______.",
+   "Ayúdanos a ser amables incluso con las personas que no son amables con nosotros."
   ],
-  "togetherLine": "Make us kind like Jesus! Amen."
+  "togetherLine": "¡Haznos amables como Jesús! Amén."
  },
  {
   "day": 20,
-  "theme": "Those in Need",
-  "title": "Bigger Than Our Walls",
+  "theme": "Los necesitados",
+  "title": "Más grande que nuestras paredes",
   "lines": [
-   "Father, You love every person in the whole world. Help us love them too.",
-   "We pray for kids who are hungry, lonely, or scared tonight.",
-   "Send them helpers, and make us helpers too.",
-   "We pray for families going through hard times.",
-   "Be extra close to them and provide what they need.",
-   "Wrap Your arms around ______ tonight, God.",
-   "Use our hands, our snacks, our dollars, and our time however You want."
+   "Padre, Tú amas a cada persona en el mundo entero. Ayúdanos a amarlos también.",
+   "Oramos por los niños que tienen hambre, están solos o asustados esta noche.",
+   "Envíales ayudantes y haznos ayudantes a nosotros también.",
+   "Oramos por las familias que pasan por momentos difíciles.",
+   "Esté más cerca de ellos y bríndeles lo que necesitan.",
+   "Envuelve tus brazos alrededor de ______ esta noche, Dios.",
+   "Usa nuestras manos, nuestros bocadillos, nuestros dólares y nuestro tiempo como quieras."
   ],
-  "togetherLine": "Your love is for everyone! Amen."
+  "togetherLine": "¡Tu amor es para todos! Amén."
  },
  {
   "day": 21,
-  "theme": "Trusting God",
-  "title": "In Your Hands",
+  "theme": "Confiando en Dios",
+  "title": "En tus manos",
   "lines": [
-   "Father, You feed the birds and dress the flowers — and You care for us even more.",
-   "When we worry, remind us to pray instead.",
-   "Trade our heavy worries for Your light peace.",
-   "You see what we cannot see and know what we do not know.",
-   "Help us lean on You instead of only ourselves.",
-   "God, our family trusts You with ______.",
-   "Give us peaceful sleep tonight, because You stay awake watching over us."
+   "Padre, Tú alimentas a los pájaros y vistes las flores, y nos cuidas aún más.",
+   "Cuando nos preocupemos, recuérdanos que oremos en su lugar.",
+   "Cambia nuestras pesadas preocupaciones por Tu ligera paz.",
+   "Ves lo que no podemos ver y sabes lo que no sabemos.",
+   "Ayúdanos a apoyarnos en Ti en lugar de solo en nosotros mismos.",
+   "Dios, nuestra familia confía en Ti con ______.",
+   "Danos un sueño tranquilo esta noche, porque Tú te quedas despierto velando por nosotros."
   ],
-  "togetherLine": "Our family is in Your hands! Amen."
+  "togetherLine": "¡Nuestra familia está en Tus manos! Amén."
  },
  {
   "day": 22,
-  "theme": "School & Learning",
-  "title": "Growing Minds",
+  "theme": "Escuela y aprendizaje",
+  "title": "Mentes en crecimiento",
   "lines": [
-   "Father, You made us curious on purpose. Thank You for the joy of learning.",
-   "Bless our teachers and helpers — give them patience and joy.",
-   "Help us listen well and try our best.",
-   "Help us be kind at school and at work — to the new kid, the quiet kid, everyone.",
-   "Make us brave enough to do what is right there.",
-   "Help me be a good friend to ______ at school.",
-   "Make us hard workers who do everything like we are doing it for You."
+   "Padre, nos hiciste sentir curiosos a propósito. Gracias por la alegría de aprender.",
+   "Bendice a nuestros maestros y ayudantes, dales paciencia y alegría.",
+   "Ayúdanos a escuchar bien y hacer nuestro mejor esfuerzo.",
+   "Ayúdanos a ser amables en la escuela y en el trabajo: con el niño nuevo, con el niño tranquilo, con todos.",
+   "Haznos lo suficientemente valientes para hacer lo que está ahí.",
+   "Ayúdame a ser un buen amigo de ______ en la escuela.",
+   "Haznos trabajadores que hagamos todo como si lo hiciéramos por Ti."
   ],
-  "togetherLine": "Thank You for our growing minds! Amen."
+  "togetherLine": "¡Gracias por nuestras mentes en crecimiento! Amén."
  },
  {
   "day": 23,
-  "theme": "Friends",
-  "title": "Thank You for Friends",
+  "theme": "Amigos",
+  "title": "Gracias por tus amigos",
   "lines": [
-   "Father, thank You for the people who play with us, laugh with us, and stick with us.",
-   "Bless our friends tonight, at their own houses, with their own families.",
-   "Keep them safe and let them know You love them.",
-   "If any of our friends are sad or struggling, comfort them.",
-   "And show us how to help.",
-   "God, help me make a new friend, maybe ______.",
-   "Thank You for being our best friend of all, Jesus."
+   "Padre, gracias por las personas que juegan con nosotros, se ríen con nosotros y se quedan con nosotros.",
+   "Bendice a nuestros amigos esta noche, en sus propias casas, con sus propias familias.",
+   "Manténgalos a salvo y hágales saber que los ama.",
+   "Si alguno de nuestros amigos está triste o tiene dificultades, consuélelo.",
+   "Y muéstranos cómo ayudar.",
+   "Dios, ayúdame a hacer un nuevo amigo, tal vez ______.",
+   "Gracias por ser nuestro mejor amigo de todos, Jesús."
   ],
-  "togetherLine": "Thank You, God, for friends! Amen."
+  "togetherLine": "¡Gracias, Dios, por los amigos! Amén."
  },
  {
   "day": 24,
-  "theme": "God's World",
-  "title": "Maker of Everything",
+  "theme": "El mundo de Dios",
+  "title": "Fabricante de todo",
   "lines": [
-   "Maker of mountains and ladybugs, thank You for this incredible world.",
-   "Thank You for animals — the fast ones, the fluffy ones, the funny ones.",
-   "You must have smiled when You made them.",
-   "The stars remind us how big You are.",
-   "And You know every one of them by name — and every one of us, too.",
-   "God, thank You for making me with ______.",
-   "Thank You for making people the most special creation of all."
+   "Creador de montañas y mariquitas, gracias por este mundo increíble.",
+   "Gracias por los animales: los rápidos, los esponjosos, los divertidos.",
+   "Debes haber sonreído cuando las hiciste.",
+   "Las estrellas nos recuerdan lo grande que eres.",
+   "Y conoces a cada uno de ellos por su nombre, y a cada uno de nosotros también.",
+   "Dios, gracias por hacerme con ______.",
+   "Gracias por hacer de las personas la creación más especial de todas."
   ],
-  "togetherLine": "The whole earth is full of Your glory! Amen."
+  "togetherLine": "¡Toda la tierra está llena de Tu gloria! Amén."
  },
  {
   "day": 25,
-  "theme": "Joy & Praise",
-  "title": "A Prayer of Praise",
+  "theme": "Alegría y alabanza",
+  "title": "Una oración de alabanza",
   "lines": [
-   "Father, this is the day You made, and we are glad in it!",
-   "You are good all the time — morning, noon, and night.",
-   "Nothing and nobody is greater than You.",
-   "Even on hard days, You give us reasons for joy.",
-   "Our joy is built on You, and You never change.",
-   "God, I want to praise You for ______.",
-   "Let our family's laughter be a kind of thank-You to You."
+   "¡Padre, este es el día que hiciste, y nos alegramos en él!",
+   "Eres bueno todo el tiempo: por la mañana, al mediodía y por la noche.",
+   "Nada ni nadie es más grande que Tú.",
+   "Incluso en los días difíciles, nos das motivos de alegría.",
+   "Nuestra alegría se basa en Ti, y Tú nunca cambias.",
+   "Dios, quiero alabarte por ______.",
+   "Deja que la risa de nuestra familia sea una especie de agradecimiento a Ti."
   ],
-  "togetherLine": "The joy of the Lord is our strength! Amen."
+  "togetherLine": "¡El gozo del Señor es nuestra fuerza! Amén."
  },
  {
   "day": 26,
-  "theme": "Patience",
-  "title": "Help Us Wait Well",
+  "theme": "Paciencia",
+  "title": "Ayúdanos a esperar bien",
   "lines": [
-   "Father, waiting is hard! We need Your help with it.",
-   "Help us be quick to listen, slow to speak, and slow to get angry.",
-   "Put a little pause between our feelings and our words.",
-   "Some good things take a long time to grow — like seeds, and like us.",
-   "Help us trust Your timing.",
-   "Thank You for being patient with me when I ______.",
-   "Help us give each other time to grow, the way You give us time."
+   "¡Padre, esperar es difícil! Necesitamos tu ayuda.",
+   "Ayúdanos a ser rápidos para escuchar, lentos para hablar y lentos para enojarnos.",
+   "Ponga una pequeña pausa entre nuestros sentimientos y nuestras palabras.",
+   "Algunas cosas buenas tardan mucho tiempo en crecer, como las semillas y nosotros.",
+   "Ayúdanos a confiar en tu tiempo.",
+   "Gracias por ser paciente conmigo cuando ______.",
+   "Ayúdanos a darnos tiempo para crecer, de la manera en que Tú nos das tiempo."
   ],
-  "togetherLine": "Your timing is always right! Amen."
+  "togetherLine": "¡Tu tiempo siempre es el correcto! Amén."
  },
  {
   "day": 27,
-  "theme": "Peace & Rest",
-  "title": "Peace for Tonight",
+  "theme": "Paz y descanso",
+  "title": "Paz para esta noche",
   "lines": [
-   "Father, thank You for rest — for cozy beds and deep breaths.",
-   "Take the busy thoughts, the leftover worries, and the big feelings of today.",
-   "We hand them all to You.",
-   "Where there are arguments still hanging in the air, bring peace tonight.",
-   "Make us peacemakers under this roof.",
-   "Help my heart be quiet about ______ tonight.",
-   "When the world feels loud, be our quiet place."
+   "Padre, gracias por el descanso, por las camas acogedoras y las respiraciones profundas.",
+   "Tome los pensamientos ocupados, las preocupaciones sobrantes y los grandes sentimientos de hoy.",
+   "Te las entregamos todas.",
+   "Donde todavía hay discusiones en el aire, trae paz esta noche.",
+   "Haznos pacificadores bajo este techo.",
+   "Ayuda a mi corazón a estar tranquilo sobre ______ esta noche.",
+   "Cuando el mundo se sienta ruidoso, sé nuestro lugar tranquilo."
   ],
-  "togetherLine": "You keep us safe, tonight and always! Amen."
+  "togetherLine": "¡Nos mantienes a salvo, esta noche y siempre! Amén."
  },
  {
   "day": 28,
-  "theme": "Serving & Sharing",
-  "title": "Use Us, God",
+  "theme": "Servir y compartir",
+  "title": "Úsanos, Dios",
   "lines": [
-   "Father, You gave each of us hands that can help. Put them to work!",
-   "Show us the people around us who need a hand.",
-   "Neighbors, classmates, grandparents, strangers — anyone You choose.",
-   "When we serve someone, You say it is like serving You.",
-   "What an honor! Help us remember that tomorrow.",
-   "Use my gift of ______ to bless someone, God.",
-   "Let everything we do, big or small, be done with love."
+   "Padre, nos diste a cada uno de nosotros manos que pueden ayudar. ¡Ponlos a trabajar!",
+   "Muéstranos a las personas a nuestro alrededor que necesitan una mano.",
+   "Vecinos, compañeros de clase, abuelos, extraños, cualquier persona que elijas.",
+   "Cuando servimos a alguien, dices que es como servirte a Ti.",
+   "¡Qué honor! Ayúdanos a recordar eso mañana.",
+   "Usa mi don de ______ para bendecir a alguien, Dios.",
+   "Deja que todo lo que hagamos, grande o pequeño, se haga con amor."
   ],
-  "togetherLine": "Serve one another in love! Amen."
+  "togetherLine": "¡Servíos unos a otros con amor! Amén."
  },
  {
   "day": 29,
-  "theme": "Gratitude",
-  "title": "Thank You, Father",
+  "theme": "Gratitud",
+  "title": "Gracias, Padre",
   "lines": [
    "Dear God, our hearts are full tonight, and we want to tell You why.",
    "Thank You for our home, our food, and the people sitting beside us.",
@@ -432,12 +432,12 @@
    "God, today I want to thank You for ______.",
    "Make our family quick to notice gifts and quick to share them."
   ],
-  "togetherLine": "Every good gift comes from You! Amen."
+  "togetherLine": "¡Todo buen regalo viene de Ti! Amén."
  },
  {
   "day": 30,
-  "theme": "Family",
-  "title": "Our Family Team",
+  "theme": "Familia",
+  "title": "Nuestro equipo familiar",
   "lines": [
    "Dear God, bless every person in this family, from the oldest to the youngest.",
    "Help us to be patient with each other, even on grumpy days.",
@@ -447,267 +447,267 @@
    "God, today I want to thank You for my family member ______.",
    "Let everyone who visits our home feel Your love inside it."
   ],
-  "togetherLine": "Love lives here, because You live here! Amen."
+  "togetherLine": "¡El amor vive aquí, porque Tú vives aquí! Amén."
  },
  {
   "day": 31,
-  "theme": "Forgiveness",
-  "title": "Clean Hearts",
+  "theme": "Perdón",
+  "title": "Corazones limpios",
   "lines": [
-   "Dear God, You already know our mistakes — and You love us anyway.",
-   "We are sorry for the unkind words and the selfish moments.",
-   "Thank You for never turning us away when we say sorry.",
-   "Thank You for Jesus, who makes forgiveness possible.",
-   "Help us forgive each other the way You forgive us.",
-   "God, I am sorry for ______. Please forgive me.",
-   "When someone says sorry to us, help us forgive them fast."
+   "Querido Dios, ya conoces nuestros errores, y nos amas de todos modos.",
+   "Lamentamos las palabras poco amables y los momentos egoístas.",
+   "Gracias por nunca rechazarnos cuando pedimos perdón.",
+   "Gracias por Jesús, que hace posible el perdón.",
+   "Ayúdanos a perdonarnos unos a otros de la manera en que Tú nos perdonas.",
+   "Dios, lo siento por ______. Por favor, perdóname.",
+   "Cuando alguien nos pida perdón, ayúdanos a perdonarlo rápidamente."
   ],
-  "togetherLine": "Your mercy is new every morning! Amen."
+  "togetherLine": "¡Tu misericordia es nueva cada mañana! Amén."
  },
  {
   "day": 32,
-  "theme": "Courage",
-  "title": "Not Alone Today",
+  "theme": "Coraje",
+  "title": "Hoy no estoy solo",
   "lines": [
-   "Dear God, You are bigger than every single thing we are afraid of.",
-   "When we feel small, remind us how big You are.",
-   "When we feel alone, remind us You never leave.",
-   "Fear is loud, but Your love is stronger.",
-   "Help us trust You more than we trust our worries.",
-   "God, please give me courage for ______.",
-   "Help us do it scared when we have to — because You are there."
+   "Querido Dios, eres más grande que cada cosa que tememos.",
+   "Cuando nos sintamos pequeños, recuérdanos lo grande que eres.",
+   "Cuando nos sintamos solos, recuérdanos que nunca te vas.",
+   "El miedo es fuerte, pero Tu amor es más fuerte.",
+   "Ayúdanos a confiar en ti más de lo que confiamos en nuestras preocupaciones.",
+   "Dios, por favor dame valor para ______.",
+   "Ayúdanos a hacerlo asustados cuando tengamos que — porque Tú estás ahí."
   ],
-  "togetherLine": "God is bigger! Amen."
+  "togetherLine": "¡Dios es más grande! Amén."
  },
  {
   "day": 33,
-  "theme": "Kindness",
-  "title": "Kindness Like Jesus",
+  "theme": "Amabilidad",
+  "title": "Bondad como Jesús",
   "lines": [
-   "Dear God, thank You for every kind thing someone did for us today.",
-   "Give us eyes that notice when someone is sad or left out.",
-   "Give us feet that walk over and hearts that care.",
-   "Kindness is love everyone can see.",
-   "Let people see Your love in the small things we do.",
-   "God, help me be kind to ______ tomorrow.",
-   "Let one act of our kindness start a whole chain of it."
+   "Querido Dios, gracias por cada cosa amable que alguien hizo por nosotros hoy.",
+   "Danos ojos que noten cuando alguien está triste o se queda fuera.",
+   "Danos pies que caminen y corazones que se preocupen.",
+   "La bondad es amor que todos pueden ver.",
+   "Deja que la gente vea tu amor en las pequeñas cosas que hacemos.",
+   "Dios, ayúdame a ser amable con ______ mañana.",
+   "Deja que un acto de nuestra bondad inicie toda una cadena."
   ],
-  "togetherLine": "Love is something we do! Amen."
+  "togetherLine": "¡El amor es algo que hacemos! Amén."
  },
  {
   "day": 34,
-  "theme": "Those in Need",
-  "title": "Hearts for the Hurting",
+  "theme": "Los necesitados",
+  "title": "Corazones para los que sufren",
   "lines": [
-   "Dear God, some people had a hard day today. We lift them up to You.",
-   "We pray for kids who are hungry, lonely, or scared tonight.",
-   "Send them helpers, and make us helpers too.",
-   "We pray for people with no home and no family nearby.",
-   "Show them they are not forgotten — not by You, not by us.",
-   "God, today we especially pray for ______.",
-   "Remind us that helping one person matters, even when we cannot help everyone."
+   "Querido Dios, algunas personas tuvieron un día difícil hoy. Los elevamos hacia Ti.",
+   "Oramos por los niños que tienen hambre, se sienten solos o asustados esta noche.",
+   "Envíales ayudantes y haznos ayudantes también.",
+   "Oramos por las personas que no tienen hogar ni familia cerca.",
+   "Muéstrales que no han sido olvidados, ni tú ni nosotros.",
+   "Dios, hoy oramos especialmente por ______.",
+   "Recuérdanos que ayudar a una persona es importante, incluso cuando no podamos ayudar a todos."
   ],
-  "togetherLine": "Use our family to share Your love! Amen."
+  "togetherLine": "¡Usa a nuestra familia para compartir Tu amor! Amén."
  },
  {
   "day": 35,
-  "theme": "Trusting God",
-  "title": "You've Got Us, God",
+  "theme": "Confiando en Dios",
+  "title": "Nos tienes, Dios",
   "lines": [
-   "Dear God, we do not know what tomorrow holds, but we know You hold tomorrow.",
-   "When we worry, remind us to pray instead.",
-   "Trade our heavy worries for Your light peace.",
-   "Even when life feels stormy, You are our safe place.",
-   "Help us remember whose hands are holding us.",
-   "God, I am giving You my worry about ______.",
-   "Help us remember all the times You came through before."
+   "Querido Dios, no sabemos lo que nos depara el mañana, pero sabemos que Tú nos deparas el mañana.",
+   "Cuando nos preocupemos, recuérdanos que en su lugar oremos.",
+   "Cambia nuestras pesadas preocupaciones por Tu ligera paz.",
+   "Incluso cuando la vida se siente tormentosa, Tú eres nuestro lugar seguro.",
+   "Ayúdanos a recordar de quién son las manos que nos sostienen.",
+   "Dios, te entrego mi preocupación por ______.",
+   "Ayúdanos a recordar todas las veces que Tú pasaste antes."
   ],
-  "togetherLine": "You take care of us — always have, always will! Amen."
+  "togetherLine": "Cuida de nosotros, ¡siempre lo has hecho, siempre lo harás! Amén."
  },
  {
   "day": 36,
-  "theme": "School & Learning",
-  "title": "Help Us Learn",
+  "theme": "Escuela y aprendizaje",
+  "title": "Ayúdanos a aprender",
   "lines": [
-   "Dear God, school and work can be wonderful and hard — sometimes on the same day.",
-   "Bless our teachers and helpers — give them patience and joy.",
-   "Help us listen well and try our best.",
-   "Thank You that we never stop learning, kids and grown-ups alike.",
-   "Most of all, help us learn more about You.",
-   "God, help me with ______ at school or work this week.",
-   "When tests and big days come, give us calm hearts and clear minds."
+   "Querido Dios, la escuela y el trabajo pueden ser maravillosos y difíciles, a veces en el mismo día.",
+   "Bendice a nuestros maestros y ayudantes, dales paciencia y alegría.",
+   "Ayúdanos a escuchar bien y hacer nuestro mejor esfuerzo.",
+   "Gracias porque nunca dejamos de aprender, tanto niños como adultos.",
+   "Sobre todo, ayúdanos a aprender más sobre ti.",
+   "Dios, ayúdame con ______ en la escuela o el trabajo esta semana.",
+   "Cuando lleguen las pruebas y los grandes días, danos corazones tranquilos y mentes claras."
   ],
-  "togetherLine": "All wisdom comes from You! Amen."
+  "togetherLine": "¡Toda sabiduría viene de Ti! Amén."
  },
  {
   "day": 37,
-  "theme": "Friends",
-  "title": "Good Friends, Good Hearts",
+  "theme": "Amigos",
+  "title": "Buenos amigos, buenos corazones",
   "lines": [
-   "Dear God, You gave us friends so we never have to do life alone.",
-   "Bless our friends tonight, at their own houses, with their own families.",
-   "Keep them safe and let them know You love them.",
-   "Help us notice kids who do not have a friend yet.",
-   "Give us courage to be their first one.",
-   "God, thank You for my friend ______.",
-   "Heal any friendships that are hurting right now."
+   "Querido Dios, Tú nos diste amigos para que nunca tengamos que vivir solos.",
+   "Bendice a nuestros amigos esta noche, en sus propias casas, con sus propias familias.",
+   "Mantenlos a salvo y hazles saber que los amas.",
+   "Ayúdanos a notar a los niños que aún no tienen un amigo.",
+   "Danos valor para ser los primeros.",
+   "Dios, gracias por mi amigo ______.",
+   "Sana cualquier amistad que esté sufriendo en este momento."
   ],
-  "togetherLine": "Help us love our friends like You love us! Amen."
+  "togetherLine": "¡Ayúdanos a amar a nuestros amigos como Tú nos amas! Amén."
  },
  {
   "day": 38,
-  "theme": "God's World",
-  "title": "What a World You Made!",
+  "theme": "El mundo de Dios",
+  "title": "¡Qué mundo hiciste!",
   "lines": [
-   "Dear God, the sky has been telling us about You all day.",
-   "Thank You for animals — the fast ones, the fluffy ones, the funny ones.",
-   "You must have smiled when You made them.",
-   "Thank You for making each of us wonderfully, on purpose, one of a kind.",
-   "Help us believe we are Your masterpiece.",
-   "God, my favorite thing You made is ______.",
-   "Help us remember that everything beautiful points back to You."
+   "Querido Dios, el cielo nos ha estado hablando de Ti todo el día.",
+   "Gracias por los animales: los rápidos, los esponjosos, los divertidos.",
+   "Debiste haber sonreído cuando los hiciste.",
+   "Gracias por hacer de cada uno de nosotros maravillosamente, a propósito, único en su especie.",
+   "Ayúdanos a creer que somos tu obra maestra.",
+   "Dios, mi cosa favorita que hiciste es ______.",
+   "Ayúdanos a recordar que todo lo bello apunta a Ti."
   ],
-  "togetherLine": "What a wonderful world You made! Amen."
+  "togetherLine": "¡Qué mundo tan maravilloso hiciste! Amén."
  },
  {
   "day": 39,
-  "theme": "Joy & Praise",
-  "title": "Singing to God",
+  "theme": "Alegría y alabanza",
+  "title": "Cantando a Dios",
   "lines": [
-   "Dear God, our hearts feel like singing — so this prayer is our song.",
-   "You are good all the time — morning, noon, and night.",
-   "Nothing and nobody is greater than You.",
-   "Angels praise You, oceans roar for You, and little kids sing to You.",
-   "We join the big song right now!",
-   "God, You are so ______! We praise You!",
-   "Teach us to praise You in the sunshine and in the rain."
+   "Querido Dios, nuestros corazones tienen ganas de cantar, por eso esta oración es nuestra canción.",
+   "Eres bueno todo el tiempo: mañana, mediodía y noche.",
+   "Nada ni nadie es mayor que Tú.",
+   "Los ángeles te alaban, los océanos rugen por Ti y los niños pequeños te cantan.",
+   "¡Nos sumamos a la gran canción ahora mismo!",
+   "¡Dios, eres tan ______! ¡Te alabamos!",
+   "Enséñanos a alabarte bajo el sol y bajo la lluvia."
   ],
-  "togetherLine": "We praise You, God! Amen."
+  "togetherLine": "¡Te alabamos, Dios! Amén."
  },
  {
   "day": 40,
-  "theme": "Patience",
-  "title": "Patient Hearts",
+  "theme": "paciencia",
+  "title": "Corazones pacientes",
   "lines": [
-   "Dear God, You are never in a hurry, and You are never late.",
-   "Help us be quick to listen, slow to speak, and slow to get angry.",
-   "Put a little pause between our feelings and our words.",
-   "Thank You for being patient with us when we make the same mistake again.",
-   "Help us be that patient with each other.",
-   "God, help me be patient with ______.",
-   "Grow patience in our family like a strong, slow tree."
+   "Querido Dios, Tú nunca tienes prisa y nunca llegas tarde.",
+   "Ayúdanos a ser rápidos para escuchar, lentos para hablar y lentos para enojarnos.",
+   "Poner una pequeña pausa entre nuestros sentimientos y nuestras palabras.",
+   "Gracias por ser paciente con nosotros cuando volvemos a cometer el mismo error.",
+   "Ayúdanos a ser tan pacientes unos con otros.",
+   "Dios, ayúdame a tener paciencia con ______.",
+   "Haga crecer la paciencia en nuestra familia como un árbol fuerte y lento."
   ],
-  "togetherLine": "Grow patience in us, God! Amen."
+  "togetherLine": "¡Haz crecer la paciencia en nosotros, Dios! Amén."
  },
  {
   "day": 41,
-  "theme": "Peace & Rest",
-  "title": "Rest in You",
+  "theme": "Paz y descanso",
+  "title": "Descansa en ti",
   "lines": [
-   "Dear God, You give peace the world cannot give. We would like some, please.",
-   "Take the busy thoughts, the leftover worries, and the big feelings of today.",
-   "We hand them all to You.",
-   "Thank You for Sabbath moments — for naps, slow mornings, and quiet walks.",
-   "Teach our busy family how to truly rest.",
-   "God, I am handing You this busy thought: ______.",
-   "Help our home stay a calm and gentle place this week."
+   "Querido Dios, Tú das la paz que el mundo no puede dar. Nos gustaría alguno, por favor.",
+   "Tomemos como ejemplo los pensamientos ocupados, las preocupaciones restantes y los grandes sentimientos de hoy.",
+   "Te los entregamos todos.",
+   "Gracias por los momentos del sábado: por las siestas, las mañanas tranquilas y los paseos tranquilos.",
+   "Enseñe a nuestra ocupada familia cómo descansar de verdad.",
+   "Dios, te entrego este pensamiento ocupado: ______.",
+   "Ayude a que nuestro hogar siga siendo un lugar tranquilo y apacible esta semana."
   ],
-  "togetherLine": "Your peace guards our hearts! Amen."
+  "togetherLine": "¡Tu paz guarda nuestros corazones! Amén."
  },
  {
   "day": 42,
-  "theme": "Serving & Sharing",
-  "title": "Ready to Serve",
+  "theme": "Servir y compartir",
+  "title": "Listo para servir",
   "lines": [
-   "Dear God, thank You for everyone who served us today, seen and unseen.",
-   "Show us the people around us who need a hand.",
-   "Neighbors, classmates, grandparents, strangers — anyone You choose.",
-   "Even small hands can do big things with You.",
-   "Use our little gifts to make someone's day better.",
-   "God, I could help ______ this week.",
-   "Help us serve the people in this family first and best."
+   "Querido Dios, gracias por todos los que nos sirvieron hoy, visibles e invisibles.",
+   "Muéstranos a las personas que nos rodean que necesitan una mano.",
+   "Vecinos, compañeros de clase, abuelos, extraños, cualquiera que elijas.",
+   "Incluso las manos pequeñas pueden hacer grandes cosas contigo.",
+   "Utilice nuestros pequeños obsequios para mejorar el día de alguien.",
+   "Dios, podría ayudar a ______ esta semana.",
+   "Ayúdanos a servir a las personas de esta familia primero y mejor."
   ],
-  "togetherLine": "Our hands are Yours! Amen."
+  "togetherLine": "¡Nuestras manos son tuyas! Amén."
  },
  {
   "day": 43,
-  "theme": "Gratitude",
-  "title": "A Thank-You Prayer",
+  "theme": "Gratitud",
+  "title": "Una oración de agradecimiento",
   "lines": [
-   "Thank You, God, for being so good to our family.",
-   "Thank You for our home, our food, and the people sitting beside us.",
-   "Thank You for the little things too — warm blankets, funny jokes, and good books.",
-   "You give us everything we have: every breath, every meal, every hug.",
-   "Help us notice Your gifts all day long, even the tiny ones.",
-   "Thank You, God, for making ______, which makes me smile.",
-   "Teach us to say thank You first, before we ask for more."
+   "Gracias Dios por ser tan bueno con nuestra familia.",
+   "Gracias por nuestro hogar, nuestra comida y las personas sentadas a nuestro lado.",
+   "Gracias también por las pequeñas cosas: mantas cálidas, chistes divertidos y buenos libros.",
+   "Nos das todo lo que tenemos: cada respiro, cada comida, cada abrazo.",
+   "Ayúdanos a notar Tus regalos durante todo el día, incluso los más pequeños.",
+   "Gracias, Dios, por hacer ______, lo que me hace sonreír.",
+   "Enséñanos a decir gracias primero, antes de pedir más."
   ],
-  "togetherLine": "Thank You, God, for everything! Amen."
+  "togetherLine": "¡Gracias Dios por todo! Amén."
  },
  {
   "day": 44,
-  "theme": "Family",
-  "title": "A Prayer for Our Family",
+  "theme": "familia",
+  "title": "Una oración por nuestra familia",
   "lines": [
-   "Thank You, God, for giving us each other.",
-   "Help us to be patient with each other, even on grumpy days.",
-   "Make our home a place full of kind words and big laughs.",
-   "When we argue, help us make up quickly.",
-   "Teach us to say \"I'm sorry\" and \"I forgive you\" like we really mean it.",
-   "God, please help our family with ______.",
-   "Show each of us one way to help this family tomorrow."
+   "Gracias Dios por darnos unos a otros.",
+   "Ayúdanos a ser pacientes unos con otros, incluso en los días de mal humor.",
+   "Haz de nuestro hogar un lugar lleno de palabras amables y grandes risas.",
+   "Cuando discutimos, ayúdanos a hacer las paces rápidamente.",
+   "Enséñanos a decir \"lo siento\" y \"te perdono\" como lo decimos en serio.",
+   "Dios, por favor ayuda a nuestra familia con ______.",
+   "Muéstranos a cada uno de nosotros una forma de ayudar a esta familia mañana."
   ],
-  "togetherLine": "As for our family, we will serve the Lord! Amen."
+  "togetherLine": "En cuanto a nuestra familia, ¡serviremos al Señor! Amén."
  },
  {
   "day": 45,
-  "theme": "Forgiveness",
-  "title": "A Fresh-Start Prayer",
+  "theme": "perdon",
+  "title": "Una oración para empezar de nuevo",
   "lines": [
-   "God of fresh starts, here we are again, and You are glad to see us.",
-   "We are sorry for the unkind words and the selfish moments.",
-   "Thank You for never turning us away when we say sorry.",
-   "You throw our sins as far as the east is from the west.",
-   "Help us believe we are really, truly forgiven.",
-   "God, help me forgive ______ the way You forgive me.",
-   "Help us wake up tomorrow with clean hearts and no grudges."
+   "Dios de los nuevos comienzos, aquí estamos de nuevo y estás contento de vernos.",
+   "Lamentamos las palabras desagradables y los momentos egoístas.",
+   "Gracias por nunca rechazarnos cuando pedimos perdón.",
+   "Arrojas nuestros pecados tan lejos como está el oriente del occidente.",
+   "Ayúdanos a creer que estamos realmente perdonados.",
+   "Dios, ayúdame a perdonar ______ como Tú me perdonas.",
+   "Ayúdanos a despertar mañana con el corazón limpio y sin rencores."
   ],
-  "togetherLine": "Thank You, God, for fresh starts! Amen."
+  "togetherLine": "¡Gracias Dios por empezar de nuevo! Amén."
  },
  {
   "day": 46,
-  "theme": "Courage",
-  "title": "A Brave-Heart Prayer",
+  "theme": "Coraje",
+  "title": "Una oración de corazón valiente",
   "lines": [
-   "God, You hold our hands when the path feels dark. Thank You.",
-   "When we feel small, remind us how big You are.",
-   "When we feel alone, remind us You never leave.",
-   "You were with David facing the giant and Daniel in the lions' den.",
-   "You are the very same God with us today.",
-   "God, I feel nervous about ______. Hold my hand through it.",
-   "Make each of us brave in the small moments, not just the big ones."
+   "Dios, Tú tomas nuestras manos cuando el camino se siente oscuro. Gracias.",
+   "Cuando nos sintamos pequeños, recuérdanos lo grande que eres.",
+   "Cuando nos sintamos solos, recuérdanos que nunca te vas.",
+   "Estabas con David frente al gigante y con Daniel en el foso de los leones.",
+   "Tú eres el mismo Dios con nosotros hoy.",
+   "Dios, me siento nervioso por ______. Pasa mi mano a través de él.",
+   "Haz que cada uno de nosotros sea valiente en los pequeños momentos, no sólo en los grandes."
   ],
-  "togetherLine": "Be strong and courageous — God is with us! Amen."
+  "togetherLine": "Sé fuerte y valiente: ¡Dios está con nosotros! Amén."
  },
  {
   "day": 47,
-  "theme": "Kindness",
-  "title": "A Kind-Heart Prayer",
+  "theme": "Amabilidad",
+  "title": "Una oración de buen corazón",
   "lines": [
-   "God of kindness, fill us up so kindness spills out of us.",
-   "Give us eyes that notice when someone is sad or left out.",
-   "Give us feet that walk over and hearts that care.",
-   "Help our words be sweet like honey, not sharp like sticks.",
-   "Help us build people up, never tear them down.",
-   "God, thank You for the kindness ______ showed me.",
-   "Make us gentle with the people in our own house most of all."
+   "Dios de bondad, llénanos para que la bondad se derrame fuera de nosotros.",
+   "Danos ojos que noten cuando alguien está triste o excluido.",
+   "Danos pies que caminen y corazones que se preocupen.",
+   "Ayuda a que nuestras palabras sean dulces como la miel, no afiladas como palos.",
+   "Ayúdanos a edificar a las personas, nunca a derribarlas.",
+   "Dios, gracias por la bondad que ______ me mostró.",
+   "Haznos amables con la gente de nuestra propia casa sobre todo."
   ],
-  "togetherLine": "Be kind to one another — starting with us! Amen."
+  "togetherLine": "Sean amables unos con otros, ¡comenzando por nosotros! Amén."
  },
  {
   "day": 48,
-  "theme": "Those in Need",
-  "title": "A Prayer for Others",
+  "theme": "Los necesitados",
+  "title": "Una oración por los demás",
   "lines": [
    "God, You hear every cry in every country. Hear our prayer for others now.",
    "We pray for kids who are hungry, lonely, or scared tonight.",
@@ -717,7 +717,7 @@
    "God, please help the people who are ______.",
    "Make our family generous with what we have, because You shared first."
   ],
-  "togetherLine": "Make us helpers, God! Amen."
+  "togetherLine": "¡Haznos ayudantes, Dios! Amén."
  },
  {
   "day": 49,
