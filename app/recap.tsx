@@ -9,6 +9,7 @@ import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
+import { useTranslation } from '@/i18n/context';
 import { buildShareRecapMessage } from '@/lib/share-recap';
 import { todayISO } from '@/lib/dates';
 import { weekKeyForDate } from '@/lib/week-key';
@@ -22,6 +23,7 @@ import { useSettings } from '@/store/settings';
 /** Weekly recap — readings, themes, journal, answered prayers, share & print. */
 export default function RecapScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const familyName = useSettings((s) => s.familyName);
   const planStartDate = useSettings((s) => s.planStartDate);
@@ -44,13 +46,13 @@ export default function RecapScreen() {
       sundayNote,
       answeredPrayers: prayerRequests,
     });
-    await Share.share({ message, title: 'Our week in the Word' });
+    await Share.share({ message, title: t('recap.shareTitle') });
   };
 
   const shareWeeklySheet = async () => {
     if (!recap) return;
     const message = buildWeeklySheetText({ familyName, recap, sundayNote });
-    await Share.share({ message, title: 'Weekly family sheet' });
+    await Share.share({ message, title: t('recap.sheetTitle') });
   };
 
   const printWeeklySheet = async () => {
@@ -62,7 +64,7 @@ export default function RecapScreen() {
   return (
     <Screen contentStyle={{ paddingTop: insets.top + theme.spacing.lg }}>
       <AppText variant="heading" semiBold accessibilityRole="header">
-        Weekly recap
+        {t('recap.title')}
       </AppText>
       {recap ? (
         <>
@@ -71,11 +73,11 @@ export default function RecapScreen() {
           </AppText>
 
           <View style={{ flexDirection: 'row', gap: theme.spacing.sm, marginTop: theme.spacing.md, flexWrap: 'wrap' }}>
-            <AppButton label="Share with family" icon="share-outline" onPress={shareWithFamily} style={{ flex: 1, minWidth: 140 }} />
-            <AppButton label="Print weekly sheet" icon="print-outline" variant="secondary" onPress={printWeeklySheet} style={{ flex: 1, minWidth: 140 }} />
+            <AppButton label={t('common.shareWithFamily')} icon="share-outline" onPress={shareWithFamily} style={{ flex: 1, minWidth: 140 }} />
+            <AppButton label={t('common.printWeeklySheet')} icon="print-outline" variant="secondary" onPress={printWeeklySheet} style={{ flex: 1, minWidth: 140 }} />
           </View>
           <AppButton
-            label="Share text sheet"
+            label={t('common.shareTextSheet')}
             icon="document-text-outline"
             variant="ghost"
             onPress={shareWeeklySheet}
@@ -84,24 +86,27 @@ export default function RecapScreen() {
 
           <Card style={{ marginTop: theme.spacing.lg }}>
             <AppText variant="body" semiBold>
-              {recap.journalCount} journal entries · {recap.answeredPrayerCount} answered prayers
+              {t('common.journalRecapCount', {
+                journal: recap.journalCount,
+                prayers: recap.answeredPrayerCount,
+              })}
             </AppText>
             <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.xs }}>
-              Themes: {recap.themes.join(', ')}
+              {t('common.recapThemes', { themes: recap.themes.join(', ') })}
             </AppText>
             {sundayNote ? (
               <AppText variant="small" italic style={{ marginTop: theme.spacing.sm }}>
-                From church: {sundayNote}
+                {t('common.fromChurch', { note: sundayNote })}
               </AppText>
             ) : null}
           </Card>
 
-          <SectionLabel>This week’s readings</SectionLabel>
+          <SectionLabel>{t('recap.thisWeekReadings')}</SectionLabel>
           <View style={{ gap: theme.spacing.sm }}>
             {recap.days.map((d) => (
               <Card key={d.day}>
                 <AppText variant="small" semiBold scaled={false} color={theme.colors.goldDeep}>
-                  {d.dateLabel} · Day {d.day}
+                  {d.dateLabel} · {t('common.dayLabel', { day: d.day })}
                 </AppText>
                 <AppText variant="body" style={{ marginTop: 2 }}>
                   {d.references}
@@ -111,7 +116,7 @@ export default function RecapScreen() {
                 </AppText>
                 {d.journalNote ? (
                   <AppText variant="small" italic style={{ marginTop: theme.spacing.sm }}>
-                    Journal: {d.journalNote}
+                    {t('common.journalPrefix', { note: d.journalNote })}
                   </AppText>
                 ) : null}
               </Card>
@@ -120,12 +125,12 @@ export default function RecapScreen() {
         </>
       ) : (
         <AppText variant="body" style={{ marginTop: theme.spacing.lg }}>
-          Set a plan start date in Settings to see your weekly recap.
+          {t('recap.noPlanStart')}
         </AppText>
       )}
 
       <AppButton
-        label="Back to Today"
+        label={t('common.backToToday')}
         variant="secondary"
         onPress={() => router.back()}
         style={{ marginTop: theme.spacing.xl }}

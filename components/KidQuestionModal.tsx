@@ -3,6 +3,7 @@ import { Modal, TextInput, View } from 'react-native';
 
 import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
+import { useTranslation } from '@/i18n/context';
 import { useTheme } from '@/lib/theme-context';
 import { validateKidQuestion } from '@/store/kid-questions';
 
@@ -19,6 +20,7 @@ export function KidQuestionModal({
   onSave: (question: string) => void;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [question, setQuestion] = useState('');
   const [error, setError] = useState<string | null>(null);
 
@@ -52,22 +54,22 @@ export function KidQuestionModal({
           }}
         >
           <AppText variant="heading" semiBold accessibilityRole="header">
-            Log a question
+            {t('journal.logQuestionTitle')}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.xs }}>
-            Day {day} — save what a child wondered so you can revisit it later.
+            {t('journal.logQuestionSubtitle', { day })}
           </AppText>
           <TextInput
             value={question}
-            onChangeText={(t) => {
-              setQuestion(t);
+            onChangeText={(text) => {
+              setQuestion(text);
               setError(null);
             }}
-            placeholder="What did someone ask?"
+            placeholder={t('journal.logQuestionPlaceholder')}
             placeholderTextColor={theme.colors.textMuted}
             multiline
             autoFocus
-            accessibilityLabel="Kid question"
+            accessibilityLabel={t('common.kidQuestionA11y')}
             style={{
               minHeight: 88,
               marginTop: theme.spacing.md,
@@ -87,8 +89,8 @@ export function KidQuestionModal({
             </AppText>
           ) : null}
           <View style={{ flexDirection: 'row', gap: theme.spacing.sm, marginTop: theme.spacing.md }}>
-            <AppButton label="Cancel" variant="secondary" onPress={onClose} style={{ flex: 1 }} />
-            <AppButton label="Save question" onPress={save} style={{ flex: 1 }} />
+            <AppButton label={t('common.cancel')} variant="secondary" onPress={onClose} style={{ flex: 1 }} />
+            <AppButton label={t('common.saveQuestion')} onPress={save} style={{ flex: 1 }} />
           </View>
         </View>
       </View>

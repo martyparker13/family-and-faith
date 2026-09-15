@@ -8,12 +8,14 @@ import { Card } from '@/components/Card';
 import { EmptyState } from '@/components/EmptyState';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
+import { useTranslation } from '@/i18n/context';
 import { useTheme } from '@/lib/theme-context';
 import { useKidQuestions } from '@/store/kid-questions';
 
 /** List of kid questions captured during reading and devotional time. */
 export default function KidQuestionsScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const questions = useKidQuestions((s) => s.questions);
   const removeQuestion = useKidQuestions((s) => s.removeQuestion);
 
@@ -21,14 +23,14 @@ export default function KidQuestionsScreen() {
 
   return (
     <Screen>
-      <Stack.Screen options={{ title: 'Kid Questions' }} />
+      <Stack.Screen options={{ title: t('navigation.kidQuestions') }} />
 
-      <SectionLabel>Questions we wondered about</SectionLabel>
+      <SectionLabel>{t('kidQuestions.section')}</SectionLabel>
       {sorted.length === 0 ? (
         <EmptyState
           icon="help-circle-outline"
-          title="No questions yet"
-          message='Tap "Log a question" on a reading or devotional screen when a child wonders aloud.'
+          title={t('kidQuestions.emptyTitle')}
+          message={t('kidQuestions.emptyMessage')}
         />
       ) : (
         <View style={{ gap: theme.spacing.md }}>
@@ -37,7 +39,7 @@ export default function KidQuestionsScreen() {
               <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                 <View style={{ flex: 1 }}>
                   <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-                    DAY {q.day} · {q.dateISO}
+                    {t('common.dayQuestion', { day: q.day, date: q.dateISO })}
                   </AppText>
                   <AppText variant="bodyLarge" style={{ marginTop: theme.spacing.xs }}>
                     {q.question}
@@ -46,7 +48,7 @@ export default function KidQuestionsScreen() {
                 <Pressable
                   onPress={() => removeQuestion(q.id)}
                   accessibilityRole="button"
-                  accessibilityLabel="Delete question"
+                  accessibilityLabel={t('common.deleteQuestion')}
                   hitSlop={10}
                 >
                   <Ionicons name="trash-outline" size={18} color={theme.colors.textMuted} />

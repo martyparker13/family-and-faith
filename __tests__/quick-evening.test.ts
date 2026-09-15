@@ -1,4 +1,5 @@
-import { buildQuickEvening, pickQuickEveningQuestion, QUICK_EVENING_GENTLE_NOTE } from '@/lib/quick-evening';
+import { t } from '@/i18n/index';
+import { buildQuickEvening, pickQuickEveningQuestion } from '@/lib/quick-evening';
 import { getDevotional } from '@/lib/content';
 
 describe('pickQuickEveningQuestion', () => {
@@ -24,7 +25,7 @@ describe('buildQuickEvening', () => {
     expect(content.prayerLines.length).toBeGreaterThanOrEqual(1);
     expect(content.prayerLines.length).toBeLessThanOrEqual(3);
     expect(content.togetherLine.length).toBeGreaterThan(5);
-    expect(content.gentleNote).toBe(QUICK_EVENING_GENTLE_NOTE);
+    expect(content.gentleNote).toBe(t('quickEvening.gentleNote'));
   });
 
   it('does not mark reading — content has no reading completion fields', () => {

@@ -24,6 +24,7 @@ import { useCelebration } from '@/store/celebration';
 import { useProgress } from '@/store/progress';
 import { useSettings } from '@/store/settings';
 import { useKidQuestions } from '@/store/kid-questions';
+import { useTranslation } from '@/i18n/context';
 
 /**
  * Daily Devotional — age-aware questions, family challenge tracking,
@@ -31,6 +32,7 @@ import { useKidQuestions } from '@/store/kid-questions';
  */
 export default function DevotionalScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ day: string }>();
   const day = Math.min(365, Math.max(1, parseInt(params.day ?? '1', 10) || 1));
   const devotional = getDevotional(day);
@@ -56,7 +58,7 @@ export default function DevotionalScreen() {
       if (captureNote.trim()) {
         setFamilyChallengeNote(day, { note: captureNote.trim() });
       }
-      fire({ message: '⭐ Family challenge complete!', size: 'small' });
+      fire({ message: t('celebrations.familyChallenge'), size: 'small' });
       celebrationHaptics('small');
     }
   };
@@ -82,7 +84,7 @@ export default function DevotionalScreen() {
       <ParentTipBanner screen="devotional" day={day} />
 
       <AppButton
-        label="Short on time? 5-minute moment"
+        label={t('common.shortOnTimeButton')}
         icon="timer-outline"
         variant="ghost"
         onPress={() => router.push(`/quick-evening?day=${day}`)}
@@ -108,7 +110,7 @@ export default function DevotionalScreen() {
           color={theme.colors.goldDeep}
           style={{ marginTop: theme.spacing.sm }}
         >
-          — {devotional.scripture.reference} (WEB)
+          — {devotional.scripture.reference} {t('common.webShort')}
         </AppText>
       </Card>
 
@@ -130,11 +132,11 @@ export default function DevotionalScreen() {
           marginTop: theme.spacing.lg,
         }}
       >
-        <SectionLabel color={theme.colors.clay}>Talk about it together</SectionLabel>
+        <SectionLabel color={theme.colors.clay}>{t('devotional.talkTogether')}</SectionLabel>
         {children.length > 0 ? (
           <Pressable onPress={() => setShowAll((v) => !v)} accessibilityRole="button">
             <AppText variant="small" semiBold color={theme.colors.goldDeep}>
-              {showAll ? 'Match ages' : 'Show all'}
+              {showAll ? t('common.matchAges') : t('common.showAll')}
             </AppText>
           </Pressable>
         ) : null}
@@ -144,9 +146,9 @@ export default function DevotionalScreen() {
         {littleQs.map((q, i) => (
           <ExpandableCard
             key={`little-${i}`}
-            eyebrow="For Little Ones"
+            eyebrow={t('devotional.forLittleOnes')}
             eyebrowColor={theme.colors.green}
-            title={`Question ${i + 1}`}
+            title={t('common.question', { number: i + 1 })}
           >
             <AppText variant="bodyLarge">{q.question}</AppText>
           </ExpandableCard>
@@ -154,16 +156,16 @@ export default function DevotionalScreen() {
         {olderQs.map((q, i) => (
           <ExpandableCard
             key={`older-${i}`}
-            eyebrow="For Older Kids & Parents"
+            eyebrow={t('devotional.forOlderKidsParents')}
             eyebrowColor={theme.colors.blue}
-            title={`Question ${littleQs.length + i + 1}`}
+            title={t('common.question', { number: littleQs.length + i + 1 })}
           >
             <AppText variant="bodyLarge">{q.question}</AppText>
           </ExpandableCard>
         ))}
       </View>
 
-      <SectionLabel color={theme.colors.goldDeep}>Family challenge</SectionLabel>
+      <SectionLabel color={theme.colors.goldDeep}>{t('devotional.familyChallenge')}</SectionLabel>
       <Card accent={theme.colors.gold}>
         <View style={{ flexDirection: 'row', gap: theme.spacing.md, alignItems: 'flex-start' }}>
           <Ionicons name="star" size={24} color={theme.colors.gold} />
@@ -176,10 +178,10 @@ export default function DevotionalScreen() {
             <TextInput
               value={captureNote}
               onChangeText={setCaptureNote}
-              placeholder="Optional: how did it go?"
+              placeholder={t('devotional.challengePlaceholder')}
               placeholderTextColor={theme.colors.textMuted}
               multiline
-              accessibilityLabel="Family challenge note"
+              accessibilityLabel={t('common.familyChallengeNoteA11y')}
               style={{
                 marginTop: theme.spacing.md,
                 minHeight: 56,
@@ -194,7 +196,7 @@ export default function DevotionalScreen() {
               }}
             />
             <AppButton
-              label="Add a photo"
+              label={t('common.addPhoto')}
               icon="camera-outline"
               variant="ghost"
               onPress={pickPhoto}
@@ -211,7 +213,7 @@ export default function DevotionalScreen() {
               borderRadius: theme.radius.md,
               marginTop: theme.spacing.md,
             }}
-            accessibilityLabel="Family challenge photo"
+            accessibilityLabel={t('common.familyChallengePhotoA11y')}
           />
         ) : null}
         {challengeDone && challengeNote?.note ? (
@@ -220,7 +222,7 @@ export default function DevotionalScreen() {
           </AppText>
         ) : null}
         <AppButton
-          label={challengeDone ? 'Challenge done! (tap to undo)' : 'We did the challenge!'}
+          label={challengeDone ? t('common.challengeDoneUndo') : t('common.weDidChallenge')}
           icon={challengeDone ? 'checkmark-circle' : 'star-outline'}
           variant={challengeDone ? 'secondary' : 'primary'}
           onPress={onChallengeDone}
@@ -232,14 +234,14 @@ export default function DevotionalScreen() {
         <CompleteActivityButton activity="devotional" day={day} />
       </View>
       <AppButton
-        label="Log a question"
+        label={t('common.logQuestion')}
         icon="help-circle-outline"
         variant="ghost"
         onPress={() => setQuestionModalVisible(true)}
         style={{ marginTop: theme.spacing.md }}
       />
       <AppButton
-        label="Write in our family journal"
+        label={t('common.writeJournal')}
         icon="create-outline"
         variant="ghost"
         onPress={() => router.push(`/journal?day=${day}`)}

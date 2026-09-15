@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { AppButton } from './AppButton';
+import { useTranslation } from '@/i18n/context';
 import {
   celebrationFor,
   celebrationHaptics,
@@ -11,18 +12,13 @@ import { todayISO } from '@/lib/dates';
 import { useCelebration } from '@/store/celebration';
 import { useProgress, type Activity } from '@/store/progress';
 
-const LABELS: Record<Activity, { todo: string; done: string }> = {
-  reading: { todo: 'Mark reading as complete', done: 'Reading completed — tap to undo' },
-  devotional: { todo: 'We talked about it!', done: 'Devotional completed — tap to undo' },
-  prayer: { todo: 'We prayed together!', done: 'Prayer completed — tap to undo' },
-};
-
 /**
  * Mark-as-complete button for a daily activity. Completing triggers haptics
  * and a confetti burst — bigger when it finishes all three activities for
  * the day or hits a streak milestone.
  */
 export function CompleteActivityButton({ activity, day }: { activity: Activity; day: number }) {
+  const { t } = useTranslation();
   const progress = useProgress();
   const recordKey =
     activity === 'reading'
@@ -32,6 +28,12 @@ export function CompleteActivityButton({ activity, day }: { activity: Activity; 
         : 'prayerDays';
   const done = Boolean(progress[recordKey][day]);
   const fire = useCelebration((s) => s.fire);
+
+  const labelKeys: Record<Activity, { todo: string; done: string }> = {
+    reading: { todo: 'common.markReadingComplete', done: 'common.readingCompleted' },
+    devotional: { todo: 'common.markDevotionalComplete', done: 'common.devotionalCompleted' },
+    prayer: { todo: 'common.markPrayerComplete', done: 'common.prayerCompleted' },
+  };
 
   const toggle = () => {
     const today = todayISO();
@@ -52,11 +54,11 @@ export function CompleteActivityButton({ activity, day }: { activity: Activity; 
 
   return (
     <AppButton
-      label={done ? LABELS[activity].done : LABELS[activity].todo}
+      label={done ? t(labelKeys[activity].done) : t(labelKeys[activity].todo)}
       icon={done ? 'checkmark-circle' : 'ellipse-outline'}
       variant={done ? 'secondary' : 'primary'}
       onPress={toggle}
-      accessibilityHint="Tracks this in your family's daily progress"
+      accessibilityHint={t('common.completeActivityHint')}
     />
   );
 }

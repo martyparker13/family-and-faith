@@ -8,6 +8,7 @@ import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
+import { useTranslation } from '@/i18n/context';
 import { guidanceCategories, guidanceTopics } from '@/lib/content';
 import { searchGuidance } from '@/lib/guidance-search';
 import { useTheme } from '@/lib/theme-context';
@@ -39,6 +40,7 @@ const CATEGORY_ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
  */
 export default function GuidanceScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [query, setQuery] = useState('');
 
@@ -48,13 +50,12 @@ export default function GuidanceScreen() {
   return (
     <Screen contentStyle={{ paddingTop: insets.top + theme.spacing.lg }}>
       <AppText variant="heading" semiBold accessibilityRole="header">
-        Scripture Guidance
+        {t('guidance.title')}
       </AppText>
       <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-        Whatever your family is facing, God’s word has something to say.
+        {t('guidance.subtitle')}
       </AppText>
 
-      {/* Search box */}
       <View
         style={{
           flexDirection: 'row',
@@ -73,10 +74,10 @@ export default function GuidanceScreen() {
         <TextInput
           value={query}
           onChangeText={setQuery}
-          placeholder='Try "my kids keep fighting"…'
+          placeholder={t('guidance.searchPlaceholder')}
           placeholderTextColor={theme.colors.textMuted}
-          accessibilityLabel="Search for guidance"
-          accessibilityHint="Describe a situation in your own words"
+          accessibilityLabel={t('common.searchGuidanceA11y')}
+          accessibilityHint={t('common.searchGuidanceHint')}
           autoCorrect={false}
           style={{
             flex: 1,
@@ -87,7 +88,7 @@ export default function GuidanceScreen() {
           }}
         />
         {query.length > 0 && (
-          <Pressable onPress={() => setQuery('')} accessibilityLabel="Clear search" hitSlop={10}>
+          <Pressable onPress={() => setQuery('')} accessibilityLabel={t('common.clearSearch')} hitSlop={10}>
             <Ionicons name="close-circle" size={22} color={theme.colors.textMuted} />
           </Pressable>
         )}
@@ -96,12 +97,11 @@ export default function GuidanceScreen() {
       {searching ? (
         <>
           <SectionLabel>
-            {matches.length > 0 ? 'Where God meets you' : 'No matches found'}
+            {matches.length > 0 ? t('guidance.matchesFound') : t('guidance.noMatches')}
           </SectionLabel>
           {matches.length === 0 ? (
             <AppText variant="body" color={theme.colors.textMuted}>
-              Try different words — or browse the topics below. Every topic is full of scripture
-              for real life.
+              {t('guidance.noMatchesBody')}
             </AppText>
           ) : (
             <View style={{ gap: theme.spacing.md }}>
@@ -111,7 +111,7 @@ export default function GuidanceScreen() {
                   accent={theme.colors.gold}
                   onPress={() => router.push(`/guidance/${topic.id}`)}
                   accessibilityLabel={topic.name}
-                  accessibilityHint="Opens scripture and encouragement for this topic"
+                  accessibilityHint={t('common.opensTopicA11y')}
                 >
                   <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
                     {topic.category.toUpperCase()}
@@ -134,7 +134,7 @@ export default function GuidanceScreen() {
         </>
       ) : (
         <>
-          <SectionLabel>Browse topics</SectionLabel>
+          <SectionLabel>{t('guidance.browseTopics')}</SectionLabel>
           {guidanceCategories.map((category) => (
             <View key={category} style={{ marginBottom: theme.spacing.lg }}>
               <View
@@ -156,7 +156,7 @@ export default function GuidanceScreen() {
               </View>
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm }}>
                 {guidanceTopics
-                  .filter((t) => t.category === category)
+                  .filter((topic) => topic.category === category)
                   .map((topic) => (
                     <Pressable
                       key={topic.id}

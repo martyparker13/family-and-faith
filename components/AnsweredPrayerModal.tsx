@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, Modal, Platform, Pressable, TextInput, View } fro
 
 import { AppButton } from './AppButton';
 import { AppText } from './AppText';
+import { useTranslation } from '@/i18n/context';
 import { useTheme } from '@/lib/theme-context';
 
 interface AnsweredPrayerModalProps {
@@ -22,6 +23,7 @@ export function AnsweredPrayerModal({
   onCancel,
 }: AnsweredPrayerModalProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [note, setNote] = useState('');
 
   const confirm = () => {
@@ -37,7 +39,7 @@ export function AnsweredPrayerModal({
     <Modal visible={requestTitle !== null} transparent animationType="fade" onRequestClose={cancel}>
       <Pressable
         onPress={cancel}
-        accessibilityLabel="Close"
+        accessibilityLabel={t('common.close')}
         style={{
           flex: 1,
           backgroundColor: theme.colors.scrim,
@@ -58,7 +60,7 @@ export function AnsweredPrayerModal({
             }}
           >
             <AppText variant="title" semiBold center>
-              Answered! 🙌
+              {t('prayerList.answeredModalTitle')}
             </AppText>
             <AppText
               variant="body"
@@ -66,15 +68,15 @@ export function AnsweredPrayerModal({
               color={theme.colors.textMuted}
               style={{ marginTop: theme.spacing.xs }}
             >
-              {`How did God answer "${requestTitle ?? ''}"? (optional)`}
+              {t('common.answeredOptional', { title: requestTitle ?? '' })}
             </AppText>
             <TextInput
               value={note}
               onChangeText={setNote}
-              placeholder="Tell the story in a sentence…"
+              placeholder={t('prayerList.answeredPlaceholder')}
               placeholderTextColor={theme.colors.textMuted}
               multiline
-              accessibilityLabel="How God answered, optional"
+              accessibilityLabel={t('common.howGodAnsweredA11y')}
               style={{
                 marginTop: theme.spacing.lg,
                 minHeight: 72,
@@ -90,8 +92,8 @@ export function AnsweredPrayerModal({
               }}
             />
             <View style={{ gap: theme.spacing.sm, marginTop: theme.spacing.lg }}>
-              <AppButton label="Mark as answered" icon="sparkles" onPress={confirm} />
-              <AppButton label="Not yet" variant="ghost" onPress={cancel} />
+              <AppButton label={t('common.markAsAnswered')} icon="sparkles" onPress={confirm} />
+              <AppButton label={t('common.notYet')} variant="ghost" onPress={cancel} />
             </View>
           </Pressable>
         </KeyboardAvoidingView>

@@ -34,6 +34,8 @@ const baseStores = {
     vacationMode: { active: false },
     sundayNotes: {},
     dismissedDisciplingTips: [],
+    language: 'device' as const,
+    setLanguage: () => {},
     setVacationMode: () => {},
     resumeFromVacation: () => {},
     setSundayNote: () => {},

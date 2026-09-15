@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { LayoutAnimation, Platform, Pressable, UIManager, View } from 'react-native';
 
 import { AppText } from '@/components/AppText';
+import { useTranslation } from '@/i18n/context';
 import type { ParentNotes } from '@/lib/content';
 import { parentNotesForDisplay } from '@/lib/parent-notes';
 import { useTheme } from '@/lib/theme-context';
@@ -12,12 +13,19 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
+const BAND_LABEL_KEYS = {
+  little: 'ageBands.parentNoteLittle',
+  older: 'ageBands.parentNoteOlder',
+  teen: 'ageBands.parentNoteTeen',
+} as const;
+
 /**
  * Collapsible guidance for sensitive readings — age-band aware using
  * configured children, with optional "Show all ages" toggle.
  */
 export function ParentNoteBanner({ parentNotes }: { parentNotes: ParentNotes }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const children = useSettings((s) => s.children);
   const [open, setOpen] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -43,7 +51,7 @@ export function ParentNoteBanner({ parentNotes }: { parentNotes: ParentNotes }) 
       <Pressable
         onPress={toggleOpen}
         accessibilityRole="button"
-        accessibilityLabel="Parent note for today's reading"
+        accessibilityLabel={t('common.parentNoteToday')}
         accessibilityState={{ expanded: open }}
         style={({ pressed }) => ({
           flexDirection: 'row',
@@ -56,7 +64,7 @@ export function ParentNoteBanner({ parentNotes }: { parentNotes: ParentNotes }) 
         <Ionicons name="shield-checkmark-outline" size={20} color={theme.colors.clay} />
         <View style={{ flex: 1 }}>
           <AppText variant="caption" bold scaled={false} color={theme.colors.clay}>
-            PARENT NOTE · {parentNotes.trigger.toUpperCase()}
+            {t('common.parentNoteTrigger', { trigger: parentNotes.trigger.toUpperCase() })}
           </AppText>
           {!open ? (
             <AppText variant="small" color={theme.colors.textMuted} numberOfLines={1}>
@@ -80,14 +88,14 @@ export function ParentNoteBanner({ parentNotes }: { parentNotes: ParentNotes }) 
               style={{ alignSelf: 'flex-end', marginBottom: theme.spacing.sm }}
             >
               <AppText variant="small" semiBold color={theme.colors.goldDeep}>
-                {showAll ? 'Match ages' : 'Show all ages'}
+                {showAll ? t('common.matchAges') : t('common.showAllAges')}
               </AppText>
             </Pressable>
           ) : null}
           {displays.map((item) => (
             <View key={item.band} style={{ marginTop: theme.spacing.sm }}>
               <AppText variant="caption" semiBold scaled={false} color={theme.colors.goldDeep}>
-                {item.label}
+                {t(BAND_LABEL_KEYS[item.band])}
               </AppText>
               <AppText variant="body" style={{ marginTop: 4 }}>
                 {item.text}
