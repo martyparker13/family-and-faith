@@ -4,6 +4,7 @@ import { View } from 'react-native';
 
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
+import { useTranslation } from '@/i18n/context';
 import { celebrationHaptics } from '@/lib/celebrate';
 import { latestBookCompletion } from '@/lib/book-milestones';
 import { todayISO } from '@/lib/dates';
@@ -14,6 +15,7 @@ import { useProgress } from '@/store/progress';
 /** Celebrates the most recent uncelebrated Bible book completion. */
 export function BookMilestoneBadge() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const completedDays = useProgress((s) => s.completedDays);
   const celebratedBookMilestones = useProgress((s) => s.celebratedBookMilestones);
   const recordBookCelebration = useProgress((s) => s.recordBookCelebration);
@@ -25,10 +27,10 @@ export function BookMilestoneBadge() {
 
   useEffect(() => {
     if (!latestBook || latestDay === undefined) return;
-    fire({ message: `📖 Finished ${latestBook}!`, size: 'big' });
+    fire({ message: t('common.bookFinishedCelebration', { book: latestBook }), size: 'big' });
     celebrationHaptics('big');
     recordBookCelebration(latestBook, todayISO());
-  }, [latestBook, latestDay, fire, recordBookCelebration]);
+  }, [latestBook, latestDay, fire, recordBookCelebration, t]);
 
   if (!latest) return null;
 
@@ -38,13 +40,13 @@ export function BookMilestoneBadge() {
         <Ionicons name="ribbon" size={28} color={theme.colors.green} />
         <View style={{ flex: 1 }}>
           <AppText variant="caption" bold scaled={false} color={theme.colors.green}>
-            BOOK COMPLETE
+            {t('reading.bookComplete')}
           </AppText>
           <AppText variant="title" semiBold style={{ marginTop: 2 }}>
-            You finished {latest.book}!
+            {t('common.bookCompleteBadge', { book: latest.book })}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted}>
-            Day {latest.day} — another milestone on your Bible journey.
+            {t('common.bookCompleteMilestone', { day: latest.day })}
           </AppText>
         </View>
       </View>

@@ -9,6 +9,7 @@ import { AppButton } from '@/components/AppButton';
 import { AppText } from '@/components/AppText';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
+import { useTranslation } from '@/i18n/context';
 import { dateToISO, todayISO } from '@/lib/dates';
 import { requestNotificationPermission, scheduleRhythmReminders } from '@/lib/notifications';
 import { useTheme } from '@/lib/theme-context';
@@ -16,19 +17,20 @@ import {
   DEFAULT_REMINDERS,
   useSettings,
   type AgeBand,
+  type AppLanguage,
   type ChildProfile,
   type ReminderTime,
 } from '@/store/settings';
 
 interface StartOption {
-  label: string;
+  labelKey: string;
   date: () => string;
 }
 
-const START_OPTIONS: StartOption[] = [
-  { label: 'Today', date: () => todayISO() },
+const START_OPTION_KEYS: StartOption[] = [
+  { labelKey: 'onboarding.startToday', date: () => todayISO() },
   {
-    label: 'Tomorrow',
+    labelKey: 'onboarding.startTomorrow',
     date: () => {
       const d = new Date();
       d.setDate(d.getDate() + 1);
@@ -36,7 +38,7 @@ const START_OPTIONS: StartOption[] = [
     },
   },
   {
-    label: 'Next Sunday',
+    labelKey: 'onboarding.startNextSunday',
     date: () => {
       const d = new Date();
       d.setDate(d.getDate() + ((7 - d.getDay()) % 7 || 7));
@@ -44,7 +46,7 @@ const START_OPTIONS: StartOption[] = [
     },
   },
   {
-    label: 'Next Monday',
+    labelKey: 'onboarding.startNextMonday',
     date: () => {
       const d = new Date();
       d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7));
@@ -53,26 +55,32 @@ const START_OPTIONS: StartOption[] = [
   },
 ];
 
-const RHYTHM_PRESETS: { label: string; times: Record<'morning' | 'dinner' | 'bedtime', ReminderTime | null> }[] = [
+const RHYTHM_PRESET_KEYS: { labelKey: string; times: Record<'morning' | 'dinner' | 'bedtime', ReminderTime | null> }[] = [
   {
-    label: '7 AM · 6 PM · 8 PM',
+    labelKey: 'onboarding.rhythmPreset1',
     times: { morning: { hour: 7, minute: 0 }, dinner: { hour: 18, minute: 0 }, bedtime: { hour: 20, minute: 0 } },
   },
   {
-    label: '8 AM · 6:30 PM · 8:30 PM',
+    labelKey: 'onboarding.rhythmPreset2',
     times: {
       morning: { hour: 8, minute: 0 },
       dinner: { hour: 18, minute: 30 },
       bedtime: { hour: 20, minute: 30 },
     },
   },
-  { label: 'Reminders off', times: { morning: null, dinner: null, bedtime: null } },
+  { labelKey: 'onboarding.remindersOff', times: { morning: null, dinner: null, bedtime: null } },
 ];
 
-const AGE_BANDS: { label: string; value: AgeBand }[] = [
-  { label: 'Little (3–7)', value: 'little' },
-  { label: 'Older (8–12)', value: 'older' },
-  { label: 'Teen (13+)', value: 'teen' },
+const AGE_BAND_KEYS: { labelKey: string; value: AgeBand }[] = [
+  { labelKey: 'onboarding.ageBandLittle', value: 'little' },
+  { labelKey: 'onboarding.ageBandOlder', value: 'older' },
+  { labelKey: 'onboarding.ageBandTeen', value: 'teen' },
+];
+
+const LANGUAGE_OPTIONS: { labelKey: string; value: AppLanguage }[] = [
+  { labelKey: 'settings.languageDevice', value: 'device' },
+  { labelKey: 'settings.languageEn', value: 'en' },
+  { labelKey: 'settings.languageEs', value: 'es' },
 ];
 
 function formatTime({ hour, minute }: ReminderTime): string {
@@ -83,14 +91,18 @@ function formatTime({ hour, minute }: ReminderTime): string {
 
 /**
  * First-launch onboarding: family name, children, three-rhythm reminders,
- * and plan start date.
+ * language, and plan start date.
  */
 export default function OnboardingScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const completeOnboarding = useSettings((s) => s.completeOnboarding);
+  const setLanguage = useSettings((s) => s.setLanguage);
+  const savedLanguage = useSettings((s) => s.language);
 
   const [familyName, setFamilyName] = useState('');
+  const [language, setLanguageChoice] = useState<AppLanguage>(savedLanguage);
   const [startIndex, setStartIndex] = useState(0);
   const [presetIndex, setPresetIndex] = useState(0);
   const [customTimes, setCustomTimes] = useState(DEFAULT_REMINDERS);
@@ -98,14 +110,18 @@ export default function OnboardingScreen() {
   const [children, setChildren] = useState<ChildProfile[]>([]);
   const [childBand, setChildBand] = useState<AgeBand>('little');
 
+  const ageBands = AGE_BAND_KEYS.map((b) => ({ label: t(b.labelKey), value: b.value }));
+  const languageOptions = LANGUAGE_OPTIONS.map((o) => ({ label: t(o.labelKey), value: o.value }));
+  const startOptions = START_OPTION_KEYS.map((o) => ({ label: t(o.labelKey), date: o.date }));
+  const rhythmPresets = RHYTHM_PRESET_KEYS.map((p) => ({ label: t(p.labelKey), times: p.times }));
+
   const addChild = () => {
     setChildren((c) => [...c, { ageBand: childBand }]);
   };
 
   const begin = async () => {
-    const times = useCustom
-      ? customTimes
-      : RHYTHM_PRESETS[presetIndex].times;
+    setLanguage(language);
+    const times = useCustom ? customTimes : rhythmPresets[presetIndex].times;
     const hasAnyReminder = times.morning || times.dinner || times.bedtime;
     let allowed = false;
     if (hasAnyReminder) {
@@ -120,7 +136,7 @@ export default function OnboardingScreen() {
     }
     completeOnboarding({
       familyName: familyName.trim(),
-      planStartDate: START_OPTIONS[startIndex].date(),
+      planStartDate: startOptions[startIndex].date(),
       morningReminder: allowed ? times.morning : null,
       dinnerReminder: allowed ? times.dinner : null,
       bedtimeReminder: allowed ? times.bedtime : null,
@@ -146,20 +162,27 @@ export default function OnboardingScreen() {
           <Ionicons name="home" size={44} color={theme.colors.goldDeep} />
         </View>
         <AppText variant="display" center accessibilityRole="header">
-          Faith & Family
+          {t('onboarding.title')}
         </AppText>
         <AppText variant="body" center color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm, maxWidth: 300 }}>
-          Morning reading, dinner talk, bedtime prayer — a daily rhythm together.
+          {t('onboarding.subtitle')}
         </AppText>
       </View>
 
-      <SectionLabel>What should we call your family? (optional)</SectionLabel>
+      <SectionLabel>{t('settings.language')}</SectionLabel>
+      <ChipRow
+        options={languageOptions.map((o) => o.label)}
+        selected={languageOptions.findIndex((o) => o.value === language)}
+        onSelect={(i) => setLanguageChoice(languageOptions[i].value)}
+      />
+
+      <SectionLabel>{t('onboarding.familyNameSection')}</SectionLabel>
       <TextInput
         value={familyName}
         onChangeText={setFamilyName}
-        placeholder="e.g. The Parker Family"
+        placeholder={t('onboarding.familyNamePlaceholder')}
         placeholderTextColor={theme.colors.textMuted}
-        accessibilityLabel="Family name, optional"
+        accessibilityLabel={t('common.familyNameOptionalA11y')}
         style={{
           minHeight: theme.minTouch + 4,
           borderWidth: 1,
@@ -173,32 +196,32 @@ export default function OnboardingScreen() {
         }}
       />
 
-      <SectionLabel>Who is in your family? (optional)</SectionLabel>
+      <SectionLabel>{t('onboarding.childrenSection')}</SectionLabel>
       <ChipRow
-        options={AGE_BANDS.map((b) => b.label)}
-        selected={AGE_BANDS.findIndex((b) => b.value === childBand)}
-        onSelect={(i) => setChildBand(AGE_BANDS[i].value)}
+        options={ageBands.map((b) => b.label)}
+        selected={ageBands.findIndex((b) => b.value === childBand)}
+        onSelect={(i) => setChildBand(ageBands[i].value)}
       />
-      <AppButton label="Add a child" variant="secondary" onPress={addChild} style={{ marginTop: theme.spacing.sm }} />
+      <AppButton label={t('common.addAChild')} variant="secondary" onPress={addChild} style={{ marginTop: theme.spacing.sm }} />
       {children.length > 0 ? (
         <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm }}>
-          {children.length} child profile{children.length === 1 ? '' : 's'} added — devotionals will match their ages.
+          {t('common.childProfilesAdded', { count: children.length, plural: children.length === 1 ? '' : 's' })}
         </AppText>
       ) : null}
 
-      <SectionLabel>When does Day 1 begin?</SectionLabel>
+      <SectionLabel>{t('onboarding.planStartSection')}</SectionLabel>
       <ChipRow
-        options={START_OPTIONS.map((o) => o.label)}
+        options={startOptions.map((o) => o.label)}
         selected={startIndex}
         onSelect={setStartIndex}
       />
 
-      <SectionLabel>Your daily rhythm reminders</SectionLabel>
+      <SectionLabel>{t('onboarding.rhythmSection')}</SectionLabel>
       <ChipRow
-        options={[...RHYTHM_PRESETS.map((p) => p.label), 'Custom per slot']}
-        selected={useCustom ? RHYTHM_PRESETS.length : presetIndex}
+        options={[...rhythmPresets.map((p) => p.label), t('common.customPerSlot')]}
+        selected={useCustom ? rhythmPresets.length : presetIndex}
         onSelect={(i) => {
-          if (i === RHYTHM_PRESETS.length) setUseCustom(true);
+          if (i === rhythmPresets.length) setUseCustom(true);
           else {
             setUseCustom(false);
             setPresetIndex(i);
@@ -211,20 +234,21 @@ export default function OnboardingScreen() {
           {(['morning', 'dinner', 'bedtime'] as const).map((slot) => (
             <CustomTimeRow
               key={slot}
-              label={slot.charAt(0).toUpperCase() + slot.slice(1)}
+              label={t(`rhythm.${slot}.short`)}
+              slot={slot}
               value={customTimes[slot]}
-              onChange={(t) => setCustomTimes((prev) => ({ ...prev, [slot]: t }))}
+              onChange={(time) => setCustomTimes((prev) => ({ ...prev, [slot]: time }))}
             />
           ))}
         </View>
       ) : null}
 
       <AppButton
-        label="Begin our journey"
+        label={t('common.beginJourney')}
         icon="leaf"
         onPress={begin}
         style={{ marginTop: theme.spacing.xxl }}
-        accessibilityHint="Saves your choices and opens the Today screen"
+        accessibilityHint={t('common.beginJourneyHint')}
       />
     </Screen>
   );
@@ -232,14 +256,17 @@ export default function OnboardingScreen() {
 
 function CustomTimeRow({
   label,
+  slot,
   value,
   onChange,
 }: {
   label: string;
+  slot: 'morning' | 'dinner' | 'bedtime';
   value: ReminderTime | null;
   onChange: (t: ReminderTime | null) => void;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [showPicker, setShowPicker] = useState(false);
 
   const onPick = (event: DateTimePickerEvent, date?: Date) => {
@@ -255,11 +282,11 @@ function CustomTimeRow({
         {label}
       </AppText>
       <Pressable
-        onPress={() => onChange(value ? null : DEFAULT_REMINDERS[label.toLowerCase() as keyof typeof DEFAULT_REMINDERS] ?? { hour: 7, minute: 0 })}
+        onPress={() => onChange(value ? null : DEFAULT_REMINDERS[slot])}
         accessibilityRole="button"
       >
         <AppText variant="small" color={theme.colors.textMuted}>
-          {value ? 'On' : 'Off'}
+          {value ? t('common.on') : t('common.off')}
         </AppText>
       </Pressable>
       {value ? (
@@ -297,7 +324,7 @@ function ChipRow({
         const active = i === selected;
         return (
           <Pressable
-            key={label}
+            key={`${label}-${i}`}
             onPress={() => onSelect(i)}
             accessibilityRole="button"
             accessibilityLabel={label}

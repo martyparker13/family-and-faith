@@ -18,6 +18,8 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Confetti } from '@/components/Confetti';
+import { I18nProvider, useTranslation } from '@/i18n/context';
+import { resolveLocale, setActiveLocale } from '@/i18n/index';
 import { deepLinkToRoute } from '@/lib/import-data';
 import { scheduleRhythmReminders } from '@/lib/notifications';
 import { allStoresHydrated, waitForAllStoresHydrated } from '@/lib/store-hydration';
@@ -46,6 +48,12 @@ export default function RootLayout() {
   const morningReminder = useSettings((s) => s.morningReminder);
   const dinnerReminder = useSettings((s) => s.dinnerReminder);
   const bedtimeReminder = useSettings((s) => s.bedtimeReminder);
+  const language = useSettings((s) => s.language);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    setActiveLocale(resolveLocale(language));
+  }, [hydrated, language]);
 
   useEffect(() => {
     if (hydrated) return;
@@ -94,8 +102,10 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <RootStack />
-        <CelebrationOverlay />
+        <I18nProvider>
+          <RootStack />
+          <CelebrationOverlay />
+        </I18nProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );
@@ -108,6 +118,7 @@ function CelebrationOverlay() {
 
 function RootStack() {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -122,15 +133,15 @@ function RootStack() {
           contentStyle: { backgroundColor: theme.colors.background },
         }}
       >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Home' }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false, title: t('navigation.home') }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
-        <Stack.Screen name="quick-evening" options={{ title: 'Five-minute moment' }} />
-        <Stack.Screen name="rhythm/[slot]" options={{ title: 'Family rhythm' }} />
-        <Stack.Screen name="recap" options={{ title: 'Weekly recap' }} />
-        <Stack.Screen name="day/[day]/reading" options={{ title: 'Daily Reading' }} />
-        <Stack.Screen name="day/[day]/devotional" options={{ title: 'Devotional' }} />
-        <Stack.Screen name="day/[day]/prayer" options={{ title: 'Family Prayer' }} />
-        <Stack.Screen name="guidance/[id]" options={{ title: 'Scripture Guidance' }} />
+        <Stack.Screen name="quick-evening" options={{ title: t('navigation.fiveMinuteMoment') }} />
+        <Stack.Screen name="rhythm/[slot]" options={{ title: t('navigation.familyRhythm') }} />
+        <Stack.Screen name="recap" options={{ title: t('navigation.weeklyRecap') }} />
+        <Stack.Screen name="day/[day]/reading" options={{ title: t('navigation.dailyReading') }} />
+        <Stack.Screen name="day/[day]/devotional" options={{ title: t('navigation.devotional') }} />
+        <Stack.Screen name="day/[day]/prayer" options={{ title: t('navigation.familyPrayer') }} />
+        <Stack.Screen name="guidance/[id]" options={{ title: t('navigation.scriptureGuidance') }} />
       </Stack>
     </>
   );

@@ -4,6 +4,7 @@ import { Pressable, View } from 'react-native';
 
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
+import { useTranslation } from '@/i18n/context';
 import { parentTipFor } from '@/lib/parent-tips';
 import { celebrationHaptics } from '@/lib/celebrate';
 import { todayISO } from '@/lib/dates';
@@ -15,6 +16,7 @@ import { useProgress } from '@/store/progress';
 /** Tap-to-reveal memory verse practice with "say it together" prompt. */
 export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: number }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const practiced = useProgress((s) => Boolean(s.practicedWeeks[verse.week]));
   const togglePracticed = useProgress((s) => s.togglePracticedWeek);
   const fire = useCelebration((s) => s.fire);
@@ -35,7 +37,7 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
   const onPracticed = () => {
     togglePracticed(verse.week, todayISO());
     if (!practiced) {
-      fire({ message: '📖 Hidden in your hearts!', size: 'small' });
+      fire({ message: t('celebrations.hiddenInHearts'), size: 'small' });
       celebrationHaptics('small');
     }
   };
@@ -43,10 +45,10 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
   return (
     <Card accent={theme.colors.blue}>
       <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-        MEMORY VERSE PRACTICE
+        {t('memoryVerse.practice')}
       </AppText>
       <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.xs }}>
-        Tap each hidden word to reveal it — then say it together.
+        {t('memoryVerse.instruction')}
       </AppText>
 
       <View
@@ -64,7 +66,7 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
               key={`${word}-${i}`}
               onPress={() => revealWord(i)}
               accessibilityRole="button"
-              accessibilityLabel={isRevealed ? word : 'Hidden word, tap to reveal'}
+              accessibilityLabel={isRevealed ? word : t('common.hiddenWord')}
               style={({ pressed }) => ({
                 backgroundColor: isRevealed
                   ? theme.colors.surface
@@ -79,7 +81,7 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
               })}
             >
               <AppText variant="body" semiBold={isRevealed}>
-                {isRevealed ? word : '•••'}
+                {isRevealed ? word : t('memoryVerse.hiddenPlaceholder')}
               </AppText>
             </Pressable>
           );
@@ -89,11 +91,11 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
       <Pressable
         onPress={revealAll}
         accessibilityRole="button"
-        accessibilityLabel="Reveal all words"
+        accessibilityLabel={t('common.revealAllWords')}
         style={{ marginTop: theme.spacing.md }}
       >
         <AppText variant="small" semiBold color={theme.colors.blue}>
-          Reveal all words
+          {t('common.revealAllWords')}
         </AppText>
       </Pressable>
 
@@ -107,10 +109,10 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
           }}
         >
           <AppText variant="body" semiBold>
-            Say it together three times, then try it without looking.
+            {t('common.memoryVerseTogether')}
           </AppText>
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm }}>
-            Tip: {parentTipFor('memory-verse', day)}
+            {t('common.tipPrefix', { tip: parentTipFor('memory-verse', day) })}
           </AppText>
         </View>
       ) : null}
@@ -130,7 +132,7 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
           onPress={onPracticed}
           accessibilityRole="button"
           accessibilityLabel={
-            practiced ? 'Practiced this week — tap to undo' : 'Mark memory verse as practiced'
+            practiced ? t('common.practicedA11y') : t('common.markPracticedA11y')
           }
           style={({ pressed }) => ({
             flexDirection: 'row',
@@ -159,7 +161,7 @@ export function MemoryVersePractice({ verse, day }: { verse: MemoryVerse; day: n
             scaled={false}
             color={practiced ? theme.colors.green : theme.colors.text}
           >
-            {practiced ? 'Practiced!' : 'We practiced it'}
+            {practiced ? t('common.practicedLabel') : t('common.wePracticed')}
           </AppText>
         </Pressable>
       </View>

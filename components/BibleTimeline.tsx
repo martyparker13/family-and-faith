@@ -4,12 +4,14 @@ import { Pressable, View } from 'react-native';
 
 import { AppText } from '@/components/AppText';
 import { ProgressBar } from '@/components/ProgressBar';
+import { useTranslation } from '@/i18n/context';
 import { timelineInfo } from '@/lib/bible-timeline';
 import { useTheme } from '@/lib/theme-context';
 
 /** Simple OT narrative progress bar — tap for "where we are". */
 export function BibleTimeline({ day }: { day: number }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const info = timelineInfo(day);
 
@@ -17,7 +19,7 @@ export function BibleTimeline({ day }: { day: number }) {
     <Pressable
       onPress={() => setExpanded((v) => !v)}
       accessibilityRole="button"
-      accessibilityLabel={`Bible story progress, ${info.percent} percent. Tap for details.`}
+      accessibilityLabel={t('common.bibleProgressA11y', { percent: info.percent })}
       accessibilityState={{ expanded }}
     >
       <View
@@ -36,7 +38,7 @@ export function BibleTimeline({ day }: { day: number }) {
           }}
         >
           <AppText variant="small" semiBold scaled={false}>
-            Where we are in the story
+            {t('reading.whereWeAre')}
           </AppText>
           <Ionicons
             name={expanded ? 'chevron-up' : 'chevron-down'}
@@ -48,7 +50,7 @@ export function BibleTimeline({ day }: { day: number }) {
         {expanded ? (
           <View style={{ marginTop: theme.spacing.sm }}>
             <AppText variant="small" color={theme.colors.textMuted}>
-              {info.label} — {info.otReference}
+              {t('reading.timelineDetail', { label: info.label, reference: info.otReference })}
             </AppText>
           </View>
         ) : null}

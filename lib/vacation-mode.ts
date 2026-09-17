@@ -1,6 +1,7 @@
 /**
  * Vacation / travel mode — pause reminders, suppress catch-up guilt, freeze streaks.
  */
+import { t } from '@/i18n/index';
 import { currentStreak } from '@/store/progress';
 
 export interface VacationMode {
@@ -58,7 +59,7 @@ export function effectiveStreak(
 export function validateVacationMode(mode: VacationMode): string | null {
   if (!mode.active) return null;
   if (mode.startDate && mode.endDate && mode.startDate > mode.endDate) {
-    return 'End date must be on or after start date.';
+    return t('vacationMode.endDateError');
   }
   return null;
 }

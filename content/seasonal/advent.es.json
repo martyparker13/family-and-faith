@@ -1,0 +1,36 @@
+{
+  "id": "advent",
+  "name": "Adviento",
+  "startMonthDay": "11-27",
+  "endMonthDay": "12-24",
+  "days": [
+    {
+      "week": 1,
+      "label": "Semana de Adviento 1: Esperanza",
+      "readingNote": "Al leer hoy, esté atento a las promesas que apuntan hacia la venida del Salvador.",
+      "devotionalNote": "Enciende una vela (real o dibujada) y nombra una esperanza que tu familia está esperando con Dios.",
+      "prayerNote": "Ore por los vecinos que necesitan esperanza en esta temporada."
+    },
+    {
+      "week": 2,
+      "label": "Segunda semana de Adviento: Paz",
+      "readingNote": "Observe dónde Dios trae paz en medio de historias difíciles o ocupadas.",
+      "devotionalNote": "Pregunte: ¿Dónde nos sentimos apurados hoy? ¿Dónde podemos invitar la paz de Dios?",
+      "prayerNote": "Ora por la paz sobre una relación en tu hogar."
+    },
+    {
+      "week": 3,
+      "label": "Semana de Adviento 3: Alegría",
+      "readingNote": "Busque motivos para regocijarse, incluso los más pequeños, en los pasajes de hoy.",
+      "devotionalNote": "Comparte una alegría de esta semana, por pequeña que sea.",
+      "prayerNote": "Agradezca a Dios en voz alta por tres regalos antes de acostarse."
+    },
+    {
+      "week": 4,
+      "label": "Semana de Adviento 4 – Amor",
+      "readingNote": "Observe cómo el amor de Dios se manifiesta en la gente común.",
+      "devotionalNote": "Haga un acto tranquilo de amor por alguien de su familia antes de que termine el día.",
+      "prayerNote": "Ora para que tu hogar sea un lugar de acogida y amor."
+    }
+  ]
+}

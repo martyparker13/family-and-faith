@@ -1,6 +1,7 @@
 /**
  * Child age-band filtering for devotional questions.
  */
+import { t } from '@/i18n/index';
 import type { DevotionalQuestion } from '@/lib/content';
 import type { AgeBand, ChildProfile } from '@/store/settings';
 
@@ -32,13 +33,13 @@ export function filterQuestions(
 }
 
 export function parentPrepQuestionHint(children: ChildProfile[]): string {
-  if (children.length === 0) return 'Use the little-kid and older-kid questions.';
+  if (children.length === 0) return t('ageBands.hintDefault');
   const bands = [...new Set(children.map((c) => c.ageBand))];
   if (bands.length === 1 && bands[0] === 'little') {
-    return 'Focus on the “For Little Ones” questions today.';
+    return t('ageBands.hintLittleOnly');
   }
   if (bands.every((b) => b === 'older' || b === 'teen')) {
-    return 'Focus on the “For Older Kids & Parents” questions today.';
+    return t('ageBands.hintOlderOnly');
   }
-  return 'Use one little-kid question and one older-kid question.';
+  return t('ageBands.hintMixed');
 }

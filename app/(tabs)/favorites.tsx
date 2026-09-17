@@ -10,6 +10,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
 import { VerseCard } from '@/components/VerseCard';
+import { useTranslation } from '@/i18n/context';
 import { getPrayer } from '@/lib/content';
 import { useTheme } from '@/lib/theme-context';
 import { useFavorites, type FavoriteVerse } from '@/store/favorites';
@@ -19,6 +20,7 @@ import { useFavorites, type FavoriteVerse } from '@/store/favorites';
  */
 export default function FavoritesScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const favorites = useFavorites((s) => s.favorites);
 
@@ -28,23 +30,23 @@ export default function FavoritesScreen() {
   return (
     <Screen contentStyle={{ paddingTop: insets.top + theme.spacing.lg }}>
       <AppText variant="heading" semiBold accessibilityRole="header">
-        Favorites
+        {t('favorites.title')}
       </AppText>
       <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: 2 }}>
-        The verses and prayers your family is holding onto.
+        {t('favorites.subtitle')}
       </AppText>
 
       {favorites.length === 0 ? (
         <EmptyState
           icon="heart-outline"
-          title="Nothing saved yet"
-          message="When a verse or a daily prayer speaks to your family, tap its heart and it will live here."
+          title={t('favorites.emptyTitle')}
+          message={t('favorites.emptyMessage')}
         />
       ) : (
         <>
           {verses.length > 0 && (
             <>
-              <SectionLabel>Saved verses</SectionLabel>
+              <SectionLabel>{t('favorites.savedVerses')}</SectionLabel>
               <View style={{ gap: theme.spacing.md }}>
                 {verses.map((f) => (
                   <View key={f.id}>
@@ -68,7 +70,7 @@ export default function FavoritesScreen() {
 
           {prayers.length > 0 && (
             <>
-              <SectionLabel color={theme.colors.green}>Saved prayers</SectionLabel>
+              <SectionLabel color={theme.colors.green}>{t('favorites.savedPrayers')}</SectionLabel>
               <View style={{ gap: theme.spacing.md }}>
                 {prayers.map((f) => (
                   <FavoritePrayerCard key={f.id} favorite={f} />
@@ -85,9 +87,9 @@ export default function FavoritesScreen() {
 /** A saved daily prayer: preview with a link back to the full prayer screen. */
 function FavoritePrayerCard({ favorite }: { favorite: FavoriteVerse }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const removeFavorite = useFavorites((s) => s.removeFavorite);
   const day = favorite.day;
-  // Pull the live prayer content for the saved day (text is bundled).
   const prayer = day ? getPrayer(day) : null;
 
   return (
@@ -95,7 +97,7 @@ function FavoritePrayerCard({ favorite }: { favorite: FavoriteVerse }) {
       accent={theme.colors.green}
       onPress={day ? () => router.push(`/day/${day}/prayer`) : undefined}
       accessibilityLabel={favorite.reference}
-      accessibilityHint="Opens this prayer to pray it together"
+      accessibilityHint={t('common.opensPrayer')}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm }}>
         <Ionicons name="rose" size={20} color={theme.colors.green} />
@@ -104,13 +106,15 @@ function FavoritePrayerCard({ favorite }: { favorite: FavoriteVerse }) {
             {prayer ? prayer.title : favorite.reference}
           </AppText>
           <AppText variant="caption" scaled={false}>
-            {prayer ? `Day ${day} · ${prayer.theme}` : 'Daily prayer'}
+            {prayer && day
+              ? t('common.dayActivity', { day, activity: prayer.theme })
+              : t('common.dailyPrayer')}
           </AppText>
         </View>
         <Pressable
           onPress={() => removeFavorite(favorite.id)}
           accessibilityRole="button"
-          accessibilityLabel={`Remove "${favorite.reference}" from favorites`}
+          accessibilityLabel={t('common.removeFavoriteA11y', { reference: favorite.reference })}
           hitSlop={8}
           style={({ pressed }) => ({
             width: theme.minTouch - 8,

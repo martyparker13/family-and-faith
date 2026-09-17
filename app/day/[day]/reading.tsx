@@ -23,6 +23,7 @@ import { dateForPlanDay, formatShortDate, todayISO } from '@/lib/dates';
 import { useTheme } from '@/lib/theme-context';
 import { SPEECH_RATES, useSettings, useTextScale } from '@/store/settings';
 import { useKidQuestions } from '@/store/kid-questions';
+import { useTranslation } from '@/i18n/context';
 
 /**
  * Feature 1 — Daily Reading screen.
@@ -31,6 +32,7 @@ import { useKidQuestions } from '@/store/kid-questions';
  */
 export default function ReadingScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ day: string }>();
   const day = Math.min(365, Math.max(1, parseInt(params.day ?? '1', 10) || 1));
   const plan = getPlanDay(day);
@@ -159,7 +161,7 @@ export default function ReadingScreen() {
       {/* Teaching point */}
       <Card accent={theme.colors.blue} style={{ marginTop: theme.spacing.md }}>
         <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-          TODAY&apos;S TAKEAWAY
+          {t('reading.todaysTakeaway')}
         </AppText>
         <AppText variant="bodyLarge" style={{ marginTop: theme.spacing.sm }}>
           {plan.teachingPoint ?? plan.kidSummary}
@@ -171,7 +173,7 @@ export default function ReadingScreen() {
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm }}>
           <Ionicons name="happy" size={20} color={theme.colors.goldDeep} />
           <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-            FOR KIDS
+            {t('reading.forKids')}
           </AppText>
         </View>
         <AppText variant="bodyLarge" style={{ marginTop: theme.spacing.sm }}>
@@ -183,7 +185,7 @@ export default function ReadingScreen() {
         <Pressable
           onPress={() => setBedtimeMode((b) => !b)}
           accessibilityRole="button"
-          accessibilityLabel={bedtimeMode ? 'Show full reading' : 'Show bedtime version'}
+          accessibilityLabel={bedtimeMode ? t('common.showFullReading') : t('common.showBedtimeVersion')}
           style={({ pressed }) => ({
             flexDirection: 'row',
             alignItems: 'center',
@@ -194,7 +196,7 @@ export default function ReadingScreen() {
         >
           <Ionicons name="moon" size={18} color={theme.colors.goldDeep} />
           <AppText variant="small" semiBold color={theme.colors.goldDeep}>
-            {bedtimeMode ? 'Show full reading' : 'Bedtime version (shorter)'}
+            {bedtimeMode ? t('common.showFullReading') : t('common.bedtimeVersion')}
           </AppText>
         </Pressable>
       ) : null}
@@ -202,7 +204,7 @@ export default function ReadingScreen() {
       {bedtimeMode && plan.bedtimeHighlight ? (
         <Card accent={theme.colors.green} style={{ marginTop: theme.spacing.sm }}>
           <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-            BEDTIME HIGHLIGHTS
+            {t('reading.bedtimeHighlights')}
           </AppText>
           {plan.bedtimeHighlight.map((ref) => (
             <AppText key={ref} variant="body" style={{ marginTop: theme.spacing.sm }}>
@@ -225,7 +227,7 @@ export default function ReadingScreen() {
         <Pressable
           onPress={toggleReadAloud}
           accessibilityRole="button"
-          accessibilityLabel={speaking ? 'Stop reading aloud' : 'Read aloud'}
+          accessibilityLabel={speaking ? t('common.stopReadingAloud') : t('common.readAloud')}
           style={({ pressed }) => ({
             flexDirection: 'row',
             alignItems: 'center',
@@ -250,7 +252,7 @@ export default function ReadingScreen() {
             scaled={false}
             color={speaking ? theme.colors.onAccent : theme.colors.text}
           >
-            {speaking ? 'Stop' : 'Read aloud'}
+            {speaking ? t('common.stop') : t('common.readAloud')}
           </AppText>
         </Pressable>
       </View>
@@ -262,7 +264,7 @@ export default function ReadingScreen() {
             {error}
           </AppText>
           <AppButton
-            label="Try again"
+            label={t('common.tryAgain')}
             variant="secondary"
             onPress={retry}
             style={{ marginTop: theme.spacing.lg }}
@@ -272,7 +274,7 @@ export default function ReadingScreen() {
         <View style={{ paddingVertical: theme.spacing.xxxl, alignItems: 'center' }}>
           <ActivityIndicator color={theme.colors.gold} size="large" />
           <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.md }}>
-            Loading today’s reading…
+            {t('common.loadingReading')}
           </AppText>
         </View>
       ) : bedtimeMode ? null : (
@@ -328,7 +330,7 @@ export default function ReadingScreen() {
       <ProactiveGuidanceCard day={day} />
 
       <AppButton
-        label="Log a question"
+        label={t('common.logQuestion')}
         icon="help-circle-outline"
         variant="ghost"
         onPress={() => setQuestionModalVisible(true)}
@@ -347,7 +349,7 @@ export default function ReadingScreen() {
         <CompleteActivityButton activity="reading" day={day} />
       </View>
       <AppText variant="caption" center style={{ marginTop: theme.spacing.md }}>
-        World English Bible (WEB) — public domain
+        {t('common.webAttribution')}
       </AppText>
     </Screen>
   );

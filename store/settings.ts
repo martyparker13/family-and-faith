@@ -6,6 +6,7 @@ import type { CatchUpChoice } from '@/lib/catch-up';
 import type { VacationMode } from '@/lib/vacation-mode';
 import { DEFAULT_VACATION_MODE } from '@/lib/vacation-mode';
 
+export type AppLanguage = 'device' | 'en' | 'es';
 export type ThemePreference = 'system' | 'light' | 'dark';
 export type SpeechRate = 'slow' | 'normal' | 'fast';
 export type AgeBand = 'little' | 'older' | 'teen';
@@ -63,6 +64,8 @@ export interface SettingsState {
   sundayNotes: Record<string, string>;
   /** Discipling tip ids dismissed during days 1–14. */
   dismissedDisciplingTips: string[];
+  /** UI + content language; 'device' follows expo-localization. */
+  language: AppLanguage;
 
   setFamilyName: (name: string) => void;
   completeOnboarding: (opts: {
@@ -96,6 +99,7 @@ export interface SettingsState {
   resumeFromVacation: () => void;
   setSundayNote: (weekKey: string, note: string) => void;
   dismissDisciplingTip: (tipId: string) => void;
+  setLanguage: (language: AppLanguage) => void;
   /** Sends the user back through onboarding on next launch of the tabs. */
   replayOnboarding: () => void;
   /** Apply settings from an imported backup (merge at call site). */
@@ -126,6 +130,7 @@ export const useSettings = create<SettingsState>()(
       vacationMode: { ...DEFAULT_VACATION_MODE },
       sundayNotes: {},
       dismissedDisciplingTips: [],
+      language: 'device',
 
       setFamilyName: (familyName) => set({ familyName }),
       completeOnboarding: ({
@@ -183,13 +188,14 @@ export const useSettings = create<SettingsState>()(
             ? s.dismissedDisciplingTips
             : [...s.dismissedDisciplingTips, tipId],
         })),
+      setLanguage: (language) => set({ language }),
       replayOnboarding: () => set({ onboarded: false }),
       applyImportedSettings: (partial) => set((s) => ({ ...s, ...partial, onboarded: true })),
     }),
     {
       name: 'ff-settings',
       storage: createJSONStorage(() => AsyncStorage),
-      version: 2,
+      version: 3,
       migrate: (persisted: unknown, version: number) => {
         const state = persisted as SettingsState & { reminder?: ReminderTime | null };
         if (version < 1) {
@@ -207,6 +213,9 @@ export const useSettings = create<SettingsState>()(
           if (!state.vacationMode) state.vacationMode = { ...DEFAULT_VACATION_MODE };
           if (!state.sundayNotes) state.sundayNotes = {};
           if (!state.dismissedDisciplingTips) state.dismissedDisciplingTips = [];
+        }
+        if (version < 3) {
+          if (!state.language) state.language = 'device';
         }
         return state as SettingsState;
       },

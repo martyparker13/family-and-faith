@@ -8,13 +8,14 @@ import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
 import { MemoryVersePractice } from '@/components/MemoryVersePractice';
 import { Screen } from '@/components/Screen';
+import { useTranslation } from '@/i18n/context';
 import { getDevotional, getPlanDay, getPrayer } from '@/lib/content';
 import { celebrationHaptics } from '@/lib/celebrate';
 import { effectivePlanDay } from '@/lib/catch-up';
 import { todayISO } from '@/lib/dates';
 import { memoryVerseForDay } from '@/lib/memory-verse';
 import {
-  SLOT_LABELS,
+  getSlotLabels,
   slotActivity,
   type RhythmSlot,
 } from '@/lib/rhythm';
@@ -33,6 +34,7 @@ type FlowStep = 'intro' | 'content' | 'memory' | 'done';
  */
 export default function RhythmFlowScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ slot: string }>();
   const slot = (VALID_SLOTS.includes(params.slot as RhythmSlot)
     ? params.slot
@@ -49,7 +51,7 @@ export default function RhythmFlowScreen() {
   const devotional = getDevotional(day);
   const prayer = getPrayer(day);
   const verse = memoryVerseForDay(day);
-  const labels = SLOT_LABELS[slot];
+  const labels = getSlotLabels(slot);
 
   const markSlotComplete = useProgress((s) => s.markSlotComplete);
   const fire = useCelebration((s) => s.fire);
@@ -58,7 +60,7 @@ export default function RhythmFlowScreen() {
 
   const finish = () => {
     markSlotComplete(slot, day, today);
-    fire({ message: `${labels.short} time complete!`, size: 'small' });
+    fire({ message: t('common.rhythmDoneCelebration', { slot: labels.short }), size: 'small' });
     celebrationHaptics('small');
     setStep('done');
   };
@@ -70,6 +72,13 @@ export default function RhythmFlowScreen() {
     else router.push(`/day/${day}/prayer`);
   };
 
+  const introText =
+    slot === 'morning'
+      ? t('rhythm.introMorning')
+      : slot === 'dinner'
+        ? t('rhythm.introDinner')
+        : t('rhythm.introBedtime');
+
   return (
     <Screen>
       <View style={{ alignItems: 'center', marginBottom: theme.spacing.lg }}>
@@ -78,23 +87,17 @@ export default function RhythmFlowScreen() {
           {labels.title}
         </AppText>
         <AppText variant="small" color={theme.colors.textMuted} center>
-          Day {day}
+          {t('common.dayLabel', { day })}
         </AppText>
       </View>
 
       {step === 'intro' ? (
         <Card accent={theme.colors.gold}>
-          <AppText variant="bodyLarge">
-            {slot === 'morning'
-              ? 'Start the day with Scripture and hide this week’s verse in your hearts.'
-              : slot === 'dinner'
-                ? 'Gather around the table for today’s devotional — one question at a time.'
-                : 'Wind down together with tonight’s family prayer.'}
-          </AppText>
+          <AppText variant="bodyLarge">{introText}</AppText>
           <AppButton
             label={labels.startLabel}
             icon="play"
-            onPress={() => setStep(slot === 'morning' ? 'content' : 'content')}
+            onPress={() => setStep('content')}
             style={{ marginTop: theme.spacing.lg }}
           />
         </Card>
@@ -104,7 +107,7 @@ export default function RhythmFlowScreen() {
         <>
           <Card accent={theme.colors.blue}>
             <AppText variant="caption" bold scaled={false} color={theme.colors.goldDeep}>
-              TODAY’S READING
+              {t('reading.todaysReading')}
             </AppText>
             <AppText variant="title" semiBold style={{ marginTop: theme.spacing.sm }}>
               {plan.passages.map((p) => p.reference).join(' · ')}
@@ -114,13 +117,13 @@ export default function RhythmFlowScreen() {
             </AppText>
           </Card>
           <AppButton
-            label="Open full reading"
+            label={t('common.openFullReading')}
             variant="secondary"
             onPress={openFullScreen}
             style={{ marginTop: theme.spacing.md }}
           />
           <AppButton
-            label="Next — memory verse"
+            label={t('common.nextMemoryVerse')}
             onPress={() => setStep('memory')}
             style={{ marginTop: theme.spacing.md }}
           />
@@ -130,7 +133,12 @@ export default function RhythmFlowScreen() {
       {step === 'memory' && slot === 'morning' ? (
         <>
           <MemoryVersePractice verse={verse} day={day} />
-          <AppButton label="Mark morning done" icon="checkmark" onPress={finish} style={{ marginTop: theme.spacing.lg }} />
+          <AppButton
+            label={t('common.markMorningDone')}
+            icon="checkmark"
+            onPress={finish}
+            style={{ marginTop: theme.spacing.lg }}
+          />
         </>
       ) : null}
 
@@ -148,19 +156,24 @@ export default function RhythmFlowScreen() {
             </AppText>
           </Card>
           <AppButton
-            label="Short on time? 5-minute moment"
+            label={t('common.shortOnTimeButton')}
             icon="timer-outline"
             variant="ghost"
             onPress={() => router.push(`/quick-evening?day=${day}`)}
             style={{ marginTop: theme.spacing.md }}
           />
           <AppButton
-            label="Open full devotional"
+            label={t('common.openFullDevotional')}
             variant="secondary"
             onPress={openFullScreen}
             style={{ marginTop: theme.spacing.md }}
           />
-          <AppButton label="Mark dinner done" icon="checkmark" onPress={finish} style={{ marginTop: theme.spacing.md }} />
+          <AppButton
+            label={t('common.markDinnerDone')}
+            icon="checkmark"
+            onPress={finish}
+            style={{ marginTop: theme.spacing.md }}
+          />
         </>
       ) : null}
 
@@ -175,21 +188,30 @@ export default function RhythmFlowScreen() {
             </AppText>
           </Card>
           <AppButton
-            label="Open full prayer"
+            label={t('common.openFullPrayer')}
             variant="secondary"
             onPress={openFullScreen}
             style={{ marginTop: theme.spacing.md }}
           />
-          <AppButton label="Mark bedtime done" icon="checkmark" onPress={finish} style={{ marginTop: theme.spacing.md }} />
+          <AppButton
+            label={t('common.markBedtimeDone')}
+            icon="checkmark"
+            onPress={finish}
+            style={{ marginTop: theme.spacing.md }}
+          />
         </>
       ) : null}
 
       {step === 'done' ? (
         <Card accent={theme.colors.green}>
           <AppText variant="heading" semiBold center>
-            {labels.doneLabel}! 🎉
+            {t('common.slotDoneLabel', { label: labels.doneLabel })} 🎉
           </AppText>
-          <AppButton label="Back to Today" onPress={() => router.replace('/(tabs)')} style={{ marginTop: theme.spacing.lg }} />
+          <AppButton
+            label={t('common.backToToday')}
+            onPress={() => router.replace('/(tabs)')}
+            style={{ marginTop: theme.spacing.lg }}
+          />
         </Card>
       ) : null}
     </Screen>

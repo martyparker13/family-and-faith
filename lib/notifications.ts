@@ -5,6 +5,7 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
+import { t } from '@/i18n/index';
 import type { ReminderTime } from '@/store/settings';
 
 /** Stable identifier for the legacy single daily reminder API. */
@@ -19,38 +20,26 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const SLOT_COPY = {
-  morning: {
-    title: 'Good morning ☀️',
-    body: 'Start the day with today’s Bible reading and memory verse.',
-    channel: 'morning-reminder',
-    channelName: 'Morning reminder',
-  },
-  dinner: {
-    title: 'Dinner talk 🍽️',
-    body: 'Tonight’s devotional is ready — one question at a time.',
-    channel: 'dinner-reminder',
-    channelName: 'Dinner reminder',
-  },
-  bedtime: {
-    title: 'Bedtime prayer 🌙',
-    body: 'Wind down together with tonight’s family prayer.',
-    channel: 'bedtime-reminder',
-    channelName: 'Bedtime reminder',
-  },
-} as const;
+export type ReminderSlot = 'morning' | 'dinner' | 'bedtime';
 
-export type ReminderSlot = keyof typeof SLOT_COPY;
+function slotCopy(slot: ReminderSlot) {
+  return {
+    title: t(`notifications.${slot}.title`),
+    body: t(`notifications.${slot}.body`),
+    channel: `${slot}-reminder`,
+    channelName: t(`notifications.${slot}.channelName`),
+  };
+}
 
 /** Asks for permission. Returns true when notifications are allowed. */
 export async function requestNotificationPermission(): Promise<boolean> {
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('daily-reminder', {
-      name: 'Daily reminder',
+      name: t('notifications.dailyReminderChannel'),
       importance: Notifications.AndroidImportance.DEFAULT,
     });
-    for (const slot of Object.keys(SLOT_COPY) as ReminderSlot[]) {
-      const { channel, channelName } = SLOT_COPY[slot];
+    for (const slot of ['morning', 'dinner', 'bedtime'] as ReminderSlot[]) {
+      const { channel, channelName } = slotCopy(slot);
       await Notifications.setNotificationChannelAsync(channel, {
         name: channelName,
         importance: Notifications.AndroidImportance.DEFAULT,
@@ -73,7 +62,7 @@ export async function scheduleSlotReminder(
 
   if (!time) return;
 
-  const copy = SLOT_COPY[slot];
+  const copy = slotCopy(slot);
   await Notifications.scheduleNotificationAsync({
     identifier,
     content: {
@@ -114,8 +103,8 @@ export async function scheduleDailyReminder(time: ReminderTime | null): Promise<
   await Notifications.scheduleNotificationAsync({
     identifier: DAILY_REMINDER_ID,
     content: {
-      title: 'Family time with God 🌿',
-      body: "Today's reading, devotional, and prayer are ready for your family.",
+      title: t('notifications.legacy.title'),
+      body: t('notifications.legacy.body'),
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,

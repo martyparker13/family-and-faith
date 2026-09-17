@@ -8,6 +8,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { Screen } from '@/components/Screen';
 import { SectionLabel } from '@/components/SectionLabel';
 import { VerseCard } from '@/components/VerseCard';
+import { useTranslation } from '@/i18n/context';
 import { getGuidanceTopic } from '@/lib/content';
 import { useTheme } from '@/lib/theme-context';
 
@@ -17,6 +18,7 @@ import { useTheme } from '@/lib/theme-context';
  */
 export default function GuidanceTopicScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const topic = id ? getGuidanceTopic(id) : undefined;
 
@@ -25,8 +27,8 @@ export default function GuidanceTopicScreen() {
       <Screen>
         <EmptyState
           icon="compass-outline"
-          title="Topic not found"
-          message="This topic seems to be missing. Head back and try another."
+          title={t('guidance.topicNotFoundTitle')}
+          message={t('guidance.topicNotFoundMessage')}
         />
       </Screen>
     );
@@ -44,17 +46,16 @@ export default function GuidanceTopicScreen() {
         {topic.name}
       </AppText>
 
-      {/* Pastoral note */}
       <Card accent={theme.colors.green} style={{ marginTop: theme.spacing.lg }}>
         <AppText variant="caption" bold scaled={false} color={theme.colors.green}>
-          A WORD OF ENCOURAGEMENT
+          {t('guidance.encouragement')}
         </AppText>
         <AppText variant="bodyLarge" style={{ marginTop: theme.spacing.sm }}>
           {topic.note}
         </AppText>
       </Card>
 
-      <SectionLabel>What God’s word says</SectionLabel>
+      <SectionLabel>{t('guidance.whatGodSays')}</SectionLabel>
       <View style={{ gap: theme.spacing.md }}>
         {topic.verses.map((verse) => (
           <VerseCard
@@ -67,7 +68,7 @@ export default function GuidanceTopicScreen() {
       </View>
 
       <AppText variant="caption" center style={{ marginTop: theme.spacing.xl }}>
-        Tap the heart to keep a verse in your Favorites.
+        {t('guidance.favoriteHint')}
       </AppText>
     </Screen>
   );

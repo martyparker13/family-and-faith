@@ -6,6 +6,7 @@
  */
 import * as Haptics from 'expo-haptics';
 
+import { t } from '@/i18n/index';
 import { allActivityDates, currentStreak } from '@/store/progress';
 
 export interface Celebration {
@@ -14,10 +15,10 @@ export interface Celebration {
 }
 
 const STREAK_MILESTONES: Record<number, string> = {
-  7: '🔥 One whole week together!',
-  30: '🔥 30 days — a family habit!',
-  100: '🔥 100 days! Amazing faithfulness!',
-  365: '🏆 A FULL YEAR — you did it!',
+  7: 'celebrations.streak7',
+  30: 'celebrations.streak30',
+  100: 'celebrations.streak100',
+  365: 'celebrations.streak365',
 };
 
 interface ProgressSnapshot {
@@ -26,13 +27,14 @@ interface ProgressSnapshot {
   prayerDays: Record<number, string>;
 }
 
+function milestoneMessage(streak: number): string | undefined {
+  const key = STREAK_MILESTONES[streak];
+  return key ? t(key) : undefined;
+}
+
 /**
  * Decides how to celebrate after an activity was just marked complete.
  * Call with the *post-toggle* store state.
- *
- * `celebratedMilestonesToday` maps streak milestone values (7, 30, …) to
- * the calendar date they were last celebrated — prevents firing the same
- * milestone up to three times when finishing reading, devotional, and prayer.
  */
 export function celebrationFor(
   state: ProgressSnapshot,
@@ -44,14 +46,14 @@ export function celebrationFor(
     state.completedDays[day] && state.devotionalDays[day] && state.prayerDays[day]
   );
   const streak = currentStreak(allActivityDates(state), todayISO);
-  const milestoneMessage = STREAK_MILESTONES[streak];
+  const message = milestoneMessage(streak);
   const milestoneAlreadyCelebrated = celebratedMilestonesToday[streak] === todayISO;
 
-  if (milestoneMessage && !milestoneAlreadyCelebrated) {
-    return { message: milestoneMessage, size: 'big' };
+  if (message && !milestoneAlreadyCelebrated) {
+    return { message, size: 'big' };
   }
   if (allThreeDone) {
-    return { message: '🎉 Reading, devotional & prayer — all done today!', size: 'big' };
+    return { message: t('celebrations.allThreeDone'), size: 'big' };
   }
   return { message: null, size: 'small' };
 }
@@ -64,7 +66,8 @@ export function isStreakMilestoneCelebration(
 ): number | null {
   if (celebration.size !== 'big' || !celebration.message) return null;
   const streak = currentStreak(allActivityDates(state), todayISO);
-  if (STREAK_MILESTONES[streak] === celebration.message) return streak;
+  const expected = milestoneMessage(streak);
+  if (expected === celebration.message) return streak;
   return null;
 }
 

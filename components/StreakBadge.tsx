@@ -3,6 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { AppText } from './AppText';
+import { useTranslation } from '@/i18n/context';
 import { useTheme } from '@/lib/theme-context';
 
 /**
@@ -11,6 +12,7 @@ import { useTheme } from '@/lib/theme-context';
  */
 export function StreakBadge({ streak, frozen }: { streak: number; frozen?: boolean }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const active = streak > 0;
   const flameColor = !active
     ? theme.colors.textMuted
@@ -22,10 +24,10 @@ export function StreakBadge({ streak, frozen }: { streak: number; frozen?: boole
     <View
       accessibilityLabel={
         frozen && active
-          ? `${streak} day family streak, frozen during vacation`
+          ? t('common.streakFrozen', { count: streak })
           : active
-            ? `${streak} day family streak`
-            : 'No streak yet — read today to start one'
+            ? t('common.streakActive', { count: streak })
+            : t('common.streakNone')
       }
       style={{
         flexDirection: 'row',
@@ -44,7 +46,7 @@ export function StreakBadge({ streak, frozen }: { streak: number; frozen?: boole
         {streak}
       </AppText>
       <AppText variant="caption" scaled={false}>
-        day{streak === 1 ? '' : 's'}
+        {streak === 1 ? t('common.daySingular') : t('common.dayPlural')}
       </AppText>
     </View>
   );

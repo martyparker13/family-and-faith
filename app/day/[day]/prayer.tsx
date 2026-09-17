@@ -16,6 +16,7 @@ import { useTheme } from '@/lib/theme-context';
 import { prayerFavoriteId, useFavorites } from '@/store/favorites';
 import { useProgress } from '@/store/progress';
 import { useSettings } from '@/store/settings';
+import { useTranslation } from '@/i18n/context';
 
 /**
  * Feature 3 — Daily Family Prayer screen.
@@ -25,6 +26,7 @@ import { useSettings } from '@/store/settings';
  */
 export default function PrayerScreen() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ day: string }>();
   const day = Math.min(365, Math.max(1, parseInt(params.day ?? '1', 10) || 1));
   const prayer = getPrayer(day);
@@ -83,7 +85,7 @@ export default function PrayerScreen() {
       </AppText>
       {!prayerMode && (
         <AppText variant="caption" center scaled={false} style={{ marginTop: theme.spacing.xs }}>
-          Pray it aloud together — blanks are for each person to fill in!
+          {t('prayer.prayAloudHint')}
         </AppText>
       )}
 
@@ -108,7 +110,7 @@ export default function PrayerScreen() {
         })}
       </View>
 
-      <SectionLabel color={theme.colors.green}>Kids tap when ready</SectionLabel>
+      <SectionLabel color={theme.colors.green}>{t('prayer.kidsTapSection')}</SectionLabel>
       <Animated.View style={{ transform: [{ scale: pulse }] }}>
         <Card accent={theme.colors.green}>
           {children.length > 0 ? (
@@ -116,7 +118,7 @@ export default function PrayerScreen() {
               {children.map((child, i) => (
                 <AppButton
                   key={`child-${i}`}
-                  label={child.name ?? `Child ${i + 1}`}
+                  label={child.name ?? t('common.child', { index: i + 1 })}
                   icon="hand-left-outline"
                   variant="secondary"
                   onPress={() => onKidTap(String(i))}
@@ -125,14 +127,17 @@ export default function PrayerScreen() {
             </View>
           ) : (
             <AppButton
-              label={`Ready! (${participation?.taps ?? 0} taps)`}
+              label={t('common.readyTaps', { count: participation?.taps ?? 0 })}
               icon="hand-left-outline"
               onPress={() => onKidTap()}
             />
           )}
           {(participation?.taps ?? 0) > 0 ? (
             <AppText variant="small" color={theme.colors.textMuted} style={{ marginTop: theme.spacing.sm }}>
-              {participation?.taps} tap{(participation?.taps ?? 0) === 1 ? '' : 's'} today
+              {t('common.tapsToday', {
+                count: participation?.taps ?? 0,
+                plural: (participation?.taps ?? 0) === 1 ? '' : 's',
+              })}
             </AppText>
           ) : null}
         </Card>
@@ -144,7 +149,7 @@ export default function PrayerScreen() {
         style={{ marginTop: theme.spacing.xl, backgroundColor: theme.colors.surfaceAlt }}
       >
         <AppText variant="caption" bold center scaled={false} color={theme.colors.green}>
-          ALL TOGETHER NOW
+          {t('prayer.allTogether')}
         </AppText>
         <AppText
           variant="title"
@@ -173,8 +178,8 @@ export default function PrayerScreen() {
         <Pressable
           onPress={() => setPrayerMode((m) => !m)}
           accessibilityRole="button"
-          accessibilityLabel={prayerMode ? 'Exit prayer mode' : 'Enter prayer mode'}
-          accessibilityHint="Prayer mode dims the screen and enlarges the prayer text"
+          accessibilityLabel={prayerMode ? t('common.exitPrayerMode') : t('common.enterPrayerMode')}
+          accessibilityHint={t('common.prayerModeHint')}
           style={({ pressed }) => ({
             flexDirection: 'row',
             alignItems: 'center',
@@ -199,7 +204,7 @@ export default function PrayerScreen() {
             scaled={false}
             color={prayerMode ? theme.colors.onAccent : theme.colors.text}
           >
-            {prayerMode ? 'Exit prayer mode' : 'Prayer mode'}
+            {prayerMode ? t('common.exitPrayerMode') : t('common.enterPrayerMode')}
           </AppText>
         </Pressable>
 
@@ -208,7 +213,7 @@ export default function PrayerScreen() {
             onPress={toggleFavoritePrayer}
             accessibilityRole="button"
             accessibilityLabel={
-              isFavorite ? 'Remove this prayer from favorites' : 'Save this prayer to favorites'
+              isFavorite ? t('common.removePrayerFavorite') : t('common.savePrayerFavorite')
             }
             style={({ pressed }) => ({
               flexDirection: 'row',
@@ -229,7 +234,7 @@ export default function PrayerScreen() {
               color={isFavorite ? theme.colors.clay : theme.colors.textMuted}
             />
             <AppText variant="small" semiBold scaled={false}>
-              {isFavorite ? 'Saved' : 'Save'}
+              {isFavorite ? t('common.savedPrayer') : t('common.savePrayer')}
             </AppText>
           </Pressable>
         )}
@@ -241,7 +246,7 @@ export default function PrayerScreen() {
             <CompleteActivityButton activity="prayer" day={day} />
           </View>
           <AppButton
-            label="Our family prayer list"
+            label={t('common.ourPrayerList')}
             icon="list"
             variant="ghost"
             onPress={() => router.push('/prayer-list')}

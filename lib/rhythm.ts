@@ -2,11 +2,18 @@
  * Daily rhythm: morning reading, dinner devotional, bedtime prayer.
  * Slot detection is local-time based so families see what's "next".
  */
+import { t } from '@/i18n/index';
 import type { Activity } from '@/store/progress';
 
 export type RhythmSlot = 'morning' | 'dinner' | 'bedtime';
 
 const SLOT_ORDER: RhythmSlot[] = ['morning', 'dinner', 'bedtime'];
+
+const SLOT_ICONS: Record<RhythmSlot, 'sunny' | 'restaurant' | 'moon'> = {
+  morning: 'sunny',
+  dinner: 'restaurant',
+  bedtime: 'moon',
+};
 
 /** Maps each rhythm moment to its primary activity. */
 export function slotActivity(slot: RhythmSlot): Activity {
@@ -41,6 +48,18 @@ export interface SlotLabels {
   icon: 'sunny' | 'restaurant' | 'moon';
 }
 
+/** Localized labels for a rhythm slot (uses active locale). */
+export function getSlotLabels(slot: RhythmSlot): SlotLabels {
+  return {
+    title: t(`rhythm.${slot}.title`),
+    short: t(`rhythm.${slot}.short`),
+    startLabel: t(`rhythm.${slot}.startLabel`),
+    doneLabel: t(`rhythm.${slot}.doneLabel`),
+    icon: SLOT_ICONS[slot],
+  };
+}
+
+/** @deprecated Use getSlotLabels(slot) for localized strings. */
 export const SLOT_LABELS: Record<RhythmSlot, SlotLabels> = {
   morning: {
     title: 'Morning time',

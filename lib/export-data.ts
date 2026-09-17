@@ -3,6 +3,7 @@
  */
 import { Share } from 'react-native';
 
+import { t } from '@/i18n/index';
 import { getDevotional, getPlanDay } from '@/lib/content';
 import { percentComplete } from '@/store/progress';
 import type { FavoriteVerse } from '@/store/favorites';
@@ -112,28 +113,33 @@ export function buildFamilyBackup(stores: ExportStores): FamilyBackup {
 /** Markdown keepsake suitable for share/print. */
 export function exportYearKeepsake(stores: ExportStores): string {
   const { settings, progress, journal, favorites, prayerList } = stores;
-  const family = settings.familyName || 'Our Family';
+  const family = settings.familyName || t('common.ourFamily');
   const pct = percentComplete(progress.completedDays);
   const answered = prayerList.filter((r) => r.answeredAt);
 
   const lines: string[] = [
-    `# ${family} — Faith & Family Keepsake`,
+    `# ${t('exportKeepsake.title', { family })}`,
     '',
-    `*Exported ${new Date().toLocaleDateString()}*`,
+    t('exportKeepsake.exported', { date: new Date().toLocaleDateString() }),
     '',
-    '## Our year in numbers',
-    `- **${pct}%** of the Bible read together`,
-    `- **${Object.keys(progress.completedDays).length}** reading days`,
-    `- **${Object.keys(journal).length}** journal entries`,
-    `- **${answered.length}** answered prayers`,
-    `- **${favorites.length}** saved favorites`,
+    t('exportKeepsake.yearInNumbers'),
+    t('exportKeepsake.percentBible', { percent: pct }),
+    t('exportKeepsake.readingDays', { count: Object.keys(progress.completedDays).length }),
+    t('exportKeepsake.journalEntries', { count: Object.keys(journal).length }),
+    t('exportKeepsake.answeredPrayers', { count: answered.length }),
+    t('exportKeepsake.savedFavorites', { count: favorites.length }),
     '',
   ];
 
   if (answered.length > 0) {
-    lines.push('## Answered prayers', '');
+    lines.push(t('exportKeepsake.answeredPrayersSection'), '');
     for (const r of answered) {
-      lines.push(`- **${r.title}**${r.answeredNote ? ` — ${r.answeredNote}` : ''}`);
+      lines.push(
+        t('exportKeepsake.answeredEntry', {
+          title: r.title,
+          note: r.answeredNote ? ` — ${r.answeredNote}` : '',
+        })
+      );
     }
     lines.push('');
   }
@@ -144,40 +150,44 @@ export function exportYearKeepsake(stores: ExportStores): string {
   const challengeNotes = stores.progress.familyChallengeNotes ?? {};
   const challengeDays = Object.keys(challengeNotes).map(Number).sort((a, b) => a - b);
   if (challengeDays.length > 0) {
-    lines.push('## Family challenges', '');
+    lines.push(t('exportKeepsake.familyChallenges'), '');
     for (const day of challengeDays) {
       const note = challengeNotes[day];
-      if (note?.note) lines.push(`- Day ${day}: ${note.note}`);
+      if (note?.note) lines.push(t('exportKeepsake.challengeDay', { day, note: note.note }));
     }
     lines.push('');
   }
 
   if (journalDays.length > 0) {
-    lines.push('## Family journal', '');
+    lines.push(t('exportKeepsake.familyJournal'), '');
     for (const day of journalDays) {
       const entry = journal[day];
       const plan = getPlanDay(day);
-      lines.push(`### Day ${day} — ${plan.passages[0]?.reference ?? ''}`);
+      lines.push(
+        t('exportKeepsake.journalDay', { day, reference: plan.passages[0]?.reference ?? '' })
+      );
       if (entry.note) lines.push(entry.note);
-      if (entry.voiceUri) lines.push('_Voice note saved_');
+      if (entry.voiceUri) lines.push(t('exportKeepsake.voiceNoteSaved'));
       lines.push('');
     }
   }
 
   if (favorites.length > 0) {
-    lines.push('## Favorite verses & prayers', '');
+    lines.push(t('exportKeepsake.favoritesSection'), '');
     for (const f of favorites.slice(0, 50)) {
-      lines.push(`> “${f.text}” — *${f.reference}*`);
+      lines.push(t('exportKeepsake.favoriteVerse', { text: f.text, reference: f.reference }));
       lines.push('');
     }
   }
 
-  lines.push('## Themes we explored', '');
+  lines.push(t('exportKeepsake.themesSection'), '');
   const themes = new Set<string>();
   for (const day of Object.keys(progress.devotionalDays).map(Number)) {
     themes.add(getDevotional(day).theme);
   }
-  lines.push([...themes].slice(0, 30).join(' · ') || '_Keep going — your themes will fill in here._');
+  lines.push(
+    [...themes].slice(0, 30).join(' · ') || t('exportKeepsake.themesPlaceholder')
+  );
 
   return lines.join('\n');
 }
@@ -219,6 +229,6 @@ export async function shareFamilyDataExport(): Promise<void> {
   const json = JSON.stringify(payload, null, 2);
   await Share.share({
     message: json,
-    title: 'Faith & Family backup',
+    title: t('settings.exportBackupTitle'),
   });
 }
