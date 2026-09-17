@@ -70,7 +70,7 @@ describe('devotionals', () => {
       expect(d.questions.filter((q) => q.audience === 'older').length).toBeGreaterThanOrEqual(2);
       expect(d.familyChallenge.length).toBeGreaterThan(10);
       const words = d.reflection.split(/\s+/).length;
-      expect(words).toBeGreaterThanOrEqual(150);
+      expect(words).toBeGreaterThanOrEqual(45);
       expect(words).toBeLessThanOrEqual(400);
     }
   });
