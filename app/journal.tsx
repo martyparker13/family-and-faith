@@ -10,7 +10,7 @@ import {
 } from 'expo-audio';
 import { copyAsync, documentDirectory } from 'expo-file-system/legacy';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
 
 import { AppButton } from '@/components/AppButton';
@@ -99,17 +99,11 @@ function JournalEditor({
   const [mode, setMode] = useState<'text' | 'voice'>(initialVoiceUri ? 'voice' : 'text');
   const [voiceUri, setVoiceUri] = useState(initialVoiceUri);
   const [voiceDurationMs, setVoiceDurationMs] = useState(initialVoiceDurationMs);
-  const [playing, setPlaying] = useState(false);
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const recorderState = useAudioRecorderState(recorder);
   const player = useAudioPlayer(voiceUri ? { uri: voiceUri } : undefined);
   const playerStatus = useAudioPlayerStatus(player);
-
-  useEffect(() => {
-    if (playerStatus.didJustFinish) {
-      setPlaying(false);
-    }
-  }, [playerStatus.didJustFinish]);
+  const playing = playerStatus.playing;
 
   const save = () => {
     onSave(note, voiceUri ? { voiceUri, voiceDurationMs } : undefined);
@@ -143,12 +137,10 @@ function JournalEditor({
     if (!voiceUri) return;
     if (playing) {
       player.pause();
-      setPlaying(false);
       return;
     }
     await player.seekTo(0);
     player.play();
-    setPlaying(true);
   };
 
   return (
