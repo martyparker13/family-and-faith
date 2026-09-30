@@ -1,8 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
+import {
+  AudioModule,
+  RecordingPresets,
+  setAudioModeAsync,
+  useAudioPlayer,
+  useAudioPlayerStatus,
+  useAudioRecorder,
+  useAudioRecorderState,
+} from 'expo-audio';
 import { copyAsync, documentDirectory } from 'expo-file-system/legacy';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
 
 import { AppButton } from '@/components/AppButton';
@@ -91,16 +99,11 @@ function JournalEditor({
   const [mode, setMode] = useState<'text' | 'voice'>(initialVoiceUri ? 'voice' : 'text');
   const [voiceUri, setVoiceUri] = useState(initialVoiceUri);
   const [voiceDurationMs, setVoiceDurationMs] = useState(initialVoiceDurationMs);
-  const recordingRef = useRef<Audio.Recording | null>(null);
-  const soundRef = useRef<Audio.Sound | null>(null);
-  const [recording, setRecording] = useState(false);
-  const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    return () => {
-      soundRef.current?.unloadAsync().catch(() => {});
-    };
-  }, []);
+  const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
+  const recorderState = useAudioRecorderState(recorder);
+  const player = useAudioPlayer(voiceUri ? { uri: voiceUri } : undefined);
+  const playerStatus = useAudioPlayerStatus(player);
+  const playing = playerStatus.playing;
 
   const save = () => {
     onSave(note, voiceUri ? { voiceUri, voiceDurationMs } : undefined);
@@ -108,48 +111,36 @@ function JournalEditor({
   };
 
   const startRecording = async () => {
-    const perm = await Audio.requestPermissionsAsync();
+    const perm = await AudioModule.requestRecordingPermissionsAsync();
     if (!perm.granted) return;
-    await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
-    const rec = new Audio.Recording();
-    await rec.prepareToRecordAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY);
-    await rec.startAsync();
-    recordingRef.current = rec;
-    setRecording(true);
+    await setAudioModeAsync({ allowsRecording: true, playsInSilentMode: true });
+    await recorder.prepareToRecordAsync();
+    recorder.record();
   };
 
   const stopRecording = async () => {
-    const rec = recordingRef.current;
-    if (!rec) return;
-    await rec.stopAndUnloadAsync();
-    const uri = rec.getURI();
-    const status = await rec.getStatusAsync();
-    recordingRef.current = null;
-    setRecording(false);
+    if (!recorderState.isRecording) return;
+    await recorder.stop();
+    const uri = recorder.uri;
+    const status = recorder.getStatus();
     if (uri) {
       const dest = `${documentDirectory}journal-voice-${day}-${Date.now()}.m4a`;
       await copyAsync({ from: uri, to: dest });
       setVoiceUri(dest);
-      setVoiceDurationMs(status.durationMillis ?? undefined);
+      setVoiceDurationMs(status.durationMillis || undefined);
+      player.replace({ uri: dest });
       setSaved(false);
     }
   };
 
   const togglePlayback = async () => {
     if (!voiceUri) return;
-    if (playing && soundRef.current) {
-      await soundRef.current.stopAsync();
-      setPlaying(false);
+    if (playing) {
+      player.pause();
       return;
     }
-    soundRef.current?.unloadAsync().catch(() => {});
-    const { sound } = await Audio.Sound.createAsync({ uri: voiceUri });
-    soundRef.current = sound;
-    setPlaying(true);
-    sound.setOnPlaybackStatusUpdate((status) => {
-      if (status.isLoaded && status.didJustFinish) setPlaying(false);
-    });
-    await sound.playAsync();
+    await player.seekTo(0);
+    player.play();
   };
 
   return (
@@ -192,10 +183,10 @@ function JournalEditor({
       ) : (
         <View style={{ alignItems: 'center', gap: theme.spacing.md, paddingVertical: theme.spacing.md }}>
           <AppButton
-            label={recording ? t('common.stopRecording') : voiceUri ? t('common.rerecord') : t('common.startRecording')}
-            icon={recording ? 'stop-circle' : 'mic'}
-            variant={recording ? 'secondary' : 'primary'}
-            onPress={recording ? stopRecording : startRecording}
+            label={recorderState.isRecording ? t('common.stopRecording') : voiceUri ? t('common.rerecord') : t('common.startRecording')}
+            icon={recorderState.isRecording ? 'stop-circle' : 'mic'}
+            variant={recorderState.isRecording ? 'secondary' : 'primary'}
+            onPress={recorderState.isRecording ? stopRecording : startRecording}
           />
           {voiceUri ? (
             <Pressable

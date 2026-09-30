@@ -1,30 +1,27 @@
 /**
  * Audio session configuration so read-aloud (expo-speech) continues in background.
  */
-import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
+import { setAudioModeAsync, type AudioMode } from 'expo-audio';
 
-export interface SpeechAudioModeOptions {
-  staysActiveInBackground: boolean;
-  playsInSilentModeIOS: boolean;
-  shouldDuckAndroid: boolean;
-  playThroughEarpieceAndroid: boolean;
-  interruptionModeIOS: InterruptionModeIOS;
-  interruptionModeAndroid: InterruptionModeAndroid;
-}
+export type SpeechAudioModeOptions = Pick<
+  AudioMode,
+  | 'shouldPlayInBackground'
+  | 'playsInSilentMode'
+  | 'interruptionMode'
+  | 'shouldRouteThroughEarpiece'
+>;
 
 /** Defaults used when configuring speech / narration audio. */
 export function speechAudioModeOptions(): SpeechAudioModeOptions {
   return {
-    staysActiveInBackground: true,
-    playsInSilentModeIOS: true,
-    shouldDuckAndroid: true,
-    playThroughEarpieceAndroid: false,
-    interruptionModeIOS: InterruptionModeIOS.DuckOthers,
-    interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+    shouldPlayInBackground: true,
+    playsInSilentMode: true,
+    interruptionMode: 'duckOthers',
+    shouldRouteThroughEarpiece: false,
   };
 }
 
 /** Configure device audio session for background read-aloud. */
 export async function configureSpeechAudioSession(): Promise<void> {
-  await Audio.setAudioModeAsync(speechAudioModeOptions());
+  await setAudioModeAsync(speechAudioModeOptions());
 }
