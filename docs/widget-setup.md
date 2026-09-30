@@ -30,7 +30,7 @@ URL shortcuts with the same `faithandfamily://` links.
 
 ## Native widget (future / custom dev build)
 
-Expo SDK 56 does not include a cross-platform widget API in the managed
+Expo SDK 57 does not include a cross-platform widget API in the managed
 workflow. Recommended path for iOS:
 
 1. Use [`@bacons/apple-targets`](https://github.com/EvanBacon/expo-apple-targets)

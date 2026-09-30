@@ -1,17 +1,14 @@
 import { speechAudioModeOptions } from '@/lib/audio-session';
 
-jest.mock('expo-av', () => ({
-  Audio: {
-    setAudioModeAsync: jest.fn().mockResolvedValue(undefined),
-  },
-  InterruptionModeIOS: { DuckOthers: 1 },
-  InterruptionModeAndroid: { DuckOthers: 2 },
+jest.mock('expo-audio', () => ({
+  setAudioModeAsync: jest.fn().mockResolvedValue(undefined),
 }));
 
 describe('speechAudioModeOptions', () => {
   it('enables background playback', () => {
     const opts = speechAudioModeOptions();
-    expect(opts.staysActiveInBackground).toBe(true);
-    expect(opts.playsInSilentModeIOS).toBe(true);
+    expect(opts.shouldPlayInBackground).toBe(true);
+    expect(opts.playsInSilentMode).toBe(true);
+    expect(opts.interruptionMode).toBe('duckOthers');
   });
 });

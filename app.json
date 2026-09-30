@@ -28,7 +28,10 @@
               "pathPrefix": "/"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "adaptiveIcon": {
@@ -61,7 +64,17 @@
           "color": "#C99A3C"
         }
       ],
-      "@react-native-community/datetimepicker"
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Faith & Family uses the microphone for optional voice notes in the family journal.",
+          "enableBackgroundPlayback": true,
+          "recordAudioAndroid": true
+        }
+      ],
+      "@react-native-community/datetimepicker",
+      "expo-asset",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true

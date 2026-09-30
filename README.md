@@ -81,7 +81,7 @@ eas build --profile production  # store-ready build
 | **Weekly recap** | `app/recap.tsx` | Sunday summary of readings, themes, journal, answered prayers; share with grandparents; printable weekly sheet |
 | **Vacation / travel mode** | `app/(tabs)/settings.tsx` | Pause reminders, freeze streaks, suppress catch-up guilt while away |
 | **Kid question log** | `app/kid-questions.tsx`, reading + devotional screens | Quick capture of children's questions; list view from Today |
-| **Background read-aloud** | `app/day/[day]/reading.tsx`, `lib/audio-session.ts` | Read-aloud continues when app backgrounds (expo-av audio session) |
+| **Background read-aloud** | `app/day/[day]/reading.tsx`, `lib/audio-session.ts` | Read-aloud continues when app backgrounds (expo-audio session) |
 | **Book milestones** | `components/BookMilestoneBadge.tsx`, Settings | Celebration when a whole Bible book is finished |
 | **Tap-along prayer** | `app/day/[day]/prayer.tsx` | Kids tap when ready — per-child buttons when configured |
 | **Voice note journal** | `app/journal.tsx` | Text or voice journal entries with playback |
