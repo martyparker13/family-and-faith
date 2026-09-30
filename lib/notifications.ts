@@ -1,8 +1,15 @@
 /**
  * Optional daily rhythm reminders via expo-notifications — three distinct
  * local notifications for morning, dinner, and bedtime. No push service involved.
+ *
+ * Android Expo Go (SDK 53+) removed remote push and evaluating
+ * `expo-notifications` can throw at module load. That used to take down
+ * `_layout.tsx` and expo-router ("missing default export"). Load the native
+ * module lazily and no-op on Android Expo Go; keep real local reminders on
+ * iOS Expo Go and all dev/production builds.
  */
-import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import type * as NotificationsNS from 'expo-notifications';
 import { Platform } from 'react-native';
 
 import { t } from '@/i18n/index';
@@ -11,14 +18,51 @@ import type { ReminderTime } from '@/store/settings';
 /** Stable identifier for the legacy single daily reminder API. */
 export const DAILY_REMINDER_ID = 'ff-daily-reminder';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowBanner: true,
-    shouldShowList: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+type NotificationsModule = typeof NotificationsNS;
+
+let notificationsModule: NotificationsModule | null | undefined;
+
+/** Android Expo Go cannot load expo-notifications (SDK 53+). */
+export function isAndroidExpoGo(): boolean {
+  return Platform.OS === 'android' && Constants.appOwnership === 'expo';
+}
+
+function loadNotificationsModule(): NotificationsModule | null {
+  if (isAndroidExpoGo()) {
+    return null;
+  }
+  try {
+    // Lazy require so a static import cannot crash the root layout.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    return require('expo-notifications') as NotificationsModule;
+  } catch {
+    return null;
+  }
+}
+
+function getNotifications(): NotificationsModule | null {
+  if (isAndroidExpoGo()) {
+    return null;
+  }
+  if (notificationsModule === undefined) {
+    notificationsModule = loadNotificationsModule();
+  }
+  return notificationsModule;
+}
+
+try {
+  const Notifications = getNotifications();
+  Notifications?.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+} catch {
+  // setNotificationHandler must not throw during import.
+}
 
 export type ReminderSlot = 'morning' | 'dinner' | 'bedtime';
 
@@ -33,6 +77,9 @@ function slotCopy(slot: ReminderSlot) {
 
 /** Asks for permission. Returns true when notifications are allowed. */
 export async function requestNotificationPermission(): Promise<boolean> {
+  const Notifications = getNotifications();
+  if (!Notifications) return false;
+
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('daily-reminder', {
       name: t('notifications.dailyReminderChannel'),
@@ -57,6 +104,9 @@ export async function scheduleSlotReminder(
   slot: ReminderSlot,
   time: ReminderTime | null
 ): Promise<void> {
+  const Notifications = getNotifications();
+  if (!Notifications) return;
+
   const identifier = slotNotificationId(slot);
   await Notifications.cancelScheduledNotificationAsync(identifier).catch(() => {});
 
@@ -97,6 +147,9 @@ export async function scheduleRhythmReminders(reminders: RhythmReminders): Promi
  * @deprecated Use scheduleRhythmReminders instead.
  */
 export async function scheduleDailyReminder(time: ReminderTime | null): Promise<void> {
+  const Notifications = getNotifications();
+  if (!Notifications) return;
+
   await Notifications.cancelScheduledNotificationAsync(DAILY_REMINDER_ID);
   if (!time) return;
 
