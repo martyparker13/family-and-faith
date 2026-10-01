@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { Animated, Easing, StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import { AppText } from './AppText';
@@ -111,7 +111,7 @@ export function buildConfettiPieces(
 }
 
 const PieceView = memo(function PieceView({ piece }: { piece: ConfettiPiece }) {
-  const progress = useRef(new Animated.Value(0)).current;
+  const [progress] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
     progress.setValue(0);
