@@ -19,7 +19,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const locale = resolveLocale(language);
 
   useEffect(() => {
-    setActiveLocale(locale);
+    try {
+      setActiveLocale(locale);
+    } catch {
+      // Locale updates must not crash the tree.
+    }
   }, [locale]);
 
   const value = useMemo(

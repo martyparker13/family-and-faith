@@ -17,30 +17,60 @@ const PERSISTED_STORES = [
   usePrayerList,
 ] as const;
 
+const HYDRATION_TIMEOUT_MS = 8_000;
+
 /** True when every persisted store has finished hydrating. */
 export function allStoresHydrated(): boolean {
-  return PERSISTED_STORES.every((store) => store.persist.hasHydrated());
+  try {
+    return PERSISTED_STORES.every((store) => store.persist.hasHydrated());
+  } catch {
+    // A persist API failure must not block first paint forever.
+    return true;
+  }
 }
 
 /**
  * Resolves once all persisted stores have hydrated. If already hydrated,
- * resolves immediately.
+ * resolves immediately. Times out so a stuck AsyncStorage read cannot
+ * leave the production splash up forever.
  */
 export function waitForAllStoresHydrated(): Promise<void> {
-  if (allStoresHydrated()) return Promise.resolve();
+  try {
+    if (allStoresHydrated()) return Promise.resolve();
+  } catch {
+    return Promise.resolve();
+  }
 
   return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      unsubs.forEach((u) => {
+        try {
+          u();
+        } catch {
+          // ignore
+        }
+      });
+      resolve();
+    };
+
     const unsubs: (() => void)[] = [];
     const check = () => {
-      if (allStoresHydrated()) {
-        unsubs.forEach((u) => u());
-        resolve();
-      }
+      if (allStoresHydrated()) finish();
     };
-    for (const store of PERSISTED_STORES) {
-      if (store.persist.hasHydrated()) continue;
-      unsubs.push(store.persist.onFinishHydration(check));
+    try {
+      for (const store of PERSISTED_STORES) {
+        if (store.persist.hasHydrated()) continue;
+        unsubs.push(store.persist.onFinishHydration(check));
+      }
+    } catch {
+      finish();
+      return;
     }
+    const timeout = setTimeout(finish, HYDRATION_TIMEOUT_MS);
+    unsubs.push(() => clearTimeout(timeout));
     check();
   });
 }

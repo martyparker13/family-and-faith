@@ -7,6 +7,11 @@
  * `_layout.tsx` and expo-router ("missing default export"). Load the native
  * module lazily and no-op on Android Expo Go; keep real local reminders on
  * iOS Expo Go and all dev/production builds.
+ *
+ * Production/release must still initialize the handler, but never throw:
+ * require + setNotificationHandler run on first use (not at import time) and
+ * every native call is try/caught so a missing permission or module cannot
+ * crash launch.
  */
 import Constants from 'expo-constants';
 import type * as NotificationsNS from 'expo-notifications';
@@ -40,63 +45,108 @@ function loadNotificationsModule(): NotificationsModule | null {
   }
 }
 
+function installNotificationHandler(Notifications: NotificationsModule): void {
+  try {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowBanner: true,
+        shouldShowList: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+  } catch {
+    // setNotificationHandler must not throw during startup.
+  }
+}
+
 function getNotifications(): NotificationsModule | null {
   if (isAndroidExpoGo()) {
     return null;
   }
   if (notificationsModule === undefined) {
     notificationsModule = loadNotificationsModule();
+    if (notificationsModule) {
+      installNotificationHandler(notificationsModule);
+    }
   }
   return notificationsModule;
 }
 
-try {
-  const Notifications = getNotifications();
-  Notifications?.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowBanner: true,
-      shouldShowList: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
-} catch {
-  // setNotificationHandler must not throw during import.
+/**
+ * Production / iOS Expo Go / dev clients: load the native module and install
+ * the foreground handler. Safe to call more than once. No-ops on Android Expo
+ * Go and when the module cannot load.
+ */
+export function initializeNotifications(): void {
+  try {
+    const Notifications = getNotifications();
+    if (Notifications) installNotificationHandler(Notifications);
+  } catch {
+    // Import-time and first-paint must never throw.
+  }
 }
 
 export type ReminderSlot = 'morning' | 'dinner' | 'bedtime';
 
 function slotCopy(slot: ReminderSlot) {
-  return {
-    title: t(`notifications.${slot}.title`),
-    body: t(`notifications.${slot}.body`),
-    channel: `${slot}-reminder`,
-    channelName: t(`notifications.${slot}.channelName`),
-  };
+  try {
+    return {
+      title: t(`notifications.${slot}.title`),
+      body: t(`notifications.${slot}.body`),
+      channel: `${slot}-reminder`,
+      channelName: t(`notifications.${slot}.channelName`),
+    };
+  } catch {
+    return {
+      title: slot,
+      body: slot,
+      channel: `${slot}-reminder`,
+      channelName: slot,
+    };
+  }
 }
 
-/** Asks for permission. Returns true when notifications are allowed. */
-export async function requestNotificationPermission(): Promise<boolean> {
-  const Notifications = getNotifications();
-  if (!Notifications) return false;
+async function ensureAndroidChannels(Notifications: NotificationsModule): Promise<void> {
+  if (Platform.OS !== 'android') return;
 
-  if (Platform.OS === 'android') {
+  try {
     await Notifications.setNotificationChannelAsync('daily-reminder', {
       name: t('notifications.dailyReminderChannel'),
       importance: Notifications.AndroidImportance.DEFAULT,
     });
-    for (const slot of ['morning', 'dinner', 'bedtime'] as ReminderSlot[]) {
+  } catch {
+    // Channel creation is best-effort; permission prompt can still proceed.
+  }
+
+  for (const slot of ['morning', 'dinner', 'bedtime'] as ReminderSlot[]) {
+    try {
       const { channel, channelName } = slotCopy(slot);
       await Notifications.setNotificationChannelAsync(channel, {
         name: channelName,
         importance: Notifications.AndroidImportance.DEFAULT,
       });
+    } catch {
+      // Keep going so one channel failure cannot block reminders.
     }
   }
-  const existing = await Notifications.getPermissionsAsync();
-  if (existing.granted) return true;
-  const requested = await Notifications.requestPermissionsAsync();
-  return requested.granted;
+}
+
+/** Asks for permission. Returns true when notifications are allowed. */
+export async function requestNotificationPermission(): Promise<boolean> {
+  try {
+    const Notifications = getNotifications();
+    if (!Notifications) return false;
+
+    await ensureAndroidChannels(Notifications);
+
+    const existing = await Notifications.getPermissionsAsync();
+    if (existing.granted) return true;
+    const requested = await Notifications.requestPermissionsAsync();
+    return requested.granted;
+  } catch {
+    return false;
+  }
 }
 
 /** Schedule one repeating daily notification for a rhythm slot. */
@@ -104,29 +154,33 @@ export async function scheduleSlotReminder(
   slot: ReminderSlot,
   time: ReminderTime | null
 ): Promise<void> {
-  const Notifications = getNotifications();
-  if (!Notifications) return;
+  try {
+    const Notifications = getNotifications();
+    if (!Notifications) return;
 
-  const identifier = slotNotificationId(slot);
-  await Notifications.cancelScheduledNotificationAsync(identifier).catch(() => {});
+    const identifier = slotNotificationId(slot);
+    await Notifications.cancelScheduledNotificationAsync(identifier).catch(() => {});
 
-  if (!time) return;
+    if (!time) return;
 
-  const copy = slotCopy(slot);
-  await Notifications.scheduleNotificationAsync({
-    identifier,
-    content: {
-      title: copy.title,
-      body: copy.body,
-      data: { slot },
-    },
-    trigger: {
-      type: Notifications.SchedulableTriggerInputTypes.DAILY,
-      hour: time.hour,
-      minute: time.minute,
-      channelId: Platform.OS === 'android' ? copy.channel : undefined,
-    },
-  });
+    const copy = slotCopy(slot);
+    await Notifications.scheduleNotificationAsync({
+      identifier,
+      content: {
+        title: copy.title,
+        body: copy.body,
+        data: { slot },
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DAILY,
+        hour: time.hour,
+        minute: time.minute,
+        channelId: Platform.OS === 'android' ? copy.channel : undefined,
+      },
+    });
+  } catch {
+    // Permission, channel, or native-module failure must not crash the app.
+  }
 }
 
 export interface RhythmReminders {
@@ -137,9 +191,13 @@ export interface RhythmReminders {
 
 /** Replaces all rhythm reminders with the given times (scoped per slot). */
 export async function scheduleRhythmReminders(reminders: RhythmReminders): Promise<void> {
-  await scheduleSlotReminder('morning', reminders.morning);
-  await scheduleSlotReminder('dinner', reminders.dinner);
-  await scheduleSlotReminder('bedtime', reminders.bedtime);
+  try {
+    await scheduleSlotReminder('morning', reminders.morning);
+    await scheduleSlotReminder('dinner', reminders.dinner);
+    await scheduleSlotReminder('bedtime', reminders.bedtime);
+  } catch {
+    // Individual slots already swallow errors; this is a final backstop.
+  }
 }
 
 /**
@@ -147,25 +205,29 @@ export async function scheduleRhythmReminders(reminders: RhythmReminders): Promi
  * @deprecated Use scheduleRhythmReminders instead.
  */
 export async function scheduleDailyReminder(time: ReminderTime | null): Promise<void> {
-  const Notifications = getNotifications();
-  if (!Notifications) return;
+  try {
+    const Notifications = getNotifications();
+    if (!Notifications) return;
 
-  await Notifications.cancelScheduledNotificationAsync(DAILY_REMINDER_ID);
-  if (!time) return;
+    await Notifications.cancelScheduledNotificationAsync(DAILY_REMINDER_ID).catch(() => {});
+    if (!time) return;
 
-  await Notifications.scheduleNotificationAsync({
-    identifier: DAILY_REMINDER_ID,
-    content: {
-      title: t('notifications.legacy.title'),
-      body: t('notifications.legacy.body'),
-    },
-    trigger: {
-      type: Notifications.SchedulableTriggerInputTypes.DAILY,
-      hour: time.hour,
-      minute: time.minute,
-      channelId: Platform.OS === 'android' ? 'daily-reminder' : undefined,
-    },
-  });
+    await Notifications.scheduleNotificationAsync({
+      identifier: DAILY_REMINDER_ID,
+      content: {
+        title: t('notifications.legacy.title'),
+        body: t('notifications.legacy.body'),
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DAILY,
+        hour: time.hour,
+        minute: time.minute,
+        channelId: Platform.OS === 'android' ? 'daily-reminder' : undefined,
+      },
+    });
+  } catch {
+    // Same as scheduleSlotReminder — never throw to callers.
+  }
 }
 
 /** Notification identifiers for testing. */

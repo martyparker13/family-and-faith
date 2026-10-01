@@ -125,14 +125,22 @@ export default function OnboardingScreen() {
     const hasAnyReminder = times.morning || times.dinner || times.bedtime;
     let allowed = false;
     if (hasAnyReminder) {
-      allowed = await requestNotificationPermission();
+      try {
+        allowed = await requestNotificationPermission();
+      } catch {
+        allowed = false;
+      }
     }
     if (allowed) {
-      await scheduleRhythmReminders({
-        morning: times.morning,
-        dinner: times.dinner,
-        bedtime: times.bedtime,
-      });
+      try {
+        await scheduleRhythmReminders({
+          morning: times.morning,
+          dinner: times.dinner,
+          bedtime: times.bedtime,
+        });
+      } catch {
+        allowed = false;
+      }
     }
     completeOnboarding({
       familyName: familyName.trim(),

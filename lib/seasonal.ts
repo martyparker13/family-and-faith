@@ -1,9 +1,8 @@
 /**
  * Seasonal overlays — optional reading/devotional/prayer accents by date.
  */
-import adventEn from '@/content/seasonal/advent.json';
-import adventEs from '@/content/seasonal/advent.es.json';
 import { getLocale, type AppLocale } from '@/i18n/index';
+import { loadBundledJson } from '@/lib/content';
 
 export interface SeasonalDay {
   week: number;
@@ -21,9 +20,29 @@ export interface SeasonalOverlay {
   days: SeasonalDay[];
 }
 
+const EMPTY_OVERLAY: SeasonalOverlay = {
+  id: 'none',
+  name: '',
+  startMonthDay: '01-01',
+  endMonthDay: '01-01',
+  days: [],
+};
+
+const adventEn = loadBundledJson(() => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return require('@/content/seasonal/advent.json') as SeasonalOverlay;
+}, EMPTY_OVERLAY);
+const adventEs = loadBundledJson(() => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return require('@/content/seasonal/advent.es.json') as SeasonalOverlay;
+}, EMPTY_OVERLAY);
+
 const OVERLAYS_BY_LOCALE: Record<AppLocale, SeasonalOverlay[]> = {
-  en: [adventEn as SeasonalOverlay],
-  es: [mergeSeasonalOverlay(adventEn as SeasonalOverlay, adventEs as SeasonalOverlay)],
+  en: adventEn.id === 'none' ? [] : [adventEn],
+  es:
+    adventEn.id === 'none'
+      ? []
+      : [mergeSeasonalOverlay(adventEn, adventEs.id === 'none' ? adventEn : adventEs)],
 };
 
 function mergeSeasonalOverlay(en: SeasonalOverlay, es: SeasonalOverlay): SeasonalOverlay {
@@ -48,8 +67,12 @@ function mergeSeasonalOverlay(en: SeasonalOverlay, es: SeasonalOverlay): Seasona
 }
 
 export function getSeasonalOverlays(locale?: AppLocale): SeasonalOverlay[] {
-  const loc = locale ?? getLocale();
-  return OVERLAYS_BY_LOCALE[loc] ?? OVERLAYS_BY_LOCALE.en;
+  try {
+    const loc = locale ?? getLocale();
+    return OVERLAYS_BY_LOCALE[loc] ?? OVERLAYS_BY_LOCALE.en;
+  } catch {
+    return OVERLAYS_BY_LOCALE.en;
+  }
 }
 
 /** @deprecated Use getSeasonalOverlays() */

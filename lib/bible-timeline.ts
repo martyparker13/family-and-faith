@@ -18,8 +18,8 @@ export interface TimelineInfo {
 /** Human-readable "where we are" for the OT story arc. */
 export function timelineInfo(day: number): TimelineInfo {
   const planDay = readingPlan[Math.min(365, Math.max(1, day)) - 1];
-  const otPassage = planDay.passages.find((p) => p.track === 'ot');
-  const ref = otPassage?.reference ?? planDay.passages[0]?.reference ?? '';
+  const otPassage = planDay?.passages?.find((p) => p.track === 'ot');
+  const ref = otPassage?.reference ?? planDay?.passages[0]?.reference ?? '';
   const percent = otTimelinePercent(day);
 
   let label = 'Beginning the story';
