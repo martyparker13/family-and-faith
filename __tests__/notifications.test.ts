@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 
 import {
   DAILY_REMINDER_ID,
+  initializeNotifications,
   isAndroidExpoGo,
   requestNotificationPermission,
   scheduleDailyReminder,
@@ -48,6 +49,28 @@ describe('slot notifications', () => {
     expect(slotNotificationId('morning')).toBe('rhythm-morning');
     expect(slotNotificationId('dinner')).toBe('rhythm-dinner');
     expect(slotNotificationId('bedtime')).toBe('rhythm-bedtime');
+  });
+});
+
+describe('production notification init', () => {
+  it('installs the foreground handler on an Android production build', () => {
+    setPlatformOS('android');
+    setAppOwnership('standalone');
+    expect(() => initializeNotifications()).not.toThrow();
+    expect(Notifications.setNotificationHandler).toHaveBeenCalled();
+  });
+
+  it('still schedules local reminders after init', async () => {
+    setPlatformOS('android');
+    setAppOwnership('standalone');
+    initializeNotifications();
+    await scheduleDailyReminder({ hour: 8, minute: 0 });
+    expect(Notifications.scheduleNotificationAsync).toHaveBeenCalled();
+  });
+
+  it('returns false when permission APIs throw', async () => {
+    (Notifications.getPermissionsAsync as jest.Mock).mockRejectedValue(new Error('native'));
+    await expect(requestNotificationPermission()).resolves.toBe(false);
   });
 });
 

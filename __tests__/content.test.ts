@@ -6,6 +6,28 @@ import devotionals from '@/content/devotionals.json';
 import guidanceTopics from '@/content/guidance-topics.json';
 import prayers from '@/content/prayers.json';
 import readingPlan from '@/content/reading-plan.json';
+import { getPlanDay, loadBundledJson } from '@/lib/content';
+
+describe('loadBundledJson', () => {
+  it('returns the loader result when require succeeds', () => {
+    expect(loadBundledJson(() => ({ ok: true }), { ok: false })).toEqual({ ok: true });
+  });
+
+  it('returns the fallback when the loader throws', () => {
+    expect(
+      loadBundledJson(() => {
+        throw new Error('Hermes JSON parse failed');
+      }, { ok: false })
+    ).toEqual({ ok: false });
+  });
+
+  it('getPlanDay still returns a usable day from the real bundle', () => {
+    const day = getPlanDay(1, 'en');
+    expect(day.day).toBe(1);
+    expect(day.passages.length).toBeGreaterThan(0);
+    expect(day.kidSummary.length).toBeGreaterThan(20);
+  });
+});
 
 describe('reading plan', () => {
   it('has 365 days, numbered sequentially', () => {

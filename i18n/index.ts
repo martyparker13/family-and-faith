@@ -1,28 +1,60 @@
 /**
  * Lightweight i18n — nested locale JSON with English fallback.
+ *
+ * Import-time must never throw: expo-localization's getLocales() and the
+ * locale JSON requires can fail in a Hermes release build. Fall back to
+ * English and keep translating.
  */
 import * as Localization from 'expo-localization';
-
-import en from '@/locales/en.json';
-import es from '@/locales/es.json';
 
 export type AppLocale = 'en' | 'es';
 export type AppLanguage = AppLocale | 'device';
 
+function loadLocaleDict(loader: () => Record<string, unknown>): Record<string, unknown> {
+  try {
+    return loader();
+  } catch {
+    return {};
+  }
+}
+
+const en = loadLocaleDict(() => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return require('@/locales/en.json') as Record<string, unknown>;
+});
+const es = loadLocaleDict(() => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return require('@/locales/es.json') as Record<string, unknown>;
+});
+
 const LOCALES: Record<AppLocale, Record<string, unknown>> = { en, es };
 
 /** Active locale for non-React callers (content, notifications). */
-let activeLocale: AppLocale = resolveDeviceLocale();
+let activeLocale: AppLocale = 'en';
+try {
+  activeLocale = resolveDeviceLocale();
+} catch {
+  activeLocale = 'en';
+}
 
 export function resolveDeviceLocale(): AppLocale {
-  const code = Localization.getLocales()[0]?.languageCode ?? 'en';
-  return code.startsWith('es') ? 'es' : 'en';
+  try {
+    const locales = Localization.getLocales();
+    const code = locales[0]?.languageCode ?? 'en';
+    return code.startsWith('es') ? 'es' : 'en';
+  } catch {
+    return 'en';
+  }
 }
 
 /** Resolve persisted preference: null/device → device locale. */
 export function resolveLocale(language: AppLanguage | null | undefined): AppLocale {
-  if (language === 'en' || language === 'es') return language;
-  return resolveDeviceLocale();
+  try {
+    if (language === 'en' || language === 'es') return language;
+    return resolveDeviceLocale();
+  } catch {
+    return 'en';
+  }
 }
 
 export function getLocale(): AppLocale {
@@ -52,15 +84,19 @@ export interface TranslateParams {
  * Supports {{placeholder}} interpolation.
  */
 export function t(key: string, params?: TranslateParams): string {
-  const dict = LOCALES[activeLocale] ?? LOCALES.en;
-  let text = getNested(dict, key) ?? getNested(LOCALES.en, key) ?? key;
+  try {
+    const dict = LOCALES[activeLocale] ?? LOCALES.en;
+    let text = getNested(dict, key) ?? getNested(LOCALES.en, key) ?? key;
 
-  if (params) {
-    for (const [name, value] of Object.entries(params)) {
-      text = text.replace(new RegExp(`\\{\\{${name}\\}\\}`, 'g'), String(value));
+    if (params) {
+      for (const [name, value] of Object.entries(params)) {
+        text = text.replace(new RegExp(`\\{\\{${name}\\}\\}`, 'g'), String(value));
+      }
     }
+    return text;
+  } catch {
+    return key;
   }
-  return text;
 }
 
 /** Flatten nested locale object to count leaf keys (for tests). */

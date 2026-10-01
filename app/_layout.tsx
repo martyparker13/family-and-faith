@@ -21,21 +21,30 @@ import { Confetti } from '@/components/Confetti';
 import { I18nProvider, useTranslation } from '@/i18n/context';
 import { resolveLocale, setActiveLocale } from '@/i18n/index';
 import { deepLinkToRoute } from '@/lib/import-data';
-import { scheduleRhythmReminders } from '@/lib/notifications';
+import { initializeNotifications, scheduleRhythmReminders } from '@/lib/notifications';
 import { allStoresHydrated, waitForAllStoresHydrated } from '@/lib/store-hydration';
 import { ThemeProvider, useTheme } from '@/lib/theme-context';
 import { useCelebration } from '@/store/celebration';
 import { useSettings } from '@/store/settings';
 
-SplashScreen.preventAutoHideAsync();
+try {
+  SplashScreen.preventAutoHideAsync().catch(() => {
+    // Native splash may already be hidden in some release paths.
+  });
+} catch {
+  // preventAutoHideAsync must not take down the root layout.
+}
 
 /**
  * Root layout: loads fonts, waits for all persisted stores to hydrate,
  * re-registers rhythm reminders from saved settings, handles deep links,
  * and mounts the navigation stack.
+ *
+ * Production/release: fonts, i18n, notifications, linking, and splash must
+ * not throw. A font or hydration failure still shows the UI.
  */
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Lora_500Medium,
     Lora_500Medium_Italic,
     Lora_600SemiBold,
@@ -44,23 +53,42 @@ export default function RootLayout() {
     Nunito_700Bold,
     Nunito_800ExtraBold,
   });
-  const [hydrated, setHydrated] = useState(allStoresHydrated());
+  const fontsReady = fontsLoaded || !!fontError;
+  const [hydrated, setHydrated] = useState(() => {
+    try {
+      return allStoresHydrated();
+    } catch {
+      return true;
+    }
+  });
   const morningReminder = useSettings((s) => s.morningReminder);
   const dinnerReminder = useSettings((s) => s.dinnerReminder);
   const bedtimeReminder = useSettings((s) => s.bedtimeReminder);
   const language = useSettings((s) => s.language);
 
   useEffect(() => {
+    initializeNotifications();
+  }, []);
+
+  useEffect(() => {
     if (!hydrated) return;
-    setActiveLocale(resolveLocale(language));
+    try {
+      setActiveLocale(resolveLocale(language));
+    } catch {
+      // Keep the last locale rather than crashing launch.
+    }
   }, [hydrated, language]);
 
   useEffect(() => {
     if (hydrated) return;
     let cancelled = false;
-    waitForAllStoresHydrated().then(() => {
-      if (!cancelled) setHydrated(true);
-    });
+    waitForAllStoresHydrated()
+      .then(() => {
+        if (!cancelled) setHydrated(true);
+      })
+      .catch(() => {
+        if (!cancelled) setHydrated(true);
+      });
     return () => {
       cancelled = true;
     };
@@ -78,24 +106,40 @@ export default function RootLayout() {
   }, [hydrated, morningReminder, dinnerReminder, bedtimeReminder]);
 
   useEffect(() => {
-    if (fontsLoaded && hydrated) {
-      SplashScreen.hideAsync();
+    if (fontsReady && hydrated) {
+      SplashScreen.hideAsync().catch(() => {});
     }
-  }, [fontsLoaded, hydrated]);
+  }, [fontsReady, hydrated]);
 
   useEffect(() => {
     const handleUrl = (event: { url: string }) => {
-      const route = deepLinkToRoute(event.url);
-      if (route) router.push(route as '/rhythm/morning');
+      try {
+        const route = deepLinkToRoute(event.url);
+        if (route) router.push(route as '/rhythm/morning');
+      } catch {
+        // Ignore malformed deep links.
+      }
     };
-    Linking.getInitialURL().then((url) => {
-      if (url) handleUrl({ url });
-    });
-    const sub = Linking.addEventListener('url', handleUrl);
-    return () => sub.remove();
+    Linking.getInitialURL()
+      .then((url) => {
+        if (url) handleUrl({ url });
+      })
+      .catch(() => {});
+    try {
+      const sub = Linking.addEventListener('url', handleUrl);
+      return () => {
+        try {
+          sub.remove();
+        } catch {
+          // Listener may already be gone.
+        }
+      };
+    } catch {
+      return undefined;
+    }
   }, []);
 
-  if (!fontsLoaded || !hydrated) {
+  if (!fontsReady || !hydrated) {
     return null;
   }
 

@@ -38,6 +38,7 @@ describe('Android Expo Go import safety', () => {
     (Constants as { appOwnership: string | null }).appOwnership = 'expo';
 
     expect(() => loadNotifications()).not.toThrow();
+    expect(() => loadNotifications().initializeNotifications()).not.toThrow();
   });
 
   it('hydrates schedule/permission as no-ops', async () => {
@@ -46,10 +47,13 @@ describe('Android Expo Go import safety', () => {
     (Constants as { appOwnership: string | null }).appOwnership = 'expo';
 
     const {
+      initializeNotifications,
       requestNotificationPermission,
       scheduleRhythmReminders,
       scheduleDailyReminder,
     } = loadNotifications();
+
+    expect(() => initializeNotifications()).not.toThrow();
 
     await expect(requestNotificationPermission()).resolves.toBe(false);
     await expect(

@@ -95,11 +95,15 @@ export default function SettingsScreen() {
 
   const changeLanguage = async (language: AppLanguage) => {
     settings.setLanguage(language);
-    await scheduleRhythmReminders({
-      morning: settings.morningReminder,
-      dinner: settings.dinnerReminder,
-      bedtime: settings.bedtimeReminder,
-    });
+    try {
+      await scheduleRhythmReminders({
+        morning: settings.morningReminder,
+        dinner: settings.dinnerReminder,
+        bedtime: settings.bedtimeReminder,
+      });
+    } catch {
+      // Reminders can be re-saved from the reminder pickers.
+    }
   };
 
   const pickSlotReminder = async (
