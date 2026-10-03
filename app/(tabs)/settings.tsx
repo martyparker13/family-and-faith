@@ -1,8 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
+import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import * as Clipboard from 'expo-clipboard';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Modal, Pressable, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Modal,
+  Platform,
+  Pressable,
+  TextInput,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppButton } from '@/components/AppButton';
@@ -24,6 +33,13 @@ import {
 import { mergeBackupIntoLocal, parseFamilyBackup } from '@/lib/import-data';
 import { requestNotificationPermission, scheduleRhythmReminders } from '@/lib/notifications';
 import { prefetchDays, type PrefetchResult } from '@/lib/prefetch';
+import {
+  defaultCustomTime,
+  isCustomReminderTime,
+  presetIndexForSlot,
+  SLOT_TIME_PRESETS,
+  type ReminderSlot,
+} from '@/lib/reminder-presets';
 import { useTheme } from '@/lib/theme-context';
 import { useFavorites } from '@/store/favorites';
 import { useJournal } from '@/store/journal';
@@ -37,15 +53,6 @@ import {
   type SpeechRate,
   type ThemePreference,
 } from '@/store/settings';
-
-const TIME_PRESETS: ReminderTime[] = [
-  { hour: 7, minute: 0 },
-  { hour: 8, minute: 0 },
-  { hour: 12, minute: 0 },
-  { hour: 18, minute: 0 },
-  { hour: 19, minute: 30 },
-  { hour: 20, minute: 30 },
-];
 
 const THEME_OPTION_KEYS: { key: string; value: ThemePreference }[] = [
   { key: 'settings.themeSystem', value: 'system' },
@@ -106,10 +113,7 @@ export default function SettingsScreen() {
     }
   };
 
-  const pickSlotReminder = async (
-    slot: 'morning' | 'dinner' | 'bedtime',
-    time: ReminderTime | null
-  ) => {
+  const pickSlotReminder = async (slot: ReminderSlot, time: ReminderTime | null) => {
     if (time) {
       const allowed = await requestNotificationPermission();
       if (!allowed) {
@@ -350,26 +354,14 @@ export default function SettingsScreen() {
             : slot === 'dinner'
               ? settings.dinnerReminder
               : settings.bedtimeReminder;
-        const slotLabel = t(`rhythm.${slot}.short`);
         return (
-          <View key={slot} style={{ marginBottom: theme.spacing.md }}>
-            <AppText variant="small" semiBold scaled={false} style={{ marginBottom: theme.spacing.xs }}>
-              {slotLabel} · {formatReminder(current, offLabel)}
-            </AppText>
-            <OptionRow
-              options={[...TIME_PRESETS.map((time) => formatReminder(time, offLabel)), offLabel]}
-              selectedIndex={
-                current
-                  ? TIME_PRESETS.findIndex(
-                      (t) => t.hour === current.hour && t.minute === current.minute
-                    )
-                  : TIME_PRESETS.length
-              }
-              onSelect={(i) =>
-                pickSlotReminder(slot, i < TIME_PRESETS.length ? TIME_PRESETS[i] : null)
-              }
-            />
-          </View>
+          <ReminderSlotRow
+            key={slot}
+            slot={slot}
+            current={current}
+            offLabel={offLabel}
+            onPick={(time) => pickSlotReminder(slot, time)}
+          />
         );
       })}
 
@@ -603,6 +595,130 @@ function DownloadAheadCard({ planStartDate }: { planStartDate: string | null }) 
         </View>
       </View>
     </Card>
+  );
+}
+
+function ReminderSlotRow({
+  slot,
+  current,
+  offLabel,
+  onPick,
+}: {
+  slot: ReminderSlot;
+  current: ReminderTime | null;
+  offLabel: string;
+  onPick: (time: ReminderTime | null) => void;
+}) {
+  const theme = useTheme();
+  const { t } = useTranslation();
+  const [showPicker, setShowPicker] = useState(false);
+  const [draftTime, setDraftTime] = useState<ReminderTime>(defaultCustomTime(slot));
+
+  const presets = SLOT_TIME_PRESETS[slot];
+  const customIndex = presets.length;
+  const offIndex = presets.length + 1;
+  const presetIndex = presetIndexForSlot(slot, current);
+  const isCustom = isCustomReminderTime(slot, current);
+  const selectedIndex = showPicker
+    ? customIndex
+    : !current
+      ? offIndex
+      : isCustom
+        ? customIndex
+        : presetIndex;
+  const customLabel =
+    isCustom && current ? formatReminder(current, offLabel) : t('common.custom');
+
+  const openCustomPicker = () => {
+    setDraftTime(current ?? defaultCustomTime(slot));
+    setShowPicker(true);
+  };
+
+  const onPickerChange = (event: DateTimePickerEvent, date?: Date) => {
+    if (event.type === 'dismissed') {
+      setShowPicker(false);
+      return;
+    }
+    if (event.type === 'set' && date) {
+      const next = { hour: date.getHours(), minute: date.getMinutes() };
+      if (Platform.OS === 'android') {
+        setShowPicker(false);
+        onPick(next);
+        return;
+      }
+      setDraftTime(next);
+    }
+  };
+
+  return (
+    <View style={{ marginBottom: theme.spacing.md }}>
+      <AppText variant="small" semiBold scaled={false} style={{ marginBottom: theme.spacing.xs }}>
+        {t(`rhythm.${slot}.short`)} · {formatReminder(current, offLabel)}
+      </AppText>
+      <OptionRow
+        options={[
+          ...presets.map((time) => formatReminder(time, offLabel)),
+          customLabel,
+          offLabel,
+        ]}
+        selectedIndex={selectedIndex}
+        onSelect={(i) => {
+          if (i === offIndex) onPick(null);
+          else if (i === customIndex) openCustomPicker();
+          else onPick(presets[i]);
+        }}
+      />
+      {showPicker ? (
+        Platform.OS === 'ios' ? (
+          <View
+            style={{
+              marginTop: theme.spacing.sm,
+              backgroundColor: theme.colors.surface,
+              borderRadius: theme.radius.md,
+              borderWidth: 1,
+              borderColor: theme.colors.border,
+              overflow: 'hidden',
+            }}
+          >
+            <DateTimePicker
+              mode="time"
+              display="spinner"
+              value={new Date(new Date().setHours(draftTime.hour, draftTime.minute, 0, 0))}
+              onChange={onPickerChange}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: theme.spacing.sm,
+                padding: theme.spacing.sm,
+              }}
+            >
+              <AppButton
+                label={t('common.cancel')}
+                variant="secondary"
+                onPress={() => setShowPicker(false)}
+                style={{ flex: 1 }}
+              />
+              <AppButton
+                label={t('common.done')}
+                onPress={() => {
+                  setShowPicker(false);
+                  onPick(draftTime);
+                }}
+                style={{ flex: 1 }}
+              />
+            </View>
+          </View>
+        ) : (
+          <DateTimePicker
+            mode="time"
+            display="clock"
+            value={new Date(new Date().setHours(draftTime.hour, draftTime.minute, 0, 0))}
+            onChange={onPickerChange}
+          />
+        )
+      ) : null}
+    </View>
   );
 }
 
