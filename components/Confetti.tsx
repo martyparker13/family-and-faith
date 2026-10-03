@@ -29,8 +29,8 @@ export interface ConfettiPiece {
   borderRadius: number;
 }
 
-const SMALL_COUNT = 44;
-const BIG_COUNT = 76;
+const SMALL_COUNT = 48;
+const BIG_COUNT = 68;
 
 /** Small deterministic PRNG so piece layout is a pure function of the burst. */
 function mulberry32(seed: number): () => number {
@@ -53,8 +53,25 @@ function centerBiased(rand: () => number): number {
 }
 
 /**
- * Build a scattered burst: most pieces spawn top/center-ish, a quarter spray
- * from the sides, and every piece gets its own delay, duration, and path.
+ * Pure Y motion matching PieceView's translateY interpolate
+ * inputRange [0, 0.18, 1] → [0, popY, fallY].
+ */
+export function confettiTranslateYAt(piece: ConfettiPiece, progress: number): number {
+  const p = Math.max(0, Math.min(1, progress));
+  if (p <= 0.18) return (p / 0.18) * piece.popY;
+  return piece.popY + ((p - 0.18) / 0.82) * (piece.fallY - piece.popY);
+}
+
+/** Absolute screen Y for a piece at wall-clock time (ms since burst start). */
+export function confettiAbsoluteYAt(piece: ConfettiPiece, timeMs: number): number {
+  if (timeMs <= piece.delay) return piece.originY;
+  const progress = Math.min(1, (timeMs - piece.delay) / piece.duration);
+  return piece.originY + confettiTranslateYAt(piece, progress);
+}
+
+/**
+ * Build a scattered burst: pieces seed across the upper half with wide delay
+ * and speed variance so any snapshot shows different Y positions — not one row.
  */
 export function buildConfettiPieces(
   burst: number,
@@ -68,20 +85,23 @@ export function buildConfettiPieces(
   const rand = mulberry32(burst * 9301 + 49297);
   const count = size === 'big' ? BIG_COUNT : SMALL_COUNT;
 
-  return Array.from({ length: count }, () => {
-    const sideSpray = rand() < 0.28;
+  return Array.from({ length: count }, (_, index) => {
+    const sideSpray = rand() < 0.3;
     const originX = sideSpray
       ? rand() < 0.5
-        ? between(rand, width * 0.02, width * 0.2)
-        : between(rand, width * 0.8, width * 0.98)
-      : width * (0.28 + centerBiased(rand) * 0.44);
+        ? between(rand, width * 0.01, width * 0.22)
+        : between(rand, width * 0.78, width * 0.99)
+      : width * (0.12 + centerBiased(rand) * 0.76);
 
-    const originY = between(rand, height * 0.04, height * 0.26);
+    // Spread across the full upper half so the first frame is already a cloud,
+    // not a thin horizontal line near the top.
+    const originY = between(rand, height * 0.02, height * 0.5);
+
     const outward = originX < width / 2 ? -1 : 1;
     const spraySpan = sideSpray
-      ? between(rand, width * 0.18, width * 0.46) * outward
-      : between(rand, -width * 0.42, width * 0.42);
-    const flutter = between(rand, -width * 0.08, width * 0.08);
+      ? between(rand, width * 0.2, width * 0.55) * outward
+      : between(rand, -width * 0.55, width * 0.55);
+    const flutter = between(rand, -width * 0.14, width * 0.14);
 
     const ribbon = rand() < 0.22;
     const square = !ribbon && rand() < 0.18;
@@ -92,16 +112,21 @@ export function buildConfettiPieces(
         : between(rand, 6, 12);
     const heightPx = ribbon ? between(rand, 14, 24) : square ? widthPx : between(rand, 9, 18);
 
+    // Stagger starts across most of the fall window so early and late pieces
+    // coexist on screen at very different Y positions.
+    const wave = (index / count) * 900;
+    const delay = wave + between(rand, 0, 700);
+
     return {
       originX,
       originY,
       sprayX: spraySpan,
-      midX: spraySpan * between(rand, 0.45, 0.75) + flutter,
-      popY: between(rand, -height * 0.16, height * 0.06),
-      fallY: height - originY + between(rand, 50, 160),
-      delay: between(rand, 0, 420),
-      duration: between(rand, 1500, 2500),
-      rotateTo: between(rand, -900, 900),
+      midX: spraySpan * between(rand, 0.35, 0.7) + flutter,
+      popY: between(rand, -height * 0.22, height * 0.1),
+      fallY: height - originY + between(rand, 40, 220),
+      delay,
+      duration: between(rand, 1100, 2800),
+      rotateTo: between(rand, -1080, 1080),
       color: colors[Math.floor(rand() * colors.length)] ?? colors[0],
       width: widthPx,
       height: heightPx,
@@ -115,31 +140,35 @@ const PieceView = memo(function PieceView({ piece }: { piece: ConfettiPiece }) {
 
   useEffect(() => {
     progress.setValue(0);
-    const animation = Animated.timing(progress, {
-      toValue: 1,
-      duration: piece.duration,
-      delay: piece.delay,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    });
+    // Sequence keeps delay off the native timing node (more reliable than
+    // Animated.timing({ delay }) alone) while still using the native driver.
+    const animation = Animated.sequence([
+      Animated.delay(piece.delay),
+      Animated.timing(progress, {
+        toValue: 1,
+        duration: piece.duration,
+        easing: Easing.bezier(0.22, 0.61, 0.36, 1),
+        useNativeDriver: true,
+      }),
+    ]);
     animation.start();
     return () => animation.stop();
   }, [piece, progress]);
 
   const translateY = progress.interpolate({
-    inputRange: [0, 0.16, 1],
+    inputRange: [0, 0.18, 1],
     outputRange: [0, piece.popY, piece.fallY],
   });
   const translateX = progress.interpolate({
-    inputRange: [0, 0.2, 0.58, 1],
-    outputRange: [0, piece.midX, piece.sprayX, piece.sprayX * 1.12],
+    inputRange: [0, 0.22, 0.55, 1],
+    outputRange: [0, piece.midX, piece.sprayX, piece.sprayX * 1.15],
   });
   const spin = progress.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', `${piece.rotateTo}deg`],
   });
   const fade = progress.interpolate({
-    inputRange: [0, 0.06, 0.8, 1],
+    inputRange: [0, 0.04, 0.78, 1],
     outputRange: [0, 1, 1, 0],
   });
 
@@ -161,8 +190,8 @@ const PieceView = memo(function PieceView({ piece }: { piece: ConfettiPiece }) {
 });
 
 /**
- * A lightweight, dependency-free confetti burst: paper pieces explode from
- * the top/center with independent delay, duration, and spin, then the overlay
+ * A lightweight, dependency-free confetti burst: paper pieces explode across
+ * the upper half with independent delay, duration, and spin, then the overlay
  * removes itself. Purely decorative — hidden from screen readers.
  */
 export function Confetti({ burst, message, size = 'small' }: ConfettiProps) {
