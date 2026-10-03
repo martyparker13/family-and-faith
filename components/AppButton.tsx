@@ -12,6 +12,13 @@ interface AppButtonProps {
   icon?: keyof typeof Ionicons.glyphMap;
   disabled?: boolean;
   loading?: boolean;
+  /**
+   * Tighter horizontal padding + body text size for side-by-side rows
+   * on narrow phone widths (~360–412dp).
+   */
+  compact?: boolean;
+  /** Clamp label to a single line (useful in equal-width button pairs). */
+  numberOfLines?: number;
   style?: StyleProp<ViewStyle>;
   accessibilityHint?: string;
 }
@@ -24,6 +31,8 @@ export function AppButton({
   icon,
   disabled,
   loading,
+  compact,
+  numberOfLines,
   style,
   accessibilityHint,
 }: AppButtonProps) {
@@ -55,7 +64,7 @@ export function AppButton({
           alignItems: 'center',
           justifyContent: 'center',
           gap: theme.spacing.sm,
-          paddingHorizontal: theme.spacing.xl,
+          paddingHorizontal: compact ? theme.spacing.md : theme.spacing.xl,
           paddingVertical: theme.spacing.md,
           opacity: disabled ? 0.5 : pressed ? 0.85 : 1,
           borderWidth: variant === 'secondary' ? 1 : 0,
@@ -69,7 +78,15 @@ export function AppButton({
       ) : (
         <>
           {icon ? <Ionicons name={icon} size={20} color={textColor} /> : null}
-          <AppText variant="bodyLarge" semiBold color={textColor} scaled={false}>
+          <AppText
+            variant={compact ? 'body' : 'bodyLarge'}
+            semiBold
+            color={textColor}
+            scaled={false}
+            center
+            numberOfLines={numberOfLines}
+            style={{ flexShrink: 1 }}
+          >
             {label}
           </AppText>
         </>

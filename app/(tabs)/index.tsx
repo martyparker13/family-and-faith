@@ -164,15 +164,26 @@ export default function TodayScreen() {
               lastDay: catchUp.lastCompletedDay || t('common.noneYet'),
             })}
           </AppText>
-          <View style={{ flexDirection: 'row', gap: theme.spacing.sm, marginTop: theme.spacing.md }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'stretch',
+              gap: theme.spacing.sm,
+              marginTop: theme.spacing.md,
+            }}
+          >
             <AppButton
               label={t('today.continueToday')}
               variant="secondary"
+              compact
+              numberOfLines={1}
               onPress={() => setCatchUpChoice('continue')}
               style={{ flex: 1 }}
             />
             <AppButton
               label={t('today.todayOnly')}
+              compact
+              numberOfLines={1}
               onPress={() => setCatchUpChoice('today-only')}
               style={{ flex: 1 }}
             />
