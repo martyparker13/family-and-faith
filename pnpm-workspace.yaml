@@ -1,0 +1,4 @@
+# pnpm 11+: approve lifecycle scripts for specific packages.
+# Same result as `pnpm approve-builds unrs-resolver`.
+allowBuilds:
+  unrs-resolver: true
