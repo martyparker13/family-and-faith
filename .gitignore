@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules/
+# CI/EAS use package-lock.json; ignore local pnpm lock so installs stay in sync with package.json
+pnpm-lock.yaml
 
 # Expo
 .expo/

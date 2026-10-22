@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Expo config
+        run: npx expo config --json > /dev/null
+
       - name: Lint
         run: npm run lint
 

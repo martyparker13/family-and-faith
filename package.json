@@ -67,6 +67,8 @@
     "lint": "expo lint",
     "build:dev": "eas build --profile development",
     "build:preview": "eas build --profile preview",
+    "eas-install": "npm ci",
+    "verify:expo-config": "expo config --json",
     "test": "jest"
   },
   "private": true,
