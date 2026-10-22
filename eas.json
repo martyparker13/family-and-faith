@@ -4,23 +4,17 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "base": {
-      "installCommand": "npm ci"
-    },
     "development": {
-      "extends": "base",
       "developmentClient": true,
       "distribution": "internal",
       "ios": { "simulator": false },
       "channel": "development"
     },
     "preview": {
-      "extends": "base",
       "distribution": "internal",
       "channel": "preview"
     },
     "production": {
-      "extends": "base",
       "autoIncrement": true,
       "channel": "production"
     }
