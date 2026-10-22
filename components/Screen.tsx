@@ -5,8 +5,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/lib/theme-context';
 
 /**
- * On tablets, reading-length text lines get uncomfortable — cap content
- * width and center it, like a book page.
+ * On tablets / landscape / foldable inner displays, reading-length text
+ * lines get uncomfortable — cap content width and center it, like a book
+ * page. Safe-area padding below keeps content clear of system bars when
+ * Android draws edge-to-edge or ignores orientation locks on large screens.
  */
 export const MAX_CONTENT_WIDTH = 700;
 

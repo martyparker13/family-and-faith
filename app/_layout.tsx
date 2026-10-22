@@ -14,6 +14,7 @@ import * as Linking from 'expo-linking';
 import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -164,6 +165,15 @@ function RootStack() {
   const theme = useTheme();
   const { t } = useTranslation();
 
+  // Keep the Android/iOS root window color in sync with the active theme.
+  // Avoid setting status/navigation bar *colors* (deprecated on Android 15+);
+  // expo-status-bar only drives light/dark content appearance via insets APIs.
+  useEffect(() => {
+    SystemUI.setBackgroundColorAsync(theme.colors.background).catch(() => {
+      // Native module may be unavailable in some test/web paths.
+    });
+  }, [theme.colors.background]);
+
   return (
     <>
       <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
@@ -175,6 +185,7 @@ function RootStack() {
           headerShadowVisible: false,
           headerBackButtonDisplayMode: 'minimal',
           contentStyle: { backgroundColor: theme.colors.background },
+          orientation: 'default',
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: t('navigation.home') }} />
