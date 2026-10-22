@@ -3,10 +3,11 @@
     "name": "Faith & Family",
     "slug": "family-and-faith",
     "version": "2.1.3",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "faithandfamily",
     "userInterfaceStyle": "automatic",
+    "backgroundColor": "#FDF6E9",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.C323.faithandfamily",
@@ -17,7 +18,7 @@
     },
     "android": {
       "package": "com.C323.faithandfamily",
-      "versionCode": 4,
+      "versionCode": 13,
       "intentFilters": [
         {
           "action": "VIEW",
@@ -75,7 +76,18 @@
       ],
       "@react-native-community/datetimepicker",
       "expo-asset",
-      "expo-localization"
+      "expo-localization",
+      "expo-system-ui",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "extraProguardRules": "-keep class com.swmansion.reanimated.** { *; }\n-keep class com.swmansion.worklets.** { *; }\n-keep class com.swmansion.gesturehandler.** { *; }\n-keep class com.swmansion.rnscreens.** { *; }\n-keep class com.facebook.react.turbomodule.** { *; }\n-keep class expo.modules.** { *; }\n"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
