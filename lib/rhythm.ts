@@ -88,3 +88,11 @@ export const SLOT_LABELS: Record<RhythmSlot, SlotLabels> = {
 export function rhythmDeepLink(slot: RhythmSlot): string {
   return `faithandfamily://rhythm/${slot}`;
 }
+
+/** Expo-router path to the full-screen activity for a rhythm slot. */
+export function slotActivityPath(slot: RhythmSlot, day: number): string {
+  const activity = slotActivity(slot);
+  if (activity === 'reading') return `/day/${day}/reading`;
+  if (activity === 'devotional') return `/day/${day}/devotional`;
+  return `/day/${day}/prayer`;
+}

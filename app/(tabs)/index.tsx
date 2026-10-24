@@ -30,7 +30,7 @@ import {
   currentRhythmSlot,
   orderedSlots,
   getSlotLabels,
-  slotActivity,
+  slotActivityPath,
   type RhythmSlot,
 } from '@/lib/rhythm';
 import { activeSeasonalOverlay, seasonalDayInfo } from '@/lib/seasonal';
@@ -403,7 +403,7 @@ function UpNextHero({
         <AppButton
           label={labels.startLabel}
           icon="play"
-          onPress={() => router.push(`/rhythm/${slot}`)}
+          onPress={() => router.push(slotActivityPath(slot, day))}
           style={{ marginTop: theme.spacing.md }}
         />
       ) : null}
@@ -449,9 +449,7 @@ function RhythmDashboardCard({
         : t('common.prayerSubtitle', { theme: prayer.theme.toLowerCase() });
 
   const onPress = () => {
-    if (slot === 'morning') router.push(`/day/${day}/reading`);
-    else if (slot === 'dinner') router.push(`/day/${day}/devotional`);
-    else router.push(`/day/${day}/prayer`);
+    router.push(slotActivityPath(slot, day));
   };
 
   return (

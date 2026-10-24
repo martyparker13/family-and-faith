@@ -2,6 +2,7 @@ import {
   currentRhythmSlot,
   orderedSlots,
   slotActivity,
+  slotActivityPath,
   rhythmDeepLink,
 } from '@/lib/rhythm';
 
@@ -39,5 +40,13 @@ describe('orderedSlots', () => {
 describe('rhythmDeepLink', () => {
   it('builds faithandfamily scheme URLs', () => {
     expect(rhythmDeepLink('morning')).toBe('faithandfamily://rhythm/morning');
+  });
+});
+
+describe('slotActivityPath', () => {
+  it('maps slots to full-screen day routes', () => {
+    expect(slotActivityPath('morning', 42)).toBe('/day/42/reading');
+    expect(slotActivityPath('dinner', 7)).toBe('/day/7/devotional');
+    expect(slotActivityPath('bedtime', 1)).toBe('/day/1/prayer');
   });
 });
