@@ -16,7 +16,7 @@ import { todayISO } from '@/lib/dates';
 import { memoryVerseForDay } from '@/lib/memory-verse';
 import {
   getSlotLabels,
-  slotActivity,
+  slotActivityPath,
   type RhythmSlot,
 } from '@/lib/rhythm';
 import { useTheme } from '@/lib/theme-context';
@@ -66,10 +66,7 @@ export default function RhythmFlowScreen() {
   };
 
   const openFullScreen = () => {
-    const activity = slotActivity(slot);
-    if (activity === 'reading') router.push(`/day/${day}/reading`);
-    else if (activity === 'devotional') router.push(`/day/${day}/devotional`);
-    else router.push(`/day/${day}/prayer`);
+    router.push(slotActivityPath(slot, day));
   };
 
   const introText =
