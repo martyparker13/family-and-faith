@@ -30,6 +30,7 @@ import {
   currentRhythmSlot,
   orderedSlots,
   getSlotLabels,
+  slotActivity,
   slotActivityPath,
   type RhythmSlot,
 } from '@/lib/rhythm';
