@@ -22,6 +22,7 @@ import { SectionLabel } from '@/components/SectionLabel';
 import { TextSizeControl } from '@/components/TextSizeControl';
 import { VacationModeCard } from '@/components/VacationModeCard';
 import { useTranslation } from '@/i18n/context';
+import { getAppDisplayVersion } from '@/lib/app-version';
 import { completedBooks } from '@/lib/book-milestones';
 import { clearBibleCache } from '@/lib/bible';
 import { currentPlanDay, todayISO } from '@/lib/dates';
@@ -468,7 +469,7 @@ export default function SettingsScreen() {
       <SectionLabel>{t('settings.about')}</SectionLabel>
       <Card>
         <AppText variant="small" color={theme.colors.textMuted}>
-          {t('settings.aboutText')}
+          {t('settings.aboutText', { version: getAppDisplayVersion() })}
         </AppText>
       </Card>
 

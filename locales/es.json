@@ -477,7 +477,7 @@
     "exportDataDescription": "Guarda diario, oraciones, favoritos y progreso como archivo JSON que puedes conservar o compartir.",
     "offlineReading": "Lectura sin conexión",
     "about": "Acerca de",
-    "aboutText": "Fe y Familia v1.1 · Lectura matutina, charla en la cena, oración al acostarse. Escritura de la World English Bible (dominio público). Todos los datos permanecen en este dispositivo a menos que exportes una copia de seguridad.",
+    "aboutText": "Fe y Familia v{{version}} · Lectura matutina, charla en la cena, oración al acostarse. Escritura de la World English Bible (dominio público). Todos los datos permanecen en este dispositivo a menos que exportes una copia de seguridad.",
     "importModalTitle": "Importar copia de seguridad",
     "importModalHint": "Pega el JSON de una exportación anterior.",
     "importPlaceholder": "Pega aquí el JSON de la copia…",

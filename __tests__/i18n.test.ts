@@ -33,6 +33,15 @@ describe('locale JSON parity', () => {
     const esKeys = flattenKeys(es as Record<string, unknown>).sort();
     expect(esKeys).toEqual(enKeys);
   });
+
+  it('settings.aboutText uses {{version}} instead of a hardcoded semver', () => {
+    const hardcodedSemver = /v\d+\.\d+(?:\.\d+)?/;
+    for (const locale of [en, es] as const) {
+      const aboutText = locale.settings.aboutText;
+      expect(aboutText).toContain('{{version}}');
+      expect(aboutText).not.toMatch(hardcodedSemver);
+    }
+  });
 });
 
 describe('t() helper', () => {
