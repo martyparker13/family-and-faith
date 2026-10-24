@@ -477,7 +477,7 @@
     "exportDataDescription": "Save journal, prayers, favorites, and progress as a JSON file you can keep or share.",
     "offlineReading": "Offline reading",
     "about": "About",
-    "aboutText": "Faith & Family v1.1 · Morning reading, dinner talk, bedtime prayer. Scripture from the World English Bible (public domain). All data stays on this device unless you export a backup.",
+    "aboutText": "Faith & Family v{{version}} · Morning reading, dinner talk, bedtime prayer. Scripture from the World English Bible (public domain). All data stays on this device unless you export a backup.",
     "importModalTitle": "Import backup",
     "importModalHint": "Paste the JSON from a previous export.",
     "importPlaceholder": "Paste backup JSON here…",
