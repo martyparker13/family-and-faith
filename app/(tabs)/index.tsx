@@ -168,7 +168,7 @@ export default function TodayScreen() {
           <View
             style={{
               flexDirection: 'row',
-              alignItems: 'stretch',
+              flexWrap: 'wrap',
               gap: theme.spacing.sm,
               marginTop: theme.spacing.md,
             }}
@@ -177,16 +177,14 @@ export default function TodayScreen() {
               label={t('today.continueToday')}
               variant="secondary"
               compact
-              numberOfLines={1}
               onPress={() => setCatchUpChoice('continue')}
-              style={{ flex: 1 }}
+              style={{ flexGrow: 1, flexBasis: '48%', minWidth: 140 }}
             />
             <AppButton
               label={t('today.todayOnly')}
               compact
-              numberOfLines={1}
               onPress={() => setCatchUpChoice('today-only')}
-              style={{ flex: 1 }}
+              style={{ flexGrow: 1, flexBasis: '48%', minWidth: 140 }}
             />
           </View>
         </Card>
